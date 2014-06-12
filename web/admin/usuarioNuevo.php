@@ -126,9 +126,9 @@ $('.removido').change(function(){
 			</tr>
 			<!--#inicio campos para nuevo-->
 			<tr class="input_nuevo campo-profesor"id="trColegio">
-				<th align="right">Colegio</th> 
+				<th align="right">Colegio (*)</th> 
 				<td>
-					<select name="colegio" class="campos" id="colegio">
+					<select name="rbdColegio" class="campos" id="colegio">
                     	<option value="">----</option>
                     	<?php 
 						    $colegios = getColegiosNuevo();
@@ -160,12 +160,12 @@ $('.removido').change(function(){
 
 			<!--#fin campos para nuevo-->
 			<!--campos para nuevo utp-->
-			<tr class="campo_nuevo_utp" style="display:none;">
+			<!--<tr class="campo_nuevo_utp" style="display:none;">
 				<th align="right">Curso directivo</th> 
 				<td>
 					<select name="cursoDirectivo" class="campos" id="cursoDirectivo"></select>
                 </td>
-			</tr>
+			</tr>-->
 			<!--fin campos para nuevo utp-->
 
 
