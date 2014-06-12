@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin título</title>
+</head>
+
+<body onload="tab = document.getElementById('theTable'); tab.style.display='none'">
+<script type="text/javascript">
+
+var rowVisible = true;
+
+function toggleDisplay(tbl) {
+   tbl.style.display="";
+   var tblRows = tbl.rows;
+   for (i = 0; i < tblRows.length; i++) {
+      if (tblRows[i].className != "headerRow") {
+         tblRows[i].style.display = (rowVisible) ? "none" : "";
+      }
+   }
+   rowVisible = !rowVisible;
+}
+
+</script>
+
+<table id="theTable" border="1">
+   <tr class="headerRow">
+      <th>test header</th>
+      <th>test header</th>
+      <th>test header</th>
+   </tr>
+   <tr class="headerRow">
+      <td>test</td>
+      <td>test</td>
+      <td>test</td>
+   </tr>
+   <tr>
+      <td>test</td>
+      <td>test</td>
+      <td>test</td>
+   </tr>
+   <tr >
+      <td>test</td>
+      <td>test</td>
+      <td>test</td>
+   </tr>
+   <tr>
+      <td>test</td>
+      <td>test</td>
+      <td>test</td>
+   </tr>
+</table>
+
+<input type="button" value="toggle row display" onclick="toggleDisplay(document.getElementById('theTable'))" />
+
+</body>
+</html>

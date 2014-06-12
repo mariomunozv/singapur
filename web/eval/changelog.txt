@@ -1,0 +1,27 @@
+== UI Stepper ChangeLog ==
+
+== 0.0.5-alpha ==
+
+* [21-Aug-08] Added support for numeric keypad
+
+== 0.0.4-alpha ==
+
+* [23-JUL-08] Fixed bug whereby manual input was not being recorded. If an
+* illegal numeric value is entered the stepper will automatically default
+* to the next step thereby preventing unwanted values. For example if step
+* size is 10 and current value is 30. If changes value to 32 the stepper 
+* will change it to 40 as that's the next logical value. 
+
+== 0.0.3-alpha ==
+
+* [22-JUL-08] Added a few more standard widget methods. Now uses bind rather 
+* than the separate event  methods. Holding UP/DOWN cursor keys and +/- keys 
+* makes the stepper spin continuously until it reaches the limit.
+
+== 0.0.2-alpha ==
+
+* [22-JUL-08] Added mousedown feature to spin buttons
+
+== 0.0.1-alpha ==
+
+* [21-JUL-08] First build

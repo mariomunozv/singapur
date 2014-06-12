@@ -1,0 +1,11 @@
+.block-btn {
+  text-align: center;
+  padding-bottom:15px;
+  padding-top:10px;
+}
+.cajaCentralFondo {
+  margin-top:15px;
+  width: 570px;
+  background-image: url("../img/cajaCentralFondo2.png");
+  background-repeat: repeat-y;
+}

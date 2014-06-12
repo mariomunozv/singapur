@@ -1,0 +1,45 @@
+a.button {
+	background: transparent url(btn/_bg_button_a.gif) no-repeat scroll top right; 
+	color: #000; 
+	display: block;
+	float: left; 
+	font-family:arial; 
+	font-size: 8pt;
+	font-weight:bold;
+	height: 24px;
+	margin-right: 6px;
+	padding-right: 18px;
+	text-decoration: none; 
+}
+a.button span {	
+	background: transparent url(btn/_bg_button_span.gif) no-repeat; 
+	display: block; 
+	line-height: 14px;
+	padding: 5px 0 5px 18px;  
+	text-decoration:none;
+} 
+a.button:hover span{
+	background-position:0 -24px; 
+}
+a.button:hover{
+	background-position:right -24px; 
+}				
+
+.aceptar{		background:url(btn/aceptar.gif)		no-repeat; padding-left:20px; }
+.alertar{		background:url(btn/alertar.gif)		no-repeat; padding-left:20px; } 
+.cancelar{		background:url(btn/cancelar.gif)	no-repeat; padding-left:20px; }
+.izquierda{		background:url(btn/izquierda.gif)	no-repeat; padding-left:20px; }
+.derecha{		background:url(btn/derecha.gif)		no-repeat; padding-left:20px; }
+.carpeta{		background:url(btn/carpeta.gif)		no-repeat; padding-left:20px; }
+.crear{			background:url(btn/crear.gif)		no-repeat; padding-left:20px; } 
+.descargar{		background:url(btn/descargar.gif)	no-repeat; padding-left:20px; }
+.editar{		background:url(btn/editar.gif) 		no-repeat; padding-left:20px; } 
+.escribir{		background:url(btn/escribir.gif)	no-repeat; padding-left:20px; }
+.eliminar{		background:url(btn/eliminar.gif)	no-repeat; padding-left:20px; }
+.escribir{		background:url(btn/escribir.gif)	no-repeat; padding-left:20px; } 
+.guardar{		background:url(btn/guardar.gif)		no-repeat; padding-left:20px; }
+.listar{		background:url(btn/listar.gif)		no-repeat; padding-left:20px; } 
+.preguntar{		background:url(btn/preguntar.gif)	no-repeat; padding-left:20px; }
+.precio{		background:url(btn/precio.gif)		no-repeat; padding-left:20px; }
+.pagos{			background:url(btn/pagos.gif)		no-repeat; padding-left:20px; }
+.refrescar{		background:url(btn/refrescar.gif)	no-repeat; padding-left:20px; } 

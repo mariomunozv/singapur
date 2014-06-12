@@ -1,0 +1,27 @@
+/* GENERAL */
+
+body{ font-family: arial narrow; font-size: 12px; margin:0px; padding:0px; }
+a{ color:#FF0000; }
+.contenido{ padding:5px 10px; }
+.titulo_form{ font-size:14px; font-weight:bold; border-bottom:1px solid #333333; }
+.menu{ background: url(../images/head.gif) repeat-x; color:#FFFFFF; padding-left:15px; padding-bottom:3px; }
+.menu h2{ font-weight:bold; margin-top:30px; }
+.menu a{ font-size:13px; color:#FFFFFF; }
+.menu a:hover{ color:#CCCCCC; }
+
+/* MENSAJES */ 
+
+.mensaje{ height:70px; padding-left:70px; padding-top:13px; font-weight:bold; width:350px; }
+.mensaje span{ font-size:12px; color:#FF0000; } 
+.mensaje a{ color:#0066CC; text-decoration:none; font-weight:100 !important; } 
+
+.alertar{ background:url(btn/alertar.gif) no-repeat; border:1px solid #FF0000; }
+.alerta{ background:url(../images/alerta.jpg) no-repeat; }
+.informacion{ background:url(../images/info.jpg) no-repeat; }
+.bien{ background:url(../images/correcto.jpg) no-repeat; }
+.mal{ background:url(../images/error.jpg) no-repeat; }
+
+.blink{ text-decoration:blink; color:#FF0000 !important; font-weight:bold; }
+
+
+.caja{width:550px; overflow:hidden; display:block; margin:10px; padding:2px; border:0px solid #000; float:left;}

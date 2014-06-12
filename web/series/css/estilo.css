@@ -1,0 +1,385 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	background-color: #032359;
+	background-image: url(../../img/bg.jpg);
+	text-align: center;
+	
+} 
+
+#header {
+  	width: 970px;
+  	margin: 0 auto;/* center the page in Firefox */
+  	text-align: left;
+	padding: 5px;
+}
+#item {
+  
+  	padding: 20px;
+}
+#todo {
+  width: 980px;	
+  margin: 2px auto;   /* align for good browsers */
+ 
+
+
+}
+#contenido {
+	width: 980px;
+  	background-color:#fff;
+	height:550px;
+	text-align:center;; /* counter the body center */
+	
+	float:left;
+	margin:0px;
+	padding:0px;
+	
+}
+
+#contenidoCierre {
+	width: 980px;
+  	background-color:#fff;
+	height:480px;
+	text-align:center;; /* counter the body center */
+	background-image:url(../images/cierre.jpg);
+	background-repeat:no-repeat;
+	float:left;
+	margin:0px;
+	padding:0px;
+
+}
+
+#contenidoPresentacion {
+	width: 980px;
+  	background-color:#fff;
+ 
+	text-align:center;; /* counter the body center */
+	
+	float:left;
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
+
+}
+
+
+
+#top {
+	float:left;
+	width:980px;
+	height:11px; 
+	background:url(../images/head.gif) top left no-repeat; 
+	margin:0px; 
+	padding:0px; 
+	display:block;
+}
+	
+#bottom {float:left;
+	width:980px;
+	height:11px; 
+	background:url(../images/eader2.gif) top left no-repeat; 
+	margin:0px; 
+	padding:0px; 
+	display:block;
+}
+
+#fondo {
+	
+  	margin: 0px;/* center the page in Firefox */
+
+	padding: 0px;
+	
+	
+}
+#fondoPres {
+	float:right;
+	width: 550px;
+	height:475px;
+	/*background-color:#00C;*/
+  	margin: 15px;/* center the page in Firefox */
+  	text-align: left;
+	padding: 5px;
+	
+}
+
+#textoPres{ width:340px;
+           height:400px;
+		   margin:60px 5px 0px 20px; 
+		   /*background-color:#FF0;*/
+		   padding:0px 10px 0px 10px; 
+		   float:left; 
+		   text-align:justify;
+		   font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;;
+		   font-size:16px;
+		   font-weight:600;
+		   }
+		   
+#imgCierre {
+	width:199px;
+    height:482px;
+    float:left; 
+	background-image:url(../images/maestra.jpg);
+	
+	
+	}
+#ideas{
+	width:650px;
+	height:300px;
+	/*margin-left:40px;
+    margin-right:40px;*/
+	float:left;
+	padding:60px 30px 30px 30px;
+
+	}		   
+		   
+.tituloCierre{
+
+	background-color:#06C;
+	padding:5px 0px 0px 0px;
+	/*margin-left:auto;
+    margin-right:auto;*/
+	float:left;
+	
+}
+
+.numeroEntero{
+	font-size:20px;
+}
+
+
+.numeroFraccion{
+	font-size:12px;
+	padding:0px;
+	margin:0px;
+}
+
+#tablaFraccion{
+	 padding:0px;
+	 margin:0px;
+	 
+	}
+
+#tablaFraccion hr{
+	 padding:0px;
+	 margin:0px;
+	 
+	}
+
+
+.alternativa{
+	text-align:justify;
+	font-size:14px;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	}
+.porcentajeObtenido{
+	text-align:justify;
+	font-size:16px;
+	font-weight:bold;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	}
+.mensajeFinal{
+	text-align:justify;
+	font-size:14px; 
+
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	}
+
+
+.botonContinuar{
+	
+	background-image: url(../images/continuar01.jpg);
+	background-repeat:no-repeat;
+	height:58px;
+	width:174px;
+	border:medium;
+	display:block;
+	clear:left;
+	margin:0px auto;
+	float:none!important;
+	text-decoration:none;
+
+}
+.botonContinuar:hover{
+	
+	background-image: url(../images/continuar02.jpg);
+	background-repeat:no-repeat;
+	height:58px;
+	width:174px;
+	border:medium;
+	display:block;
+	clear:left;
+	margin:0px auto;
+	float:none!important;
+	text-decoration:none;
+
+}
+
+.botonCerrar{
+	
+	background-image: url(../images/cerrarventana01.jpg);
+	background-repeat:no-repeat;
+	height:58px;
+	width:174px;
+	border:medium;
+	display:block;
+	clear:left;
+	margin:0px auto;
+	float:none!important;
+	text-decoration:none;
+
+}
+.botonCerrar:hover{
+	
+	background-image: url(../images/cerrarventana02.jpg);
+	background-repeat:no-repeat;
+	height:58px;
+	width:174px;
+	border:medium;
+	display:block;
+	clear:left;
+	margin:0px auto;
+	float:none!important;
+	text-decoration:none;
+
+}
+
+
+
+#interactivo {
+  	width: 970px;
+    height:530px;
+	background-color:#FFF;
+  	margin: 0 auto;/* center the page in Firefox */
+  	text-align: left;
+	padding: 2px;
+}
+
+#alternativa {
+	font-size: 14px;
+	height:auto;
+  	margin: 0px 0px 0px 50px ;/* center the page in Firefox */
+	cursor:pointer;
+  	
+}
+
+#textoEnunciado{
+margin:3px 4px 0 0px; 
+border: 1px solid rgb(255, 204, 102);
+padding:10px; 
+margin:0px 10px 15px 10px; 
+background-color: rgb(253, 253, 221);  
+text-align: center;
+width:930px; 
+line-height:30px;
+/*background:url(http://www.grupoklein.cl/beleneduca/labomat/images/iconoEnunciado.gif) 0px 0px no-repeat;*/
+}
+
+
+a:link {
+	text-decoration: none;
+	color: #000;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	
+	text-decoration: none; 
+	color: #000;
+	font-stretch:condensed;
+	background-color:#FF0;
+	
+	
+	
+}
+a:active {
+	text-decoration: none;
+	color: #000;
+}
+.enunciadoProblema {
+	width:400px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #006600;
+	font-size: 14px;
+	font-weight: bold;
+	padding:0px 0px 0px 0px;
+	text-align:justify;
+
+}
+.tituloSesion{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #006600;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.style5 {
+	color: #333333
+}
+
+.style5 {
+	color: #333333
+}
+.style7 { 
+text-align:left; 
+font-family: Verdana, Arial, Helvetica, sans-serif; 
+color: #F3F3F3;
+font-style:normal; 
+font-weight:bold;  
+}
+
+.textoNormal { 
+text-align:justify; 
+font-family: Verdana, Arial, Helvetica, sans-serif; 
+font-size: 12px;
+padding:0px 15px 0 15px;
+ 
+}
+
+.textoRespuesta { 
+text-align:left; 
+font-family: Verdana, Arial, Helvetica, sans-serif; 
+color: #3E3E3E;
+font-style:normal; 
+font-weight:bold;  
+font-size: 12px;
+}
+
+
+
+
+#cajaAlternativaFondo {     
+	width: 328px;
+    background-image: url("../img/fondoCajaAlternativa.png");
+    background-repeat: repeat-y;
+}
+
+#cajaAlternativaTop {
+	width: 328px;
+    background-image: url("../img/topCajaAlternativa.png");
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
+#cajaAlternativaDown {
+	width: 328px;
+    background-image: url("../img/bottomCajaAlternativa.png");
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    padding: 5px;
+} 
+
+.contenedor_tabla{
+	overflow:hidden; float:left; margin:0px; padding:0px;width:328px;
+	}
+.top{
+	 height:10px; overflow:hidden; float:left; margin:0px; padding:0px;width:328px; background-image:url("../img/topCajaAlternativa.png"); background-repeat: no-repeat;
+	}
+.centro_tabla{
+	  overflow:hidden; float:left; margin:0px; padding:0px;width:328px; background-image:url("../img/fondoCajaAlternativa.png"); background-repeat: repeat-y;
+	}
+.bottom{
+	  height:10px; overflow:hidden; float:left; margin:0px; padding:0px;width:328px; background-image:url("../img/bottomCajaAlternativa.png"); background-repeat: no-repeat;
+	}

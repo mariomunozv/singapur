@@ -1,0 +1,32 @@
+body {
+	font: 62.5%/1.25 Georgia, "Times New Roman", Times, serif; 
+	color: #000;
+}
+
+#page {
+    font-size: 1.6em;	
+}
+
+h1 {
+	border-bottom: 2px solid #000; 
+	font-size: 1.2em;
+}
+
+label {
+	font-weight: bold; 
+	float: left; margin-right: 1em; 
+	line-height: 1.5em;
+}
+
+.def {
+	font-style: italic;
+	color: #999;
+	white-space: nowrap;
+}
+
+.custom {
+	font-style: normal;
+	font-weight: bold;
+	color: #f00;
+	white-space: nowrap;	
+}
