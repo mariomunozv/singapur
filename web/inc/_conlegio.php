@@ -29,5 +29,4 @@ function getRbdUsuario($idUsuario){
 	return $row[0];
 }
 
-
 ?>

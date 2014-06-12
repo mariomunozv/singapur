@@ -12,6 +12,7 @@ require("../inc/_funciones.php");
 
 
 function getCursosUsuario($idUsuario){
+	
 	$sql = "SELECT * FROM `inscripcionCursoCapacitacion` a join cursoCapacitacion b on a.idCursoCapacitacion = b.idCursoCapacitacion where idUsuario = ".$idUsuario;
 	//echo $sql;
 	$res = mysql_query($sql);

@@ -1,6 +1,7 @@
 <?php 
 require("inc/incluidos.php");
 ?>
+
 <?php require ("hd.php");?>
 
 <script language="javascript">

@@ -27,13 +27,15 @@ function getJornadasCurso($idCurso){
 	// echo "<br>".$sql;
 	$res = mysql_query($sql);
 	$i =0;
-	while ($row = mysql_fetch_array($res)) {
-		$jornadasCurso[$i] = array(
-		"idJornada"=> $row["idJornada"],
-		"nombreJornada" => $row["nombreJornada"],
-		"descripcionJornada"=> $row["descripcionJornada"],
-		);
-	$i++;	
+	if($res != False){
+		while ($row = mysql_fetch_array($res)) {
+			$jornadasCurso[$i] = array(
+			"idJornada"=> $row["idJornada"],
+			"nombreJornada" => $row["nombreJornada"],
+			"descripcionJornada"=> $row["descripcionJornada"],
+			);
+		$i++;	
+		}
 	}
 	if ($i == 0){
 		$jornadasCurso[$i] = array();				
@@ -50,13 +52,15 @@ function getJornadasMural($idCurso){
 	// echo "<br>".$sql;
 	$res = mysql_query($sql);
 	$i =0;
-	while ($row = mysql_fetch_array($res)) {
-		$jornadasCurso[$i] = array(
-		"idJornada"=> $row["idJornada"],
-		"nombreJornada" => $row["nombreJornada"],
-		"descripcionJornada"=> $row["descripcionJornada"],
-		);
-	$i++;	
+	if($res!= False ){
+		while ($row = mysql_fetch_array($res)) {
+			$jornadasCurso[$i] = array(
+			"idJornada"=> $row["idJornada"],
+			"nombreJornada" => $row["nombreJornada"],
+			"descripcionJornada"=> $row["descripcionJornada"],
+			);
+		$i++;	
+		}
 	}
 	if ($i == 0){
 		$jornadasCurso[$i] = array();				

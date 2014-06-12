@@ -100,12 +100,12 @@ Conectarse_seg();
                                                  $nombre = getNombreProfesor($datosUsuario["rut"]);
                                                  break;
 
-											case "UTP":
+											                      case "UTP":
                                                  $nombre = getNombreProfesor($datosUsuario["rut"]);
                                                  break;	 
 											 	 
                                             case "Directivo":
-                                                 $nombre = getNombreDirectivo($datosUsuario["rut"]);
+                                                 $nombre = getNombreProfesor($datosUsuario["rut"]);
                                                  break;
 												 
                                             case "Alumno":
@@ -115,6 +115,9 @@ Conectarse_seg();
                                             case "Empleado Klein":
                                                  $nombre = getNombreEmpleadoKlein($datosUsuario["rut"]);
                                                  break;
+                                            default:
+                                                 $nombre = getNombreEmpleadoKlein($datosUsuario["rut"]);
+                                                 break;
                                      }
                                      $_SESSION["sesionNombreUsuario"] = $nombre;
 										/* Registro de acceso al sistema */
@@ -122,28 +125,23 @@ Conectarse_seg();
 										registraAcceso($idUsuario, 1, 'NULL');
 										@$idCurso = getCursoUs($_SESSION["sesionIdUsuario"]);
 										$_SESSION["sesionIdCurso"] = $idCurso; 
-										
-										switch ($datosUsuario["idPerfilUsuario"]) {
+										                switch ($datosUsuario["idPerfilUsuario"]) {
                                             case "3":
                                                  dirigirse_a("../mural.php?idCurso=".$idCurso);
                                             break;
 											
-											case "4":
+											                      case "21":
                                                  dirigirse_a("../mural.php?idCurso=".$idCurso);
                                             break;
 
-											default:
+											                 default:
                                                  dirigirse_a("../curso.php?idCurso=".$idCurso);
                                             break;	 
-                                     }
-										
-										
-										
-										
+                                     }										
                                 }else{
                                      echo "Su clave es Incorrecta";  ?>
                                       <a href="../index.php">&lt;&lt; Volver</a>
-               <?php               }
+               <?php            }
                            }else{
 							   echo " El usuario ingresado no existe"; ?>
 							  <br />

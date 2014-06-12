@@ -2,7 +2,8 @@
 
 /* Registra la lectura o envio de datos de un usuario */
 function registraAcceso($idUsuario, $idTipoRecursoObservado, $idLinkAccesoRecurso){
-	$sql = "INSERT INTO accesoRecurso VALUES ('$idUsuario', '', '$idTipoRecursoObservado', NOW() , $idLinkAccesoRecurso)";
+	$sql = "INSERT INTO accesoRecurso 
+	        VALUES ('$idUsuario', NULL, '$idTipoRecursoObservado', NOW() , $idLinkAccesoRecurso)";
 	$res = mysql_query($sql);
 	if (!$res) {
 		info('Error en la consulta SQL: <br><b>'.$sql.'</b><br>'. mysql_error());

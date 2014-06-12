@@ -434,6 +434,9 @@ $rbdColegio = getRbdUsuario($idUsuario);
 		require("pie.php");
 		
     ?> 
+    <script type="text/javascript">
+        alert("<?php echo $_SESSION["sesionTipoUsuario"]; ?>");
+    </script>
  
 </div><!--principal--> 
 </body>

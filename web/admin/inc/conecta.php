@@ -1,7 +1,7 @@
 <?php 
 
 function Conectarse(){   
-   if (!($link=mysql_connect("localhost","desarrollo","..5&desarrollo")))
+   if (!($link=mysql_connect("localhost:3307","root","assamita1")))
    {
       echo "Error conectando a la base de datos.";
       exit();

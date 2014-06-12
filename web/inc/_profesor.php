@@ -22,6 +22,23 @@ function getDatosProfesor2($idUsuario){
 		);
 		return ($datosProfesor);
 }	
+function getRutProfesores(){
+		$sql = " SELECT rutProfesor, nombreProfesor, apellidoPaternoProfesor from profesor where not exists (select * from usuario where usuario.rutProfesor = profesor.rutProfesor)";
+		$res = mysql_query($sql); 
+		$row = mysql_fetch_array($res);
+		$i = 0;
+		while ($row = mysql_fetch_array($res)){
+		$profesores[$i] = array(
+					  "nombreParaMostrar"=> "[".$row["rutProfesor"]."]  ".$row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"],
+  					  "rut"=>$row["rutProfesor"],
+					);	
+		$i++;
+		}
+		if ($i==0){
+			return(NULL);
+		}
+		return($profesores);
+}	
 
 function getProfesoresColegio($rbdColegio){
 	$sql = "SELECT u.idUsuario, p.*";

@@ -39,7 +39,7 @@ function getDatosUsuarioPorId($idUsuario){
 		
 		$usuario=array();
 		
-		if ($row["tipoUsuario"] == "Profesor" || $row["tipoUsuario"] == "Encuesta"){
+		if ($row["tipoUsuario"] == "Profesor" || $row["tipoUsuario"] == "Encuesta" || $row["tipoUsuario"] == "UTP" || $row["tipoUsuario"] == "Directivo" ){
 			$datos = getDatosProfesor($idUsuario);
 			$datos["nombre"] = $datos["nombreProfesor"];
 			$datos["rbdColegio"] = $datos["rbdColegio"];
@@ -84,7 +84,7 @@ function getDatosUsuarioPorId($idUsuario){
 		if ($row["tipoUsuario"] == "Alumno"){
 			
 		}
-		if ($row["tipoUsuario"] == "Empleado Klein"){
+		if ($row["tipoUsuario"] == "Empleado Klein"|| $row["tipoUsuario"] == "Coordinador General" || $row["tipoUsuario"] == "Relator/Tutor" || $row["tipoUsuario"] == "Asesor"){
 			$datos = getDatosEmpleadoKlein($idUsuario);
 			$datos["nombre"] = $datos["nombreEmpleadoKlein"];
 			$datos["apellidoPaterno"] = $datos["apellidoPaternoEmpleadoKlein"];
@@ -123,7 +123,7 @@ function getDatosUsuarioPorId($idUsuario){
 				"asignaturaACargoProfesor" => $datos["asignaturaACargoProfesor"]
 				);
 		}
-		else if($row["tipoUsuario"] == "Empleado Klein")
+		else if($row["tipoUsuario"] == "Empleado Klein" || $row["tipoUsuario"] == "Coordinador General" || $row["tipoUsuario"] == "Relator/Tutor" || $row["tipoUsuario"] == "Asesor")
 		{
 			$usuario=array(
 				"idUsuario"=> $row["idUsuario"],
@@ -199,8 +199,7 @@ function getDatosUsuarioPorId($idUsuario){
 
 
 function getTipoUsuario($idUsuario){
-	$sql = "SELECT * FROM usuario WHERE idUsuario = "."'$idUsuario'";
-	//echo $sql;
+	$sql = "SELECT * FROM usuario WHERE idUsuario = ".$idUsuario;
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	return($row["tipoUsuario"]);
@@ -347,16 +346,16 @@ function getDatosUsuario($usuario){
 		//echo $sql;
 		$res = mysql_query($sql); 
 		$row = mysql_fetch_array($res);
-		if ($row["tipoUsuario"] == "Profesor"){
+		if ($row["tipoUsuario"] == "Profesor" || $row["tipoUsuario"] == "UTP" || $row["tipoUsuario"] == "Directivo" ){
 			$rut = $row["rutProfesor"];
 		}
-		if ($row["tipoUsuario"] == "Directivo"){
-			$rut = $row["rutDirectivo"];
-		}
+		//if ($row["tipoUsuario"] == "Directivo"){
+		//	$rut = $row["rutProfesor"];
+		//}
 		if ($row["tipoUsuario"] == "Alumno"){
 			$rut = $row["rutAlumno"];
 		}
-		if ($row["tipoUsuario"] == "Empleado Klein"){
+		if ($row["tipoUsuario"] == "Empleado Klein" || $row["tipoUsuario"] == "Relator/Tutor" || $row["tipoUsuario"] == "Asesor" || $row["tipoUsuario"] == "Coordinador General"){
 			$rut = $row["rutEmpleadoKlein"];
 		}
 		$usuario=array(

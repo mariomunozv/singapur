@@ -101,6 +101,24 @@ function actualizaDatosEmpleadoKlein($rut,$nombre,$apellidoPaterno,$apellidoMate
 	return $result;
 }
 
+function getRutEmpleados(){
+		$sql = " SELECT rutEmpleadoKlein, nombreEmpleadoKlein, apellidoPaternoEmpleadoKlein from empleadoKlein where not exists (select * from usuario where usuario.rutEmpleadoKlein = empleadoKlein.rutEmpleadoKlein)";
+		//echo $sql;
+		$res = mysql_query($sql); 
+		$row = mysql_fetch_array($res);
+		$i = 0;
+		while ($row = mysql_fetch_array($res)){
+		$empleadosKlein[$i] = array( "nombreParaMostrar"=> "[".$row["rutEmpleadoKlein"]."]  ".$row["nombreEmpleadoKlein"]." ".$row["apellidoPaternoEmpleadoKlein"],
+  					  "rut"=>$row["rutEmpleadoKlein"],
+					);	
+		$i++;
+		}
+		if ($i==0){
+			return(NULL);
+		}
+		return($empleadosKlein);
+}	
+
 
 
 ?>

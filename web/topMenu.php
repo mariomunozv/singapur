@@ -1,82 +1,76 @@
-<?php
+<?php 
+	
+?>
 
-//print_r($_SESSION);
+
+<?php
+$tipoCurso = getTipoCurso($_SESSION['sesionIdCurso']);
+$idPerfil =  $_SESSION["sesionPerfilUsuario"];
+
+//Asignacion de permisos para limitacion del menu
+//perfiles disponibles en la tabla Perfiles de la bd.
+$profesor = 1;
+$utp =3;
+$profesor_utp=4;
+$relator_tutor=5;
+$coordinador_nivel=7;
+$coordinador_general=9;
+$empleado_klein=20;
+$directivo=21;
+$alumno=22;
+$asesor=23;
+
+
+$homeCurso = array($coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein,$coordinador_general);
+$homeMural = array();
+$curso = array();//array($coordinador_general, $asesor);
+$mural = array($profesor,$utp,$relator_tutor,$empleado_klein,$empleado_klein,$coordinador_general);
+$recursos = array($coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein);
+$foros = array($coordinador_general,$profesor,$utp,$relator_tutor);
+$evaluacion = array($coordinador_general,$profesor,$utp,$relator_tutor,$directivo);
+$bitacora = array($coordinador_general,$profesor,$utp,$directivo,$relator_tutor);
+$resultados = array($coordinador_general,$relator_tutor);
+//$observacion =array($coordinador_general,$utp);
+$informes = array($coordinador_general,$utp,$directivo,$relator_tutor,$asesor,$empleado_klein);
 $idCurso = $_SESSION["sesionIdCurso"];
 ?>
 	<div id="cabecera">
     	<img src="img/header.jpg" width="950" height="170"> 
      	<div id="styletwo">
             <ul>
-            <?php if (@$_SESSION["sesionNombreUsuario"] != ""){?>
-                <?php if (@$_SESSION["sesionPerfilUsuario"] == 3 || @$_SESSION["sesionPerfilUsuario"] == 4 && $idCurso == '28' ){
-					?><li><a href="mural.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Home</a></li><?php
-					}else{?>
-					  <li><a href="curso.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Home</a></li>
-                <?php } ?>
-                <?php if (@$_SESSION["sesionPerfilUsuario"] == 3 || @$_SESSION["sesionPerfilUsuario"] == 4 && $idCurso == '28' ){
-					?><li><a href="curso.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Curso</a></li><?php
-				}else{?>
-	                <li><a href="mural.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Mural</a></li>
-                <?php } ?>
+            	<?php if (in_array($idPerfil, $homeMural)) { ?>
+			    <li><a href="mural.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Home</a></li>
+
+			    <?php } if (in_array($idPerfil, $homeCurso)) { ?>
+                <li><a href="curso.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Home</a></li>
+
+                <?php } if (in_array($idPerfil, $curso)) { ?>
+				<li><a href="curso.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Curso</a></li>
+
+				<?php } if (in_array($idPerfil, $mural) && $tipoCurso != "nivel" && $tipoCurso != "" ) { ?>
+	            <li><a href="mural.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Mural</a></li>
+
+                <?php } if (in_array($idPerfil, $recursos)) { ?>
                 <li><a href="recursos.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Recursos</a></li>
+
+                <?php } if (in_array($idPerfil, $foros)) { ?>
                 <li><a href="foro.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Foros</a></li>
-                <!-- <li><a href="evaluacionUTP_2013.php">Evaluación</a></li> -->
+
+		        <?php } if (in_array($idPerfil, $bitacora) && $tipoCurso!= "curso" && $tipoCurso !="") { ?>
+                <li><a href="informeBitacorasCurso.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Bitácora</a></li>
+
+                <?php } if (in_array($idPerfil, $evaluacion) && $tipoCurso!="curso" && $tipoCurso != "") { ?>
                 <li><a href="evaluacionHome.php">Evaluación</a></li>
-		        <?php 
-				if (@$_SESSION["sesionPerfilUsuario"] >= 7 && $idCurso < 35){
-				?>
-                <li><a href="informeBitacorasCurso.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Bitácora</a></li>
-                <?php
-				}
-				if (@$_SESSION["sesionPerfilUsuario"] >= 7){
-				?>
+
+				<?php } if (in_array($idPerfil, $resultados) && $tipoCurso == "curso") { ?>
                 <li><a href="actividadescoordinacion.php">Resultados Actividades</a></li>
-                <?php
-				}
-				?>
-                <?php if($idCurso > '34' && $idCurso < '40' || $idCurso == '28'  ){ //Filtro para los niveles ?> 
-                <li><a href="bitacora.php">Bitácora</a></li>
-				<?php
-				}
-	          	if($idCurso == '28'){?> 
-                <li><a href="observacionClases.php">Observación de clases</a></li>
+
+                <?php } if (in_array($idPerfil, $observacion)) { ?>
+                <!--<li><a href="observacionClases.php">Observación de clases</a></li>-->
+
+                <?php } if (in_array($idPerfil, $informes)) { ?>
                 <li><a href="informes.php">Informes</a></li>
-				<?php 
-				}
-				if (@$_SESSION["sesionPerfilUsuario"] >= 5){
-				?>
-               <!--<li><a href="informeActividad.php">Informe Actividades</a></li>-->
-               <!--<li><a href="bitacoraReporte.php">Reportes Bitácora</a></li>-->
-                <?php
-				}
-				?>
-                <?php 
-				/*
-				if (@$_SESSION["sesionPerfilUsuario"] == 1){
-					if($idCurso > '34' && $idCurso < '40' ){ 
-						?><li><a href="evaluacionProfesor.php">Evaluación</a></li><?php
-					}
-				}
-				*/
-				if (@$_SESSION["sesionPerfilUsuario"] > 7){
-				?>
-                <!-- <li><a href="informeParticipacion.php">Detalle Participacion</a></li> -->
-                <!-- <li><a href="admin/accesosResumen.php">R.Participacion</a></li> -->
-                
-                <?php
-				}
-				if (@$_SESSION["sesionPerfilUsuario"] == 4)
-				{
-				?>
-                <!--<li><a href="evaluacionProfesor.php">Evaluación Profesor</a></li>-->
-                <!--<li><a href="evaluacionUTP_2012.php">Evaluación UTP</a></li>-->
-                
-                <?php
-				}
-				}?>  
-
-				
-
+				<?php } ?>
 
             </ul>
         </div>

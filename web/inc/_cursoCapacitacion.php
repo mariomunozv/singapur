@@ -25,14 +25,17 @@ function getDatosCurso($idCurso){
 	$sql = "SELECT * FROM `cursoCapacitacion` WHERE idCursoCapacitacion =".$idCurso;
 	//echo $sql;
 	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	$datosCurso = array(
-		"idCursoCapacitacion"=> $row["idCursoCapacitacion"],
-		"nombreCortoCursoCapacitacion" => $row["nombreCortoCursoCapacitacion"],
-		"nombreCursoCapacitacion" => $row["nombreCursoCapacitacion"],
-		"descripcionCursoCapacitacion" => $row["descripcionCursoCapacitacion"]
-		);
-	return($datosCurso);
+	if ($res != False) {
+		
+		$row = mysql_fetch_array($res);
+		$datosCurso = array(
+			"idCursoCapacitacion"=> $row["idCursoCapacitacion"],
+			"nombreCortoCursoCapacitacion" => $row["nombreCortoCursoCapacitacion"],
+			"nombreCursoCapacitacion" => $row["nombreCursoCapacitacion"],
+			"descripcionCursoCapacitacion" => $row["descripcionCursoCapacitacion"]
+			);
+		return($datosCurso);
+	}
 }	
 
 function actualizaBienvenidaCurso($idCursoCapacitacion, $descripcionCursoCapacitacion){
@@ -44,4 +47,11 @@ function actualizaBienvenidaCurso($idCursoCapacitacion, $descripcionCursoCapacit
 	}
 	return $res;
 }
+	function getTipoCurso($idCurso){
+		$sql = "SELECT * FROM `cursoCapacitacion` WHERE idCursoCapacitacion =".$idCurso;
+		$res = mysql_query($sql);
+		$row = mysql_fetch_array($res);
+		$tipoCurso = $row['tipoCursoCapacitacion'];
+		return($tipoCurso);
+	}
 ?>

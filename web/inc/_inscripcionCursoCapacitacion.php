@@ -1,4 +1,6 @@
 <?php 
+
+
 function desinscribirUsuarioCursoCapacitacion( $idUsuario, $idCursoCapacitacion ){
 	$sql="DELETE FROM `inscripcionCursoCapacitacion` WHERE  `idUsuario` = '$idUsuario' AND `idCursoCapacitacion` = '$idCursoCapacitacion'";
 	$res = mysql_query($sql);
@@ -170,6 +172,7 @@ function getCursoUs($idUsuario){
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	$cursoUsuario = $row["idCursoCapacitacion"];
+	//falta devolver opciones para Directivos, coord generales y administrativos klein
 	return($cursoUsuario);
 }
 
@@ -180,18 +183,48 @@ function getCursoUs($idUsuario){
 	$res = mysql_query($sql);
 	return($res);
 } */
-
+function alert($asd){
+print_r( "<script language='javascript'>alert('".$asd."'');</script>");
+}
 
 function getCursosUsuario($idUsuario){
-	$sql = "SELECT * 
-		FROM `inscripcionCursoCapacitacion` a 
-		join cursoCapacitacion b 
-		on a.idCursoCapacitacion = b.idCursoCapacitacion 
-		where idUsuario = ".$idUsuario." 
-		AND estadoCursoCapacitacion = 1 
-		ORDER BY(nombreCortoCursoCapacitacion)";
-	//echo $sql;
+	$sql = "SELECT * FROM usuario WHERE idUsuario = ".$idUsuario;
 	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	$tipoUsuario = $row["tipoUsuario"];
+
+	if($tipoUsuario =="Coordinador General" || $tipoUsuario=="Empleado Klein"){
+		$sql = "SELECT * 
+		FROM cursoCapacitacion
+		where estadoCursoCapacitacion = 1
+		ORDER BY(nombreCortoCursoCapacitacion)";
+	}
+	else{
+		if($tipoUsuario == "Directivo"){
+			//$sql = todos los cursos directivos registrados para los colegios asociados al usuario.
+			$sql = "SELECT * 
+				FROM cursoCapacitacion 
+				where estadoCursoCapacitacion = 1
+				AND tipoCursoCapacitacion = 'directivos'
+				AND idCursoCapacitacion in (SELECT idCursoCapacitacion 
+					                        FROM cursocapacitacioncolegio a JOIN usuariocolegio b
+					                        ON a.rbdColegio = b.rbdColegio
+					                        WHERE b.idUsuario = ".$idUsuario."  )
+				ORDER BY(nombreCortoCursoCapacitacion)";
+
+		}else{
+			$sql = "SELECT * 
+				FROM inscripcionCursoCapacitacion a	join cursoCapacitacion b 
+				on a.idCursoCapacitacion = b.idCursoCapacitacion 
+				where a.idUsuario = ".$idUsuario." 
+				AND b.estadoCursoCapacitacion = 1
+				ORDER BY(nombreCortoCursoCapacitacion)";
+		}
+		
+	}
+
+	$res = mysql_query($sql);
+	mysql_error($res);
 	$i=0;
 	while($row = mysql_fetch_array($res)){
 		$datosCursosUsuario[$i] = array(

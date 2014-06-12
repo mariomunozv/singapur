@@ -74,16 +74,16 @@ function getDatosUsuario($usuario){
 		//echo $sql;
 		$res = mysql_query($sql); 
 		$row = mysql_fetch_array($res);
-		if ($row["tipoUsuario"] == "Profesor"){
+		if ($row["tipoUsuario"] == "Profesor" || $row["tipoUsuario"] == "UTP" || $row["tipoUsuario"] == "Directivo"){
 			$rut = $row["rutProfesor"];
 		}
-		if ($row["tipoUsuario"] == "Directivo"){
-			$rut = $row["rutDirectivo"];
-		}
+		//if ($row["tipoUsuario"] == "Directivo"){
+			//$rut = $row["rutDirectivo"];
+		//}
 		if ($row["tipoUsuario"] == "Alumno"){
 			$rut = $row["rutAlumno"];
 		}
-		if ($row["tipoUsuario"] == "Empleado Klein"){
+		if ($row["tipoUsuario"] == "Empleado Klein"|| $row["tipoUsuario"] == "Coordinador General" || $row["tipoUsuario"] == "Asesor" || $row["tipoUsuario"] == "Relator/Tutor"){
 			$rut = $row["rutEmpleadoKlein"];
 		}
 	//	echo "<br>-->".$row["tipoUsuario"]."<--<br>-";

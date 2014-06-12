@@ -41,7 +41,7 @@ function checkNumber(val) {
             <form id="form1" name="form1" method="post" action="sesion/login.php">
                 <div class="titulo_div">Ingreso Usuario</div>
                 <div class="info_div">Usuario</div> 
-                <div class="info_div"><input type="text" name="usuario" id="usuario" onkeyup="javascript:checkNumber(this);" maxlength="8"/></div>  
+                <div class="info_div"><input type="text" name="usuario" id="usuario" onkeyup="javascript:checkNumber(this);"/></div>   <!--maxlength="8"-->
                 <div class="info_div">Password</div>  
                 <div class="info_div"> <input type="password" name="password" id="password" onkeypress="iSubmitEnter(event, document.form1)" /></div>  
                 <div class="info_div"><?php boton("Entrar", "enviar()"); ?><br /><br />

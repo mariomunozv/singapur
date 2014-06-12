@@ -4,6 +4,7 @@ require("inc/config.php");
 
 // borrar cuando se llame desde la pagina principal
 require("_head.php"); 
+include("../_profesor.php")
 	
 ?> 
 

@@ -19,7 +19,19 @@
 	}
 	return($colegio);
 	 } */
- 
+ function getColegiosNuevo(){
+	$sql = "SELECT * FROM colegio WHERE estadoColegio = 1 ORDER BY nombreColegio ";
+	$res = mysql_query($sql);
+	$i = 0;
+	while ($row = mysql_fetch_array($res)){
+	$colegios[$i] = array("idColegio"=> $row["rbdColegio"],"nombreColegio"=>$row["nombreColegio"] );	
+	$i++;
+	}
+	if ($i==0){
+		return(NULL);
+	}
+	return($colegios);
+}
 
 
 function getDatosColegio($rbdColegio){
