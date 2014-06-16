@@ -130,7 +130,10 @@ Conectarse_seg();
                                                  dirigirse_a("../mural.php?idCurso=".$idCurso);
                                             break;
 											
-											                      case "21":
+											                      case "20":
+                                                 dirigirse_a("../mural.php?idCurso=".$idCurso);
+                                            break;
+                                            case "9":
                                                  dirigirse_a("../mural.php?idCurso=".$idCurso);
                                             break;
 
