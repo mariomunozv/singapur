@@ -214,17 +214,14 @@ function getCursosUsuario($idUsuario){
 
 		}else{
 			$sql = "SELECT * 
-				FROM inscripcionCursoCapacitacion a	join cursoCapacitacion b 
+				FROM v35.inscripcionCursoCapacitacion a	join v35.cursoCapacitacion b 
 				on a.idCursoCapacitacion = b.idCursoCapacitacion 
 				where a.idUsuario = ".$idUsuario." 
 				AND b.estadoCursoCapacitacion = 1
 				ORDER BY(nombreCortoCursoCapacitacion)";
-		}
-		
+		}	
 	}
-
 	$res = mysql_query($sql);
-	mysql_error($res);
 	$i=0;
 	while($row = mysql_fetch_array($res)){
 		$datosCursosUsuario[$i] = array(
