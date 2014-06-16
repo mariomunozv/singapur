@@ -79,13 +79,15 @@ function guardarUsuario(){
 	    		info('Error en la consulta SQL: <br><b>'.$sql.'</b><br>'. mysql_error());
 	    		mysql_query("DELETE FROM usuario WHERE idUsuario = ".$idUsuario);
 			}else{
-				if($tipo == 20 || $tipo == 9 || $tipo == 3){
-					$sql3 = "INSERT INTO inscripcioncursocapacitacion(idPerfil ,idProyectoKlein ,idUsuario, idCursoCapacitacion) VALUES(".$tipo.",  1, ".$idUsuario.",28)";
+				if($tipo == 21){
+					//$sql3 = "INSERT INTO inscripcioncursocapacitacion(idPerfil ,idProyectoKlein ,idUsuario, idCursoCapacitacion) VALUES(".$tipo.",  1, ".$idUsuario.",28)";
+					$sql3="INSERT INTO usuariocolegio(rbdColegio, idUsuario) VALUES(".$_POST["rbdColegio"].",".$idUsuario.")";
 					$res3 = mysql_query($sql3);
 					if(!$res3){
 						info('Error en la consulta SQL: <br><b>'.$sql.'</b><br>'. mysql_error());
 						mysql_query("DELETE FROM usuario WHERE idUsuario = ".$idUsuario);
 						mysql_query("DELETE FROM detalleusuarioproyectoperfil WHERE idUsuario = ".$idUsuario);
+						mysql_query("DELETE FROM profesor WHERE rutProfesor =".$_POST['nuevo_rut']);
 					}
 					else{
 						info('El usuario ha sido creado.');
