@@ -188,14 +188,13 @@ print_r( "<script language='javascript'>alert('".$asd."'');</script>");
 }
 
 function getCursosUsuario($idUsuario){
-	$sql = "SELECT * FROM usuario WHERE idUsuario = ".$idUsuario;
+	$sql = "SELECT * FROM v35.usuario WHERE idUsuario = ".$idUsuario;
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	$tipoUsuario = $row["tipoUsuario"];
-
 	if($tipoUsuario =="Coordinador General" || $tipoUsuario=="Empleado Klein"){
 		$sql = "SELECT * 
-		FROM cursoCapacitacion
+		FROM v35.cursoCapacitacion
 		where estadoCursoCapacitacion = 1
 		ORDER BY(nombreCortoCursoCapacitacion)";
 	}
@@ -203,11 +202,11 @@ function getCursosUsuario($idUsuario){
 		if($tipoUsuario == "Directivo"){
 			//$sql = todos los cursos directivos registrados para los colegios asociados al usuario.
 			$sql = "SELECT * 
-				FROM cursoCapacitacion 
+				FROM v35.cursoCapacitacion 
 				where estadoCursoCapacitacion = 1
 				AND tipoCursoCapacitacion = 'directivos'
 				AND idCursoCapacitacion in (SELECT idCursoCapacitacion 
-					                        FROM cursocapacitacioncolegio a JOIN usuariocolegio b
+					                        FROM v35.cursocapacitacioncolegio a JOIN v35.usuariocolegio b
 					                        ON a.rbdColegio = b.rbdColegio
 					                        WHERE b.idUsuario = ".$idUsuario."  )
 				ORDER BY(nombreCortoCursoCapacitacion)";
