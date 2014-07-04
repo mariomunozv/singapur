@@ -13,7 +13,7 @@ function cambiaCurso(idCurso){
 
 
 <?php 
-	//echo "<h1>adsasd".$_SESSION["sesionIdUsuario"]."</h1>";
+	//echo "<h1>-".$_SESSION["sesionIdUsuario"]."-</h1>";
 	$cursosUsuario = getCursosUsuario($_SESSION["sesionIdUsuario"]);
 	//print_r($cursosUsuario);
 	//if ( count($cursosUsuario)<=1 ||(count($cursosUsuario)==1 && $idCurso == 28)){}else{
