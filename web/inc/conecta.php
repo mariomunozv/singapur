@@ -7,8 +7,7 @@ function Conectarse_seg(){
       echo "Error conectando a la base de datos.";
       exit();
    }
-   //if (!mysql_select_db("GESTION_ASESORIAS_v34",$link))
-   if (!mysql_select_db("v35",$link))
+   if (!mysql_select_db("GESTION_ASESORIAS_v34",$link))
    {
       echo "Error seleccionando la base de datos.";
       exit();
