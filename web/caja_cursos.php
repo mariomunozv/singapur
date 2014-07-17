@@ -1,13 +1,26 @@
 <?php 
 $idCurso = $_SESSION["sesionIdCurso"];
+$idPerfil = $_SESSION["sesionPerfilUsuario"];
 ?>
 <script language="javascript">
 function cambiaCurso(idCurso){
-	if(idCurso != 28){
-		window.location.href="curso.php?idCurso="+idCurso;
+	var tipoCurso = $("#cambiaCurso option:selected").attr("meta-tipo");
+	var tipoPerfil= "<?php echo $idPerfil; ?>";
+//	alert(tipoCurso);
+	if(tipoPerfil == 21){
+		if(tipoCurso != "directivos"){
+			window.location.href="curso.php?idCurso="+idCurso;
+		}else{
+			window.location.href="informeBitacorasCurso.php?idCurso="+idCurso;
+		}
 	}else{
-		window.location.href="mural.php?idCurso="+idCurso;
+		if(tipoCurso != "directivos"){
+			window.location.href="curso.php?idCurso="+idCurso;
+		}else{
+			window.location.href="mural.php?idCurso="+idCurso;
+		}
 	}
+		
 }
 </script>
 
@@ -27,9 +40,9 @@ function cambiaCurso(idCurso){
 	<?php foreach ($cursosUsuario as $datosCurso){ 
 		if($datosCurso["idCursoCapacitacion"] == $idCurso)
 		{ ?>
-			<option value="<?php echo $datosCurso["idCursoCapacitacion"]?>" selected="selected"><?php echo $datosCurso["nombreCortoCursoCapacitacion"];?></option>
+			<option value="<?php echo $datosCurso["idCursoCapacitacion"]?>" meta-tipo="<?php echo $datosCurso["tipoCursoCapacitacion"]?>" selected="selected"><?php echo $datosCurso["nombreCortoCursoCapacitacion"];?></option>
 	<?php }else { ?>
-		<option value="<?php echo $datosCurso["idCursoCapacitacion"]?>"><?php echo $datosCurso["nombreCortoCursoCapacitacion"];?></option>
+		<option value="<?php echo $datosCurso["idCursoCapacitacion"]?>" meta-tipo="<?php echo $datosCurso["tipoCursoCapacitacion"]?>" ><?php echo $datosCurso["nombreCortoCursoCapacitacion"];?></option>
 	<?php }} ?>
 	</select>
 </div>

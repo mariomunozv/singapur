@@ -8,7 +8,7 @@ require ("hd.php");
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	$navegacion = "Home*mural.php?idCurso=$idCurso,Observación de Clases*#";
+	$navegacion = "Home*mural.php?idCurso=$idCurso,Informes*informes.php,Observación de Clases*#";
 	require("_navegacion.php");
 
 
@@ -80,7 +80,7 @@ require ("hd.php");
         </div> <!--cajaCentralFondo-->
         
         
-        <div id="cajaCentralFondo" >
+        <!--<div id="cajaCentralFondo" >
         
             <div id="cajaCentralTop">
                 <p class="titulo_jornada">
@@ -93,8 +93,9 @@ require ("hd.php");
               <br><br>
 
               <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('observacionClasesInformes.php','_self')" value="Informe Evaluaci&oacute;n" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('observacionClases.php','_self')" value="Informe Evaluaci&oacute;n" />
               </div>
+              <br />
 
             </div>
 			
@@ -103,7 +104,7 @@ require ("hd.php");
             &nbsp; 
             </div>
             
-        </div> <!--cajaCentralFondo-->
+        </div>--> <!--cajaCentralFondo-->
        
 
 		<br>

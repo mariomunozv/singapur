@@ -244,6 +244,7 @@ function getCursosUsuario($idUsuario){
 	$i=0;
 	while($row = mysql_fetch_array($res)){
 		$datosCursosUsuario[$i] = array(
+			"tipoCursoCapacitacion"=> $row["tipoCursoCapacitacion"],
 			"idCursoCapacitacion"=> $row["idCursoCapacitacion"],
 			"nombreCortoCursoCapacitacion" => $row["nombreCortoCursoCapacitacion"],
 			"nombreCursoCapacitacion" => $row["nombreCursoCapacitacion"]

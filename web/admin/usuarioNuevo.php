@@ -26,7 +26,7 @@ function save_usuario(){
 	//if(val_obligatorio("idProyectoKlein") == false){ return; } // CAMPOS
 	//if(val_obligatorio("nombreCortoCursoCapacitacion") == false){ return; }
 	
-	if(confirm("Seguro de guardar este curso?")){
+	if(confirm("Seguro que desea crear este usuario?")){
 
 		var division = document.getElementById("usuario_nuevo");
 		var a = $(".campos").fieldSerialize();

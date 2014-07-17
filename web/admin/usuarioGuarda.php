@@ -9,7 +9,7 @@ guardarUsuario();
 ?>
     
 <script language="javascript">
-	/*location.href="usuarios.php";*/
+	location.href="usuarios.php";
 </script>   
 
 

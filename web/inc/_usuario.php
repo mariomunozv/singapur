@@ -235,7 +235,7 @@ function getNombreFotoUsuarioEmpleadoKlein($idUsuario){
 
 function getIdUsuarios(){
 
-	$sql = "SELECT * FROM usuario where tipoUsuario != 'Alumno'";
+	$sql = "SELECT * FROM usuario where tipoUsuario != 'Alumno' ORDER BY idUsuario DESC ";
 	//echo $sql;
 	$res = mysql_query($sql);
 	$i = 0;

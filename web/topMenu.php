@@ -6,14 +6,14 @@
 <?php
 $tipoCurso = getTipoCurso($_SESSION['sesionIdCurso']);
 $idPerfil =  $_SESSION["sesionPerfilUsuario"];
-
+//echo $idPerfil;
 //Asignacion de permisos para limitacion del menu
 //perfiles disponibles en la tabla Perfiles de la bd.
 $profesor = 1;
 $utp =3;
 $profesor_utp=4;
 $relator_tutor=5;
-$coordinador_nivel=7;
+//$coordinador_nivel=7;
 $coordinador_general=9;
 $empleado_klein=20;
 $directivo=21;
@@ -21,17 +21,19 @@ $alumno=22;
 $asesor=23;
 
 
-$homeCurso = array($coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein,$coordinador_general);
+$homeCurso = array($coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein,$coordinador_general, $asesor);
 $homeMural = array();
 $curso = array();//array($coordinador_general, $asesor);
-$mural = array($profesor,$utp,$relator_tutor,$empleado_klein,$empleado_klein,$coordinador_general);
-$recursos = array($coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein);
-$foros = array($coordinador_general,$profesor,$utp,$relator_tutor);
-$evaluacion = array($coordinador_general,$profesor,$utp,$relator_tutor,$directivo);
-$bitacora = array($coordinador_general,$profesor,$utp,$directivo,$relator_tutor);
-$resultados = array($coordinador_general,$relator_tutor);
+$mural = array($asesor, $profesor,$utp,$relator_tutor,$empleado_klein,$empleado_klein,$coordinador_general);
+$recursos = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein);
+$foros = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor);
+$evaluacion = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$directivo);
+$bitacora = array($asesor, $coordinador_general,$profesor,$utp,$directivo,$relator_tutor);
+$resultados = array($asesor, $coordinador_general,$relator_tutor);
 //$observacion =array($coordinador_general,$utp);
-$informes = array($coordinador_general,$utp,$directivo,$relator_tutor,$asesor,$empleado_klein);
+$informes = array($coordinador_general,$utp,$directivo,$asesor,$empleado_klein);
+$informesUTP = array($asesor, $relator_tutor);
+$informesSesion = array($relator_tutor, $asesor);
 $idCurso = $_SESSION["sesionIdCurso"];
 ?>
 	<div id="cabecera">
@@ -67,6 +69,12 @@ $idCurso = $_SESSION["sesionIdCurso"];
 
                 <?php } if (in_array($idPerfil, $observacion)) { ?>
                 <!--<li><a href="observacionClases.php">Observación de clases</a></li>-->
+
+                <?php } if (in_array($idPerfil, $informesSesion) && $tipoCurso == "curso") { ?>
+                <li><a href="#">Informe de Sesi&#243;n</a></li>
+
+                <?php } if (in_array($idPerfil, $informesUTP) && $tipoCurso == "directivos") { ?>
+                <li><a href="informes.php">Informes</a></li>
 
                 <?php } if (in_array($idPerfil, $informes)) { ?>
                 <li><a href="informes.php">Informes</a></li>
