@@ -209,6 +209,7 @@ print_r( "<script language='javascript'>alert('".$asd."'');</script>");
 
 function getCursosUsuario($idUsuario){
 	$sql = "SELECT * FROM v35.usuario WHERE idUsuario = ".$idUsuario;
+	//echo $sql;
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	$tipoUsuario = $row["tipoUsuario"];

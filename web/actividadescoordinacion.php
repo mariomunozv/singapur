@@ -29,15 +29,15 @@ function registraMuestra(link,idRecurso){
 function getProfesores(idCurso){
 
     $.ajax({
-    data:  "idCurso=" + idCurso,
-    url:   'cursoProfesores.php',
-    type:  'post',
-    dataType: "html",
-    success:  function (response) 
-    {
-        $("#divCursos").html(response);
-    }});
-
+        data:  "idCurso=" + idCurso,
+        url:   'cursoProfesores.php',
+        type:  'post',
+        dataType: "html",
+        success:  function (response) 
+        {
+            $("#divCursos").html(response);
+        }
+    });
 }
 
 $(document).ready(function(){
@@ -60,7 +60,7 @@ $(document).ready(function(){
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	
+	$navegacion = "Home*curso.php?idCurso=$idCurso,Resultados Actividades*#";
 	require("_navegacion.php");
 
 ?>

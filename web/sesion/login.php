@@ -126,12 +126,8 @@ Conectarse_seg();
 										@$idCurso = getCursoUs($_SESSION["sesionIdUsuario"]);
 										$_SESSION["sesionIdCurso"] = $idCurso; 
 										                switch ($datosUsuario["idPerfilUsuario"]) {
-                                            case "3":
-                                                 dirigirse_a("../mural.php?idCurso=".$idCurso);
-                                            break;
-											
 											                      case "21":
-                                                 dirigirse_a("../informeBitacorasCurso.php?idCurso=".$idCurso);
+                                                 dirigirse_a("../bitacora.php?idCurso=".$idCurso);
                                             break;
                                             case "9":
                                                  dirigirse_a("../mural.php?idCurso=".$idCurso);

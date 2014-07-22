@@ -13,9 +13,9 @@ require ("hd.php");
 
 function getListaActividades($idProfesor){
 
-    $sql = "SELECT L.idLista,A.tituloActividad FROM pautaItem as PI
-            inner join lista as L on PI.idLista = PI.idLista
-            inner join actividad as A on A.idActividad = L.idActividad
+    $sql = "SELECT L.idLista,A.tituloActividad FROM v35.pautaItem as PI
+            inner join v35.lista as L on PI.idLista = PI.idLista
+            inner join v35.actividad as A on A.idActividad = L.idActividad
             WHERE idUsuario = ".$idProfesor." and L.idActividad IS NOT NULL 
             group by L.idLista,A.tituloActividad";
 
@@ -55,7 +55,7 @@ function registraMuestra(link,idRecurso){
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	
+	$navegacion = "Home*curso.php?idCurso=$idCurso,Resultados Actividades*actividadescoordinacion.php,Actividades Profesor*#";
 	require("_navegacion.php");
 
 ?>
@@ -73,12 +73,12 @@ function registraMuestra(link,idRecurso){
 
     <p class="titulo_curso">Actividades Profesor</p>
     <br>
-    <?php $datos = getRutNombre($idProfesor);
-
-       foreach($datos as $row){
+    <?php 
+        $datos = getRutNombre($idProfesor);
+        foreach($datos as $row){
             echo "<h3>Rut: ".$row["rutProfesor"]."</h3>";
             echo "<h3>Nombre: ".$row["nombreProfesor"] . " ". $row["apellidoPaternoProfesor"]."</h3>";
-       }
+        }
 
     ?>
      
@@ -94,12 +94,13 @@ function registraMuestra(link,idRecurso){
             <th></th>
         </thead>
         <tbody>
-            <?php foreach($listaActividades as $row){
-                $idLista = $row["idLista"];
+            <?php 
+                foreach($listaActividades as $row){
+                    $idLista = $row["idLista"];
             ?>
                 <tr>
-                <td><center><?phpecho $row["tituloActividad"]?></center></td>
-                <td><center><a href="<?php echo "actividadesIntentos.php?idProfesor=".$idProfesor."&idLista=".$idLista."";?>">Ver Intentos</a></center></td>
+                    <td><center><?php echo $row["tituloActividad"] ?></center></td>
+                    <td><center><a href="<?php echo 'actividadesIntentos.php?idProfesor='.$idProfesor.'&idLista='.$idLista; ?>">Ver Intentos</a></center></td>
                 </tr>
             <?php } ?>
         </tbody>

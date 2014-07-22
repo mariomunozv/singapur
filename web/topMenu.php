@@ -19,21 +19,22 @@ $empleado_klein=20;
 $directivo=21;
 $alumno=22;
 $asesor=23;
+$visitante=24;
 
 
-$homeCurso = array($coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein,$coordinador_general, $asesor);
+$homeCurso = array($coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein, $asesor,$visitante);
 $homeMural = array();
 $curso = array();//array($coordinador_general, $asesor);
-$mural = array($asesor, $profesor,$utp,$relator_tutor,$empleado_klein,$empleado_klein,$coordinador_general);
-$recursos = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein);
-$foros = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor);
-$evaluacion = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$directivo);
-$bitacora = array($asesor, $coordinador_general,$profesor,$utp,$directivo,$relator_tutor);
+$mural = array($asesor, $profesor,$utp,$relator_tutor,$empleado_klein,$empleado_klein,$coordinador_general,$visitante);
+$recursos = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein,$visitante);
+$foros = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$visitante);
+$evaluacion = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$directivo,$visitante);
+$bitacora = array($asesor, $coordinador_general,$profesor,$utp,$directivo,$relator_tutor,$visitante);
 $resultados = array($asesor, $coordinador_general,$relator_tutor);
 //$observacion =array($coordinador_general,$utp);
-$informes = array($coordinador_general,$utp,$directivo,$asesor,$empleado_klein);
-$informesUTP = array($asesor, $relator_tutor);
-$informesSesion = array($relator_tutor, $asesor);
+$informes = array($coordinador_general,$directivo,$empleado_klein);
+$informesUTP = array($asesor, $relator_tutor,$utp,$visitante);
+$informesSesion = array($relator_tutor, $asesor, $empleado_klein, $coordinador_general);
 $idCurso = $_SESSION["sesionIdCurso"];
 ?>
 	<div id="cabecera">
@@ -59,7 +60,7 @@ $idCurso = $_SESSION["sesionIdCurso"];
                 <li><a href="foro.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Foros</a></li>
 
 		        <?php } if (in_array($idPerfil, $bitacora) && $tipoCurso!= "curso" && $tipoCurso !="") { ?>
-                <li><a href="informeBitacorasCurso.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Bitácora</a></li>
+                <li><a href="bitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Bitácora</a></li>
 
                 <?php } if (in_array($idPerfil, $evaluacion) && $tipoCurso!="curso" && $tipoCurso != "") { ?>
                 <li><a href="evaluacionHome.php">Evaluación</a></li>
@@ -71,7 +72,7 @@ $idCurso = $_SESSION["sesionIdCurso"];
                 <!--<li><a href="observacionClases.php">Observación de clases</a></li>-->
 
                 <?php } if (in_array($idPerfil, $informesSesion) && $tipoCurso == "curso") { ?>
-                <li><a href="#">Informe de Sesi&#243;n</a></li>
+                <li><a href="informesSesion.php">Informe de Sesi&#243;n</a></li>
 
                 <?php } if (in_array($idPerfil, $informesUTP) && $tipoCurso == "directivos") { ?>
                 <li><a href="informes.php">Informes</a></li>

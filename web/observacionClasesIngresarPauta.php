@@ -10,7 +10,7 @@
 <div id="principal">
   <?php
   require "topMenu.php";
-  $navegacion = "Home*mural.php?idCurso=$idCurso,Informes*#";
+  $navegacion = "Home*mural.php?idCurso=$idCurso,Informes*informes.php,Observación de Clases*observacionClases.php,Ingreso de Pautas de Observación*#";
   require "_navegacion.php";
 
   //$_SESSION['sesionIdUsuario'];

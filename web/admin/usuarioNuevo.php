@@ -43,7 +43,7 @@ function cambio_tipo_usuario(){
 	}else{
 		$('.campo_nuevo_utp').css("display", "none");
 	}
-	if(x.value == "Profesor" || x.value=="UTP" || x.value=="Directivo"){
+	if(x.value == "Profesor" || x.value=="UTP" || x.value=="Directivo" || x.value=="Visitante"){
 		$('.campo-empleadoklein').css("display", "none");
 		$('.campo-profesor').css("display", "");
 	}else{
@@ -82,7 +82,7 @@ $('.removido').change(function(){
                     	<option value="Profesor">Profesor</option>
                     	<option value="UTP">UTP</option>
                     	<option value="Directivo">Directivo</option>
-                    	<!--<option value="Visitante">Visitante</option>-->
+                    	<option value="Visitante">Visitante</option>
                     	<option value="Relator/Tutor">Relator/Tutor</option>
                     	<option value="Asesor">Asesor</option>
                     	<option value="Empleado Klein">Administrativo Klein</option>

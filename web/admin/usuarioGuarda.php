@@ -9,7 +9,7 @@ guardarUsuario();
 ?>
     
 <script language="javascript">
-	location.href="usuarios.php";
+	//location.href="usuarios.php";
 </script>   
 
 
@@ -18,7 +18,7 @@ guardarUsuario();
 function guardarUsuario(){
 	$flag = True;
 	$sql = "";
-	if($_POST['tipoUsuario']=="Profesor" || $_POST['tipoUsuario']=="UTP" ||$_POST['tipoUsuario']=="Directivo"  ){
+	if($_POST['tipoUsuario']=="Profesor" || $_POST['tipoUsuario']=="UTP" ||$_POST['tipoUsuario']=="Directivo" || $_POST['tipoUsuario']=="Visitante"  ){
 		if($_POST['rutProfesor']==""){
 			$sql_insert = "INSERT INTO profesor(rutProfesor, rbdColegio, nombreProfesor, apellidoPaternoProfesor, apellidoMaternoProfesor, idTipoProfesor, implementaProfesor,experienciaSingapur,nivelExperienciaSingapur,ultimaActualizacionProfesor)
 			               VALUES ('".$_POST['nuevo_rut']."',".$_POST['rbdColegio'].",'".$_POST['nuevo_nombre']."','".$_POST['nuevo_paterno']."','".$_POST['nuevo_materno']."',1,1,'','',NOW())";
@@ -69,6 +69,7 @@ function guardarUsuario(){
 			else if($tipo == "UTP")$tipo = 3;
 			else if($tipo == "Directivo")$tipo = 21;
 			else if($tipo == "Relator/Tutor")$tipo = 5;
+			else if($tipo == "Visitante")$tipo = 24;
 			else if($tipo == "Asesor")$tipo = 23;
 			else if($tipo == "Empleado Klein")$tipo = 20;
 			else if($tipo == "Coordinador General")$tipo = 9;

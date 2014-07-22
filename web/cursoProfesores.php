@@ -26,7 +26,6 @@ function getProfesoresCurso($idCurso){
 }
 
 function getCountActividades($idProfesor){
-
     $sql = "select count(*) as Num from (SELECT L.idLista,A.tituloActividad FROM pautaItem as PI
             inner join lista as L on PI.idLista = L.idLista
             inner join actividad as A on A.idActividad = L.idActividad
@@ -44,8 +43,8 @@ function getCountActividades($idProfesor){
     return $num;
 }
 
-$profesores = getProfesoresCurso($idCurso);?>
-
+$profesores = [];
+$profesores = getProfesoresCurso($idCurso); ?>
 
 
     <table class="tablesorter">
@@ -60,16 +59,17 @@ $profesores = getProfesoresCurso($idCurso);?>
         <tbody>
 
 		<?php 
-        foreach ($profesores as $row){ 
+        foreach ($profesores as $row){
 
         $idUsuario = $row["idUsuario"];
-		$num = getCountActividades($idUsuario);
+		$num=0;
+        $num = getCountActividades($idUsuario);
         ?>
             <tr>
-                <td><?phpecho $row["rutProfesor"];?></td>
-                <td><?phpecho $row["rbdColegio"];?></td>
-                <td><?phpecho $row["nombreProfesor"] . " " . $row["apellidoPaternoProfesor"];?></td>
-                <td><a href="<?php echo "actividadesProfesor.php?id=".$idUsuario?>" >Actividades Realizadas (<?phpecho $num;?>)</a></td>
+                <td><?php echo $row["rutProfesor"]; ?></td>
+                <td><?php echo $row["rbdColegio"]; ?></td>
+                <td><?php echo $row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]; ?></td>
+                <td><a href="<?php echo 'actividadesProfesor.php?id='.$idUsuario ?>" >Actividades Realizadas (<?php echo $num; ?>)</a></td>
             </tr>
         <?php 
         }

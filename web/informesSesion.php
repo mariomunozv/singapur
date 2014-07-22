@@ -8,7 +8,7 @@ require ("hd.php");
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	$navegacion = "Home*mural.php?idCurso=$idCurso,Informes*#";
+	$navegacion = "Home*curso.php?idCurso=$idCurso,Informes de Sesi&#243;n*#";
 	require("_navegacion.php");
 
 
@@ -26,7 +26,7 @@ require ("hd.php");
 	<div id="columnaCentro">
      
 		
-        <p class="titulo_curso">Informes de Actividades: </p>
+        <p class="titulo_curso">Informes de Sesi&#243;n: </p>
         <hr />
         <br />
    
@@ -34,7 +34,7 @@ require ("hd.php");
         
             <div id="cajaCentralTop">
                 <p class="titulo_jornada">
-				Informe de Evaluaciones
+				Informe de Sesi&#243;n
                 </p>
             </div>
             
@@ -50,31 +50,7 @@ require ("hd.php");
             
         </div> <!--cajaCentralFondo-->
 		<br>
-        <div id="cajaCentralFondo" >
         
-            <div id="cajaCentralTop">
-                <p class="titulo_jornada">
-                Pauta de Observaci&#243;n de Clases  
-                </p>
-            </div>
-            
-            <div id="textoJornada">
-                <<< Falta detallar texto >>>
-              <br><br>
-
-              <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('observacionClases.php','_self')" value="Ingresar/Ver Pautas" />
-              </div>
-              <br />
-
-            </div>
-            
-            
-            <div id="cajaCentralDown">
-            &nbsp; 
-            </div>
-            
-        </div> <!--cajaCentralFondo-->
         <br />
     </div> <!--columnaCentro-->
 

@@ -6,19 +6,14 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
 function cambiaCurso(idCurso){
 	var tipoCurso = $("#cambiaCurso option:selected").attr("meta-tipo");
 	var tipoPerfil= "<?php echo $idPerfil; ?>";
-//	alert(tipoCurso);
+//REDIRECCIONES
+//RESTO      => HOME
+//   => CURSO
+//DIRECTIVO  => BITACORA
 	if(tipoPerfil == 21){
-		if(tipoCurso != "directivos"){
-			window.location.href="curso.php?idCurso="+idCurso;
-		}else{
-			window.location.href="informeBitacorasCurso.php?idCurso="+idCurso;
-		}
+		window.location.href="informeBitacorasCurso.php?idCurso="+idCurso;
 	}else{
-		if(tipoCurso != "directivos"){
-			window.location.href="curso.php?idCurso="+idCurso;
-		}else{
-			window.location.href="mural.php?idCurso="+idCurso;
-		}
+		window.location.href="curso.php?idCurso="+idCurso;
 	}
 		
 }
@@ -28,7 +23,7 @@ function cambiaCurso(idCurso){
 <?php 
 	//echo "<h1>-".$_SESSION["sesionIdUsuario"]."-</h1>";
 	$cursosUsuario = getCursosUsuario($_SESSION["sesionIdUsuario"]);
-	//print_r($cursosUsuario);
+	
 	//if ( count($cursosUsuario)<=1 ||(count($cursosUsuario)==1 && $idCurso == 28)){}else{
 ?>
 <div class="titulo_div">Selecci&oacute;n de Secci&oacute;n</div>

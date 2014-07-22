@@ -76,7 +76,7 @@ function registraMuestra(link,idRecurso){
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	
+	$navegacion = "Home*curso.php?idCurso=$idCurso,Resultados Actividades*actividadescoordinacion.php,Actividades Profesor*#";
 	require("_navegacion.php");
 
 ?>

@@ -65,7 +65,7 @@ if ( empty($rutProfesores) ) {
                       <select class="input-xlarge async" name="profesores" id="profesores" data-placeholder="Seleccione Rut">
                         <?php foreach ($rutProfesores as $key => $data) {?>
                           <option value="<?php echo $data["rutProfesor"]?>" ><?php echo utf8_decode( $data["nombreProfesor"]) ?></option>
-                        <?php}?>
+                        <?php }?>
                       </select>
                     </div>
                   </div>

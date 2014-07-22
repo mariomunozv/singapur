@@ -8,7 +8,7 @@ require ("hd.php");
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	$navegacion = "Home*mural.php?idCurso=$idCurso,Observación de Clases*observacionClases.php,Instrumentos para la Observación de Clases*#";
+	$navegacion = "Home*mural.php?idCurso=$idCurso,Informes*informes.php,Observación de Clases*observacionClases.php,Instrumentos para la Observación de Clases*#";
 	require("_navegacion.php");
 ?>
 	

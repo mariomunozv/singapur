@@ -45,6 +45,7 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 				WHERE cu.rutProfesor = '$rutProfesor' 
 				AND cu.anoCursoColegio = $anoCursoColegio";
 	}
+	$sql = $sql." order by nombreNivel, letraCursoColegio";
 
 	$res = mysql_query($sql);
 	$i = 0;

@@ -39,7 +39,7 @@ function getDatosUsuarioPorId($idUsuario){
 		
 		$usuario=array();
 		
-		if ($row["tipoUsuario"] == "Profesor" || $row["tipoUsuario"] == "Encuesta" || $row["tipoUsuario"] == "UTP" || $row["tipoUsuario"] == "Directivo" ){
+		if ($row["tipoUsuario"] == "Profesor" || $row["tipoUsuario"] == "Encuesta" || $row["tipoUsuario"] == "UTP" || $row["tipoUsuario"] == "Directivo" || $row["tipoUsuario"] == "Visitante"  ){
 			$datos = getDatosProfesor($idUsuario);
 			$datos["nombre"] = $datos["nombreProfesor"];
 			$datos["rbdColegio"] = $datos["rbdColegio"];

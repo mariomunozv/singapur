@@ -2,10 +2,10 @@
 
 class DB
 {
-    private $host = "localhost";
-    private $dbname = "GESTION_ASESORIAS_v34";
-    private $user = "desarrollo";
-    private $pass = "..5&desarrollo";
+    private $host = "localhost:3307";
+    private $dbname = "v35";
+    private $user = "root";
+    private $pass = "assamita1";
     protected $dbh;
 
     /**

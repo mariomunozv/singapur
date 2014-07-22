@@ -8,6 +8,7 @@ $idJornada = 1;
 $idCurso = 1; 
 $idUsuario = $_SESSION['sesionIdUsuario'];
 $idPerfil = $_REQUEST["perfil"];
+
 ?>
 
 <script> 
@@ -132,7 +133,10 @@ if (isset ($_REQUEST["idSeccionBitacora"])){
 					echo "<option value=".$profesor['idUsuario'].">".$profesor['nombreProfesor']." ".$profesor['apellidoPaternoProfesor']."</option>";
 				}
 			}else{
-				echo "<option>".$idPerfil."</option>";
+				foreach($profesores as $profesor){
+					echo "<option value=".$profesor['idUsuario'].">".$profesor['nombreProfesor']." ".$profesor['apellidoPaternoProfesor']."</option>";
+				}
+				//echo "<option>".$idPerfil."</option>";
 			}
 			?>
             </select>

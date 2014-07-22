@@ -18,7 +18,7 @@ require("../inc/_perfil.php");
 require("_head.php"); 
 $menu = "ini"; 
 require("_menu.php");  
-$navegacion = "Inicio*inicio.php";
+$navegacion = "Usuarios*#";
 require("_navegacion.php");
  
 
