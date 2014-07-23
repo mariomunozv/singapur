@@ -15,3 +15,10 @@ function getNiveles(){
 	} 
 	return($niveles);
 }
+function getNombreNivel($idNivel){
+	$sql = "SELECT nombreNivel
+			FROM nivel
+			WHERE idNivel = ".$idNivel;
+	$row = mysql_fetch_array(mysql_query($sql));
+	return $row["nombreNivel"];
+}

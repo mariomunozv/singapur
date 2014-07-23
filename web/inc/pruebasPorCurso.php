@@ -1,5 +1,5 @@
 <?php 
-	$anoActual = 2014;
+	$anoActual = date('Y');
 	$pruebasPorCurso = array(
 							'1' => array(34,39,55,65),
 							'2' => array(35,40,56,66),

@@ -65,6 +65,7 @@ require "_navegacion.php";
 
        </div>
 
+       <?php if( $_SESSION["sesionPerfilUsuario"]!=9 && $_SESSION["sesionPerfilUsuario"]!=21 && $_SESSION["sesionPerfilUsuario"]!=5 && $_SESSION["sesionPerfilUsuario"]!=23 ){ ?>
        <div class='cajaCentralFondo'>
         <div id="cajaCentralTop">
           <p class="titulo_jornada">Ingreso Registros de Evaluaci&oacute;n</p>
@@ -86,7 +87,8 @@ require "_navegacion.php";
          &nbsp;
        </div>
 
-      </div>
+      </div><!--cajaCentralFondo-->
+      <?php } ?>
 
       <div class='cajaCentralFondo'>
         <div id="cajaCentralTop">

@@ -13,9 +13,10 @@ require ("hd.php");
 
 function getListaActividades($idProfesor){
 
-    $sql = "SELECT L.idLista,A.tituloActividad FROM v35.pautaItem as PI
-            inner join v35.lista as L on PI.idLista = PI.idLista
-            inner join v35.actividad as A on A.idActividad = L.idActividad
+    $sql = "SELECT L.idLista,A.tituloActividad 
+            FROM pautaItem as PI
+            inner join lista as L on PI.idLista = PI.idLista
+            inner join actividad as A on A.idActividad = L.idActividad
             WHERE idUsuario = ".$idProfesor." and L.idActividad IS NOT NULL 
             group by L.idLista,A.tituloActividad";
 

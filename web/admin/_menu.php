@@ -53,6 +53,7 @@ $datos_usuario["per_admin"] = 1;
         <li><a href="itemSerie.php" id="boton_cuenta">Items Actividades</a></li>
         <li><a href="aspectosDidacticos.php" id="boton_cuenta">Aspectos Didacticos</a></li>
         <li><a href="actividadNew.php" id="boton_actividadNew">Actividades New</a></li>
+        <li><a href="evaluaciones.php" id="boton_evaluaciones">Evaluaciones</a></li>
 	</ul>
 </div>
 

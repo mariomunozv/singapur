@@ -1,11 +1,10 @@
 <?php 
 
-function getNombrePerfil ($idPerfil){
+function getNombrePerfil($idPerfil){
 	$sql = " SELECT * FROM `perfil` WHERE idPerfil = ".$idPerfil;
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	return $row["nombrePerfil"];
-	
 }
 
 

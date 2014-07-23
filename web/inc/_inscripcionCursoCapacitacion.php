@@ -27,37 +27,50 @@ function inscribirUsuarioCursoCapacitacion( $idPerfil, $idProyectoKlein, $idUsua
 }
 
 function getAlumnosCurso($idCursoCapacitacion){
-$sql = "SELECT * FROM `inscripcionCursoCapacitacion` a join usuario b on a.idUsuario = b.idUsuario left join profesor c on b.rutProfesor = c.rutProfesor  WHERE a.idCursoCapacitacion= ".$idCursoCapacitacion;
-$sql .= " AND a.idUsuario <> 1";
-//echo $sql;
+$sql = "SELECT b.rutProfesor, b.idUsuario, c.rbdColegio ,b.rutEmpleadoKlein, a.idPerfil, b.tipoUsuario
+        FROM inscripcionCursoCapacitacion a join usuario b on a.idUsuario = b.idUsuario 
+             left join profesor c on b.rutProfesor = c.rutProfesor
+             left join empleadoklein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
+        WHERE b.estadoUsuario = 1 AND a.idCursoCapacitacion= ".$idCursoCapacitacion;
+
+//seccion de consulta para que en el listado de participantes se considere a administrativos y coordinadores generales
+$sql2 ="SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idPerfil, b.tipoUsuario 
+		FROM usuario b join empleadoklein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
+			 left join profesor c on b.rutProfesor = c.rutProfesor 
+    		 left join detalleUsuarioProyectoPerfil e on b.idUsuario = e.idUsuario 
+		WHERE b.tipoUsuario = 'Coordinador General' AND b.estadoUsuario = 1 ";
+			/*OR (b.tipoUsuario = 'Empleado Klein' 
+				AND EXISTS (SELECT tipoCursoCapacitacion 
+							FROM cursoCapacitacion 
+							WHERE idCursoCapacitacion = 53 AND tipoCursoCapacitacion = 'curso'))";*/
+//se agregan los directivos correspondientes.
+$sql3 = "SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idPerfil, b.tipoUsuario 
+		 FROM usuario b join profesor c on b.rutProfesor = c.rutProfesor 
+   	 		  left join detalleUsuarioProyectoPerfil e on b.idUsuario = e.idUsuario 
+		 WHERE b.idUsuario in
+    						(SELECT a.idUsuario
+    						 FROM usuarioColegio a join cursoCapacitacionColegio b on a.rbdColegio = b.rbdColegio
+    						 WHERE b.idCursoCapacitacion = ".$idCursoCapacitacion.")";
+$sql = "(".$sql.") UNION (".$sql2.") UNION (".$sql3.")";
 $res = mysql_query($sql);
 $i=0;
 	while($row = mysql_fetch_array($res)){
 			
-			if ($row["idPerfil"] == 1){
+			if ($row["rutProfesor"]!=""){
 				$datosProfe = getNombreFotoUsuarioProfesor($row["idUsuario"]);
-				$nombreCompleto = getApellidosNombre($row["idUsuario"]);
-				$apellidoPaterno = $datosProfe["apellidoPaterno"];
-				$rbdColegio = $row["rbdColegio"];
-				$rut = $row["rutProfesor"];
-				
-				
-			}
-			if ($row["idPerfil"] >= 3){ //3: UTP; 4: UTP y Profesor
-				$datosProfe = getNombreFotoUsuarioProfesor($row["idUsuario"]);
-				$nombreCompleto = getApellidosNombre($row["idUsuario"]);
+				$nombreCompleto = $datosProfe["nombreCompleto"];
 				$apellidoPaterno = $datosProfe["apellidoPaterno"];
 				$rbdColegio = $row["rbdColegio"];
 				$rut = $row["rutProfesor"];
 			}
-			
-			if ($row["idPerfil"] >= 5 ){ // 5: Tutor , 7: Coordinador de nivel 	, 9: Coordinador general , 20: Administrador Sitio 
+			if ($row["rutEmpleadoKlein"]!=""){
 				$datosEmpleadoKlein = getNombreFotoUsuarioEmpleadoKlein($row["idUsuario"]);
-				$nombreCompleto = getApellidosNombre($row["idUsuario"]);
+				$nombreCompleto = $datosEmpleadoKlein["nombreCompleto"];
 				$apellidoPaterno = $datosEmpleadoKlein["apellidoPaterno"];
 				$rbdColegio ="";
 				$rut = "";
 			}
+			
 			
 			$alumnosCurso[$i] = array(
 			"idUsuario"=> $row["idUsuario"],
@@ -66,15 +79,13 @@ $i=0;
 			"rbdColegio"=> $rbdColegio,
 			"nombreCompleto" => $nombreCompleto	,
 			"rutProfesor" => $rut	,
-			);
-			
-			
+			);			
 			
 			$i++;	
 	}
 	if ($i == 0){
 		$alumnosCurso[$i] = array();	
-	} 
+	}
 	return($alumnosCurso);
 }
 
@@ -183,7 +194,7 @@ function getCursoUs($idUsuario){
 	}else{
 		if($tipoUsuario=="Empleado Klein" || $tipoUsuario=="Coordinador General"){
 			$sql = "SELECT idCursoCapacitacion 
-					FROM v35.cursoCapacitacion
+					FROM cursoCapacitacion
 					where estadoCursoCapacitacion = 1
 					ORDER BY(nombreCortoCursoCapacitacion)";
 		}else{
@@ -208,33 +219,39 @@ print_r( "<script language='javascript'>alert('".$asd."'');</script>");
 }
 
 function getCursosUsuario($idUsuario){
-	$sql = "SELECT * FROM v35.usuario WHERE idUsuario = ".$idUsuario;
+	$sql = "SELECT * FROM usuario WHERE idUsuario = ".$idUsuario;
 	//echo $sql;
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	$tipoUsuario = $row["tipoUsuario"];
-	if($tipoUsuario =="Coordinador General" || $tipoUsuario=="Empleado Klein"){
+	if($tipoUsuario =="Coordinador General"){
 		$sql = "SELECT * 
-		FROM v35.cursoCapacitacion
-		where estadoCursoCapacitacion = 1
-		ORDER BY(nombreCortoCursoCapacitacion)";
+				FROM cursoCapacitacion
+				where estadoCursoCapacitacion = 1
+				ORDER BY(nombreCortoCursoCapacitacion)";
+	}
+	elseif ($tipoUsuario=="Empleado Klein") {
+		$sql = "SELECT * 
+				FROM cursoCapacitacion
+				where estadoCursoCapacitacion = 1 AND tipoCursoCapacitacion = 'curso'
+				ORDER BY(nombreCortoCursoCapacitacion)";
 	}
 	else{
 		if($tipoUsuario == "Directivo"){
 			//$sql = todos los cursos directivos registrados para los colegios asociados al usuario.
 			$sql = "SELECT * 
-				FROM v35.cursoCapacitacion 
+				FROM cursoCapacitacion 
 				where estadoCursoCapacitacion = 1
 				AND tipoCursoCapacitacion = 'directivos'
 				AND idCursoCapacitacion in (SELECT idCursoCapacitacion 
-					                        FROM v35.cursocapacitacioncolegio a JOIN v35.usuariocolegio b
+					                        FROM cursocapacitacioncolegio a JOIN usuariocolegio b
 					                        ON a.rbdColegio = b.rbdColegio
 					                        WHERE b.idUsuario = ".$idUsuario."  )
 				ORDER BY(nombreCortoCursoCapacitacion)";
 
 		}else{
 			$sql = "SELECT * 
-				FROM v35.inscripcionCursoCapacitacion a	join v35.cursoCapacitacion b 
+				FROM inscripcionCursoCapacitacion a	join cursoCapacitacion b 
 				on a.idCursoCapacitacion = b.idCursoCapacitacion 
 				where a.idUsuario = ".$idUsuario." 
 				AND b.estadoCursoCapacitacion = 1

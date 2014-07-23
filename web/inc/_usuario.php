@@ -227,7 +227,8 @@ function getNombreFotoUsuarioEmpleadoKlein($idUsuario){
 		"imagenUsuario"=> $row["imagenUsuario"],
 		"nombre" => $row["nombreEmpleadoKlein"],
 		"apellidoPaterno" => $row["apellidoPaternoEmpleadoKlein"],
-		"apellidoMaterno" => $row["apellidoMaternoEmpleadoKlein"]
+		"apellidoMaterno" => $row["apellidoMaternoEmpleadoKlein"],
+		"nombreCompleto" => $row["apellidoPaternoEmpleadoKlein"]." ".$row["apellidoMaternoEmpleadoKlein"]." ".$row["nombreEmpleadoKlein"]
 		);
 
 	return($nombreFotoUsuario);
@@ -397,15 +398,17 @@ function getNombreFotoUsuario($idUsuario){
 
 
 function getNombreFotoUsuarioProfesor($idUsuario){
-	$sql = "SELECT * FROM usuario a left join profesor b on a.rutProfesor = b.rutProfesor WHERE idUsuario = "."'$idUsuario'";
+	$sql = "SELECT * FROM usuario a left join profesor b on a.rutProfesor = b.rutProfesor WHERE idUsuario = '$idUsuario'";
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	$nombreFotoUsuario=array(
 		"imagenUsuario"=> $row["imagenUsuario"],
 		"nombre" => $row["nombreProfesor"],
 		"apellidoPaterno" => $row["apellidoPaternoProfesor"],
-		"apellidoMaterno" => $row["apellidoMaternoProfesor"]
+		"apellidoMaterno" => $row["apellidoMaternoProfesor"],
+		"nombreCompleto" => $row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"]." ".$row["nombreProfesor"]
 		);
+	//echo $row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"];
 	return($nombreFotoUsuario);
 }
 

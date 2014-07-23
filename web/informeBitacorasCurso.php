@@ -21,7 +21,7 @@ $_SESSION["sesionIdActividad"] = $idActividad;
 if ($_SESSION["sesionPerfilUsuario"] < 5 ){ 
 	
 	alerta("No puedes acceder a esta página.");
-	dirigirse_a("../home.php");
+	dirigirse_a("home.php");
 }
 ?>
 <script type="text/javascript">

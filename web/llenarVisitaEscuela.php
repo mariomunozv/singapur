@@ -5,7 +5,7 @@ require "hd.php";
 //require "inc/_colegio.php";
 
 function getColegiosNuevo($idUsuario){
-  $sql = "SELECT * FROM v35.colegio a join v35.usuariocolegio b WHERE estadoColegio = 1 AND a.rbdColegio = b.rbdColegio AND b.idUsuario = ".$idUsuario." ORDER BY nombreColegio";
+  $sql = "SELECT * FROM colegio a join usuariocolegio b WHERE estadoColegio = 1 AND a.rbdColegio = b.rbdColegio AND b.idUsuario = ".$idUsuario." ORDER BY nombreColegio";
   $res = mysql_query($sql);
   $i = 0;
   while ($row = mysql_fetch_array($res)){

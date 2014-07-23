@@ -24,9 +24,9 @@ $datosCurso2 = getDatosCurso($_SESSION["sesionIdCurso"]);
 	<?php 
 	//print_r($_SESSION);
 
-    $alumnosCurso = getAlumnosCurso($idCurso);
+    $alumnosCurso = getAlumnosCurso($_GET["idCurso"]);
 	
-//	print_r($alumnosCurso);
+	//print_r($alumnosCurso);
     
     ordenar($alumnosCurso,array("idPerfil"=>"ASC","apellidoPaterno"=>"ASC"));
     
@@ -39,10 +39,10 @@ $datosCurso2 = getDatosCurso($_SESSION["sesionIdCurso"]);
     
     
     foreach ($alumnosCurso as $i => $value) { 
-	if($value["idPerfil"]==1 || $value["idPerfil"]==3 || $value["idPerfil"]==4){
-			$datosProfesor = getDatosProfesor2($value["idUsuario"]);
-			$value["nombreCompleto"] = $datosProfesor["nombreParaMostrar"];
-		}
+		//if($value["idPerfil"]==1 || $value["idPerfil"]==3 || $value["idPerfil"]==4){
+			//$datosProfesor = getDatosProfesor2($value["idUsuario"]);
+			//$value["nombreCompleto"] = $datosProfesor["nombreParaMostrar"];
+		//}
 	
 
 		$num = $num+1;
@@ -69,7 +69,7 @@ $datosCurso2 = getDatosCurso($_SESSION["sesionIdCurso"]);
 			?>
 			<td valign="center">
 				<div align="left">
-					<strong><?php echo $value["nombreCompleto"];?></strong>
+					<strong><?php echo $value["nombreCompleto"]; ?></strong>
 				</div>
 			</td>
 			

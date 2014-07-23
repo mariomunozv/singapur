@@ -1,6 +1,6 @@
 <?php
 
-$anoActual = '2013';
+$anoActual = date ("Y");
 
 function getNombreSeccionBitacora($idSeccion){
 	$sql ="SELECT * FROM seccionBitacora where idSeccionBitacora = ".$idSeccion;

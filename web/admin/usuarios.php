@@ -133,7 +133,7 @@ class_activo('boton_profesores','activo');
               
 <?php     }}
  }else{ 
-   echo "<tr><td colspan='12'>No existen profesores</td></tr>"; 
+   echo "<tr><td colspan='12'>No existen Usuarios registrados</td></tr>"; 
   
   }
   

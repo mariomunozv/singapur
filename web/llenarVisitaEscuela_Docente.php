@@ -3,7 +3,7 @@ require("admin/inc/config.php");
 require("inc/_funciones.php");
 //Funciones
 function getDocentes($rbdColegio){
-  $sql = "SELECT * FROM v35.profesor WHERE rbdColegio = ".$rbdColegio." AND estadoProfesor = 1 ORDER BY apellidoPaternoProfesor";
+  $sql = "SELECT * FROM profesor WHERE rbdColegio = ".$rbdColegio." AND estadoProfesor = 1 ORDER BY apellidoPaternoProfesor";
   $res = mysql_query($sql);
   $i = 0;
   while ($row = mysql_fetch_array($res)){
@@ -16,7 +16,7 @@ function getDocentes($rbdColegio){
   return($profesores);
 }
 function getCursos(){
-  $sql = "SELECT * FROM v35.cursocapacitacion WHERE estadoCursoCapacitacion = 1 AND tipoCursoCapacitacion = 'curso' ORDER BY nombreCortoCursoCapacitacion";
+  $sql = "SELECT * FROM cursocapacitacion WHERE estadoCursoCapacitacion = 1 AND tipoCursoCapacitacion = 'curso' ORDER BY nombreCortoCursoCapacitacion";
   $res = mysql_query($sql);
   $i = 0;
   while ($row = mysql_fetch_array($res)){
