@@ -20,6 +20,7 @@ $idProyecto = 1;
 foreach ($sel as $usuario){
 	desinscribirUsuarioCursoCapacitacion( $usuario, $idCurso);
 	//echo $usuario." ".$idCurso." ".$idPerfil."<br>";
+	//desactivaUsuario($usuario);
 	}
 
 ?>

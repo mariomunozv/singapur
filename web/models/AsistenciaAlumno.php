@@ -1,4 +1,4 @@
-<?php
+<?
 
 require '../db/pdo.php';
 
@@ -24,7 +24,7 @@ class AsistenciaAlumno {
         AND m.anoCursoColegio = ".$curso->ano."
         AND m.letraCursoColegio = "."'$curso->letra'"."
         ORDER BY a.apellidoPaternoAlumno ASC";
-
+  
       $sth = $db->query($query);
 
       return $sth->fetchAll(PDO::FETCH_CLASS, "AsistenciaAlumno");
@@ -47,6 +47,7 @@ class AsistenciaAlumno {
         AND m.anoCursoColegio = ".$curso->ano."
         AND m.letraCursoColegio = "."'$curso->letra'"."
         AND pi.idLista = ". $idLista ."
+    AND pi.fechaRespuestaPautaItem > '".$curso->ano."'
         ORDER BY a.apellidoPaternoAlumno ASC";
 
       $sth = $db->query($query);
@@ -67,7 +68,7 @@ class AsistenciaAlumno {
 
         echo "<tr>";
         echo "<td style='text-align:center'>" . $index . "</td>";
-        echo "<td style='text-align:center'>" . $this->nombre . "</td>";
+        echo "<td style='text-align:center'>" . utf8_decode($this->nombre) . "</td>";
         echo "<td><input class='presente' type='radio' name=" . $this->id . " value='presente' " . $presente . " /></td>";
         echo "<td><input class='ausente' type='radio' name=" . $this->id ." value='ausente' " . $ausente . "/></td>";
         echo "</tr>";

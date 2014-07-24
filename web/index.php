@@ -29,11 +29,11 @@ $(function() {
         <p class="titulo_div" style="width: 180px;">Noticias</p>
         <p class="info_div" style="width: 180px;" align="justify">
         	
-            <a href="http://asiapacifico.bcn.cl/noticias/cultura-y-sociedad/dinko-mitrovich-centro-klein-balance-metodo-singapur-en-chile" target="_blank">Asesor�a Singapur en la Prensa:  "El m�todo Singapur se est� haciendo muy popular en Chile"</a>
+            <a href="http://asiapacifico.bcn.cl/noticias/cultura-y-sociedad/dinko-mitrovich-centro-klein-balance-metodo-singapur-en-chile" target="_blank">Asesoría Singapur en la Prensa:  "El método Singapur se está haciendo muy popular en Chile"</a>
             <br /><br />
-            Desde el a�o 2009 el Centro F�lix Klein de la Universidad de Santiago de Chile adapta los textos escolares 
-            "Pensar sin L�mites: Matem�tica M�todo de Singapur" de la editorial Marshall Cavendish para Chile y Latinoam�rica, 
-            y actualmente se encuentran realizando el sexto libro, que completa la serie y que saldr� al sistema educacional 
+            Desde el año 2009 el Centro Félix Klein de la Universidad de Santiago de Chile adapta los textos escolares 
+            "Pensar sin Límites: Matemática Método de Singapur" de la editorial Marshall Cavendish para Chile y Latinoamérica, 
+            y actualmente se encuentran realizando el sexto libro, que completa la serie y que saldrá al sistema educacional 
             chileno el 2014
         </p>
     
@@ -64,9 +64,17 @@ $(function() {
   </div>
     
      <div id="columnaCentro" style="padding: 14px; width: 540px;"><p align="justify">     
-       <p align="justify">       
- <?php /*?>      <p align="justify"><br />
-		Bienvenidas y bienvenidos a la
+       <p align="justify">     
+       <p align="justify"><br />
+       Bienvenidas y bienvenidos a la Plataforma Virtual de los cursos de capacitación y asesoría en la propuesta didáctica para la  Enseñanza de las Matemáticas de Singapur. <br />
+        <br />
+        El Centro Felix Klein, de Investigación, Experimentación y transferencia en Didáctica de las Matemáticas y las Ciencias perteneciente a la Facultad de Ciencia de la Universidad de Santiago de Chile, ha sido el encargado de adaptar los textos My Pals Are Here de Singapur al sistema educativo nacional, con lo que hemos podido concretar la versión en español titulada "Pensar sin Límites: Matemática Método Singapur". <br />
+        <br />
+        Este año 2014 se llevarán a cabo cursos de formación docente para los niveles de 1º a 5º básico y para los directivos técnicos de los establecimientos educacionales que han optado por este programa. Estos cursos contemplan una actualización de conocimientos matemáticos y didácticos coherentes con la propuesta plasmada en los textos de la serie Pensar sin Límites, centrándose en la gestión de aula, a través de la preparación, análisis y reflexión de procesos de enseñanza aprendizaje matemáticos. 
+
+<!--        Bienvenidas y bienvenidos a la
+  
+
          Plataforma Virtual de los cursos de capacitaci&oacute;n y asesor&iacute;a
          en la propuesta did&aacute;ctica para la&nbsp; ense&ntilde;anza de las
          matem&aacute;ticas de Singapur. <br />
@@ -87,10 +95,10 @@ $(function() {
          la propuesta plasmada en los textos de la serie &ldquo;Pensar sin L&iacute;mites&rdquo;,
          centr&aacute;ndose en la gesti&oacute;n de aula, a trav&eacute;s de
          la preparaci&oacute;n, an&aacute;lisis y reflexi&oacute;n de procesos
-         de ense&ntilde;anza aprendizaje matem&aacute;ticos.
-         <?php */?>
+         de ense&ntilde;anza aprendizaje matem&aacute;ticos.-->
+
         
-     	<img src="img/avisoReceso.jpg" width="555">
+     	<!--  <img src="img/avisoReceso.jpg" width="555">-->
      
   </div> 
   
@@ -115,8 +123,8 @@ $(function() {
                     <tr> 
                     <th>RUT</th> 
                     <th>Razon Social</th>  
-                    <th>Direcci�n</th> 
-                    <th>Regi�n</th>
+                    <th>Dirección</th> 
+                    <th>Región</th>
         
                     <th>Comuna</th>
                     <th>Correo</th>  
@@ -128,7 +136,7 @@ $(function() {
                     <td >2-7</td> 
                     <td >ESPINACA CREATIVO</td>  
                     <td >WKWMWKLKLW</td> 
-                    <td >Regi�n Metropolitana</td> 
+                    <td >Región Metropolitana</td> 
                     <td >MARIA PINTO</td> 
                     <td >ESPINACA@ESPINACA.CL</td>  		
                     <td width="50"><a href="prv_editar.php?id=4"><img src="css/btn/editar.gif" border="0"></a></td>
@@ -139,7 +147,7 @@ $(function() {
                     <td >12345676</td> 
                     <td >dimacofi</td>  
                     <td >agustinas 786</td> 
-                    <td >Regi�n Metropolitana</td> 
+                    <td >Región Metropolitana</td> 
                     <td >SANTIAGO CENTRO</td> 
                     <td >dimacofi@yahoo.com</td>  		
                     <td width="50"><a href="prv_editar.php?id=3"><img src="css/btn/editar.gif" border="0"></a></td>
@@ -150,7 +158,7 @@ $(function() {
                     <td >12345678</td> 
                     <td >todopoleras</td>  
                     <td >lakjdsbheug87</td> 
-                    <td >Regi�n Metropolitana</td> 
+                    <td >Región Metropolitana</td> 
                     <td >PROVIDENCIA</td> 
                     <td >info@todopoleras.cl</td>  		
                     <td width="50"><a href="prv_editar.php?id=2"><img src="css/btn/editar.gif" border="0"></a></td>

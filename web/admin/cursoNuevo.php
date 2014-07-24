@@ -5,6 +5,7 @@ require("inc/funcionesAdmin.php");
 
 
 
+
 $rbdColegio = $_REQUEST["rbdColegio"];
 $profesores = getProfesoresColegio($rbdColegio);
 $niveles = getNiveles();
@@ -71,7 +72,7 @@ function save_curso(){
             
 			<tr>
 				<th align="right">Año(*)</th> 
-				<td><input type="text" name="anoCursoColegio" size="70" value="" class="campos" id="anoCursoColegio"></td>
+				<td><input type="text" name="anoCursoColegio" size="70" value="<?php echo date('Y') ?>" class="campos" id="anoCursoColegio"></td>
 			</tr> 
            
 		<tr>

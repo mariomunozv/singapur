@@ -1,6 +1,7 @@
 <?php 
 ini_set("display_errors","ON");
 require("inc/incluidos.php");
+require("inc/_variablesGlobales.php");
 
 include_once("inc/_actividad.php");
 include_once("inc/_pauta.php");
@@ -55,9 +56,10 @@ function isActividad($idActividad){
 
 
 function getIntentos($idActividad,$idUsuario){
+	global $anoActual;
 	//$sql ="SELECT * FROM pautaItem as PI inner join lista as L on PI.idLista = L.idLista WHERE idActividad = ".$idActividad." and idUsuario = ".$idUsuario." ORDER BY porcentajeLogroPautaItem DESC limit 3";
-	$sql ="SELECT * FROM pautaItem as PI inner join lista as L on PI.idLista = L.idLista WHERE idActividad = ".$idActividad." and idUsuario = ".$idUsuario." ORDER BY fechaRespuestaPautaItem ASC limit 3";
-
+	$sql ="SELECT * FROM pautaItem as PI inner join lista as L on PI.idLista = L.idLista WHERE idActividad = ".$idActividad." and idUsuario = ".$idUsuario." AND YEAR(PI.fechaRespuestaPautaItem) > ".$anoActual." ORDER BY fechaRespuestaPautaItem ASC limit 3";
+	//echo $sql;
 	$res = mysql_query($sql);
 	$i=0;
 	while($row = mysql_fetch_array($res)){

@@ -441,4 +441,16 @@ function acualizaUltimoAcceso($idUsuario){
 	$sql = "UPDATE `usuario` SET `ultimoAccesoUsuario` = NOW( ) WHERE `idUsuario` = ".$idUsuario;
 	mysql_query($sql);
 }
+
+function activaUsuario($idUsuario){
+	$sql = "UPDATE usuario SET estadoUsuario = '1', visibleUsuario = '1' WHERE idUsuario = ".$idUsuario;
+	mysql_query($sql);
+}
+
+function desactivaUsuario($idUsuario){
+	$sql = "UPDATE usuario SET estadoUsuario = '0', visibleUsuario = '0' WHERE idUsuario = ".$idUsuario;
+	mysql_query($sql);
+}
+
+
 ?>

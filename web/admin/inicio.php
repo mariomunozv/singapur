@@ -1,25 +1,15 @@
 <?php 
 //session_start();
-require("inc/config.php");
-
-
-
+require_once("inc/config.php");
+//require_once("inc/sesionAdmin.php");
 require("_head.php");
 $menu = "ini";
 require("_menu.php"); 
 $navegacion = "Inicio*inicio.php";
-require("_navegacion.php");
- 
+//require("_navegacion.php");
 
+//include "../inc/_funciones.php";
 
-/*if($_REQUEST["modo"] == "aceptar"){
-	$sql = "update evaluacion set eva_decision = 'A', eva_recepcionado = '".date("Y-m-d")."' where eva_id = '".$_REQUEST["eva"]."' ";
-	$res = mysql_query($sql);
-}
-if($_REQUEST["modo"] == "rechazar"){
-	$sql = "update evaluacion set eva_decision = 'R', eva_recepcionado = '".date("Y-m-d")."' where eva_id = '".$_REQUEST["eva"]."' ";
-	$res = mysql_query($sql);
-}*/
 ?>
 <script language="javascript">
 function mostrar_escuelas(){
@@ -52,4 +42,4 @@ class_activo('boton_inicio','activo');
 	mostrar_escuelas();
 </script>  
    
-<?php require("_pie.php"); ?>
+<?php //require("_pie.php"); ?>

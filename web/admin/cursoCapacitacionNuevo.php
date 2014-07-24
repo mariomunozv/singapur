@@ -43,7 +43,7 @@ function save_cursoCapacitacion(){
 				<th align="right">Proyecto(*)</th> 
 				<td>
                 	<select class="campos" id="idProyectoKlein" name="idProyectoKlein">
-                    	<option value="1">MIE - Matematic</option>
+                    	<option value="1">Asesoria Singapur</option>
 					</select>
                 </td>
 			</tr>   
@@ -54,7 +54,13 @@ function save_cursoCapacitacion(){
             
 			<tr>
 				<th align="right">Nombre Largo</th> 
-				<td><input type="text" name="nombreCursoCapacitacion" size="70" value="" class="campos" id="nombreCursoCapacitacion"></td>
+				<td><textarea  cols="50" rows="5" name="nombreCursoCapacitacion" class="campos" id="nombreCursoCapacitacion"></textarea></td>
+			</tr> 
+            
+            <tr>
+				<th align="right">Texto Bienvenida</th> 
+				<td><textarea name="descripcionCursoCapacitacion" id="descripcionCursoCapacitacion" cols="50" rows="10" class="campos"></textarea>
+                </td>
 			</tr> 
              
 			<tr>

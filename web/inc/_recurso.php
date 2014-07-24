@@ -19,6 +19,31 @@ function getRecurso($idRecurso){
 }
 
 
+function setRecurso($idTipoRecurso, $nombreRecurso, $urlRecurso, $decripcionRecurso){
+	$sql = "INSERT INTO recurso (
+			idTipoRecurso,	
+			nombreRecurso,
+			urlRecurso,
+			decripcionRecurso,
+			estadoRecurso
+			) VALUES (
+			$idTipoRecurso, 
+			'$nombreRecurso', 
+			'$urlRecurso', 
+			'$decripcionRecurso',
+			1
+			)";
+	$res = mysql_query($sql);
+	if (!$res) {
+		info('Error en la consulta SQL: <br><b>'.$sql.'</b><br>'. mysql_error());
+	}else{
+		info('Recurso insertado satisfactoriamente.');
+		$idRecurso = mysql_insert_id();
+		return ($idRecurso);
+	}
+	
+}
+
 function getLinkRecurso($idRecurso){
 	$rec = getRecurso($idRecurso);
 	

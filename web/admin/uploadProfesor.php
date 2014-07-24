@@ -118,6 +118,7 @@ function upload(){
 } 
 </script>
 
+<a href="profesores_nuevos_base.xls">Descargar archivo base</a>
 
 <form name="form" action="cargaMasivaProfesores.php" method="POST" enctype="multipart/form-data">
 <input type="hidden"  name="modo" id="modo" value="carga"  class="campos" /> 

@@ -88,7 +88,6 @@ Conectarse_seg();
                                if(claveCorrectaUsuario($usuario,md5($password))){ 	   
                                    
 								     $datosUsuario = getDatosUsuario($usuario);
-                     echo $datosUsuario;
                                      $_SESSION["sesionTipoUsuario"] = $datosUsuario["tipoUsuario"];
                                      $_SESSION["sesionPerfilUsuario"] = $datosUsuario["idPerfilUsuario"];				   
                                      $_SESSION["sesionIdUsuario"] = $datosUsuario["idUsuario"];

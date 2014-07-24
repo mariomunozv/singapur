@@ -39,11 +39,12 @@ $(function() {
 			0: { sorter: false }
 			 // Esto es para inabilitar el filtro en una columna
 		},
+		sortList: [[5,0], [3,0], [2,0]],
 		widthFixed: true,
 		widgets: ['zebra']}).tablesorterPager({
 			container: $("#pager"),
 			positionFixed: false,
-			size:200//Numero de registros tb
+			size:1000//Numero de registros tb
 			});  
 }); 
 
@@ -115,6 +116,6 @@ $(function() {
                         <img src="css/tabla/next.png" class="next"/>
             
                         <img src="css/tabla/last.png" class="last"/>
-                        <input type="hidden" class="pagesize" value="200"><?php /* Registros por paginas */ ?> 
+                        <input type="hidden" class="pagesize" value="1000"><?php /* Registros por paginas */ ?> 
                     </form>
                 </div>

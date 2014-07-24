@@ -1,5 +1,6 @@
 <?php
 	ini_set('display_errors','1');
+
 	header('Content-type: application/vnd.ms-excel');
 	header("Content-Disposition: attachment; filename=Descarga.xls");
 	header("Pragma: no-cache");
@@ -10,7 +11,7 @@
 
 
 	function getRespuestasItem($nivel){
-		$sql = "SELECT u.rutProfesor, ri.idRespuestaItem, ri.valorSeleccionadaItem, ri.idPautaItem, ri.idItem, ri.idUsuario, ri.idLista, i.tema, ri.puntajeRespuestaItem, i.puntajeItem, sbP.nombreSeccionBitacora as capitulo, sbP.idNivelCursoSeccionBitacora, sb.nombreSeccionBitacora as apartado
+		/*$sql = "SELECT u.rutProfesor, ri.idRespuestaItem, ri.valorSeleccionadaItem, ri.idPautaItem, ri.idItem, ri.idUsuario, ri.idLista, i.tema, ri.puntajeRespuestaItem, i.puntajeItem, sbP.nombreSeccionBitacora as capitulo, sbP.idNivelCursoSeccionBitacora, sb.nombreSeccionBitacora as apartado
 		FROM respuestaItem AS ri
 		JOIN usuario AS u ON u.idUsuario = ri.idUsuario
 		JOIN item AS i ON i.idItem = ri.idItem
@@ -20,6 +21,24 @@
 			u.rutProfesor != ''
 			and sbP.idNivelCursoSeccionBitacora = $nivel
 			and u.rutProfesor != 333
+			order by u.rutProfesor, ri.idPautaItem";*/
+
+		
+
+
+		$sql = "SELECT u.rutProfesor, ri.idRespuestaItem, ri.valorSeleccionadaItem, ri.idPautaItem, ri.idItem, ri.idUsuario, ri.idLista, i.tema, ri.puntajeRespuestaItem, i.puntajeItem, sbP.nombreSeccionBitacora as capitulo, sbP.idNivelCursoSeccionBitacora, sb.nombreSeccionBitacora as apartado
+		FROM respuestaItem AS ri
+		JOIN pautaItem AS pi on ri.idPautaItem = pi.idPautaItem
+		JOIN usuario AS u ON u.idUsuario = ri.idUsuario
+		JOIN item AS i ON i.idItem = ri.idItem
+		JOIN seccionBitacora as sb on i.idSeccionBitacora = sb.idSeccionBitacora
+		JOIN seccionBitacora as sbP on sb.idPadreSeccionBitacora = sbP.idSeccionBitacora
+		where
+			u.rutProfesor != ''
+			and u.estadoUsuario = 1
+			and sbP.idNivelCursoSeccionBitacora = $nivel
+			and u.rutProfesor != 333
+			and pi.fechaRespuestaPautaItem > '2014'
 			order by u.rutProfesor, ri.idPautaItem";
 
 		$res = mysql_query($sql);

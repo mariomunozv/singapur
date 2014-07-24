@@ -1,6 +1,8 @@
 <?php 
 require("inc/incluidos.php");
 
+$anoActual = date('Y');
+
 $idCurso = $_REQUEST["idCurso"];
 
 function getProfesoresCurso($idCurso){
@@ -26,12 +28,14 @@ function getProfesoresCurso($idCurso){
 }
 
 function getCountActividades($idProfesor){
+    global $anoActual;
     $sql = "select count(*) as Num from (SELECT L.idLista,A.tituloActividad FROM pautaItem as PI
             inner join lista as L on PI.idLista = L.idLista
             inner join actividad as A on A.idActividad = L.idActividad
             WHERE idUsuario = ".$idProfesor." and L.idActividad IS NOT NULL 
+            and PI.fechaRespuestaPautaItem > '$anoActual-01-01'
             group by L.idLista,A.tituloActividad) as NumActividades";
-
+    //echo $sql."<br /><br />";
     $res = mysql_query($sql);
 
     $num = 0;
@@ -69,11 +73,13 @@ $profesores = getProfesoresCurso($idCurso); ?>
                 <td><?php echo $row["rutProfesor"]; ?></td>
                 <td><?php echo $row["rbdColegio"]; ?></td>
                 <td><?php echo $row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]; ?></td>
-                <td><a href="<?php echo 'actividadesProfesor.php?id='.$idUsuario ?>" >Actividades Realizadas (<?php echo $num; ?>)</a></td>
+                 <?php if ($num > 0) { ?>
+                    <td><a href="<? echo "actividadesProfesor.php?id=".$idUsuario?>" >Actividades Realizadas (<? echo $num; ?>)</a></td>
+                <?php }else{ ?>
+                    <td></td>
+                <?php } ?>
             </tr>
-        <?php 
-        }
-        ?>
+        <?php } ?>
 
         </tbody>
     </table>

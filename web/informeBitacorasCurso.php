@@ -17,7 +17,6 @@ $datosActividad = getDatosActividad($idActividad);
 $_SESSION["sesionIdActividad"] = $idActividad;
 
 
-// Menor que APE y idUsuario de GET es distinto a idUsuario de SESSION
 if ($_SESSION["sesionPerfilUsuario"] < 5 ){ 
 	
 	alerta("No puedes acceder a esta página.");

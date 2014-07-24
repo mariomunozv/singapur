@@ -44,7 +44,7 @@ $(function() {
 		widgets: ['zebra']}).tablesorterPager({
 			container: $("#pager2"),
 			positionFixed: false,
-			size:50//Numero de registros tb
+			size:200//Numero de registros tb
 			});  
 }); 
 
@@ -59,6 +59,9 @@ $(function() {
 <th>ID</th>
 	<th>Apellido Paterno </th>
 	<th>nombreCompleto </th>
+	<th>Perfil</th>
+    <th>Implementa</th>
+    <th>Estado</th>
    
 
    
@@ -86,10 +89,13 @@ $alumnos=   getAlumnosCurso($idCurso);
  ?>
               <tr>
               <td><?php echo $i++;?></td>
-			    <td><input type="checkbox"  name="sel2[]" id="sel2<?php echo $alumno['idUsuario'];?>"  class="campos" value="<?php echo $alumno['idUsuario'];?>"></td>
+			    <td><input type="checkbox" name="sel2[]" id="sel2<?php echo $alumno['idUsuario'];?>"  class="campos" value="<?php echo $alumno['idUsuario'];?>"></td>
                 <td><?php echo $alumno["idUsuario"];?></td>
 				<td><?php echo $alumno["apellidoPaterno"];?></td>
 				<td><?php echo $alumno["nombreCompleto"];?></td>
+				<td><?php echo $alumno["nombrePerfil"];?></td>
+                <td><?php echo $alumno["implementa"];?></td>
+                <td><?php echo $alumno["estado"];?></td>
 				
                
               </tr>
@@ -115,7 +121,7 @@ $alumnos=   getAlumnosCurso($idCurso);
                         <img src="css/tabla/next.png" class="next"/>
             
                         <img src="css/tabla/last.png" class="last"/>
-                        <input type="hidden" class="pagesize" value="50"><?php /* Registros por paginas */ ?> 
+                        <input type="hidden" class="pagesize" value="200"><?php /* Registros por paginas */ ?> 
                     </form>
                 </div>
 <div id="guarda2"></div>

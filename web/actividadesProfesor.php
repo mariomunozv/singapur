@@ -1,6 +1,8 @@
 <?php 
 require("inc/incluidos.php");
 
+$anoActual = date('Y');
+
 $idPerfil =  $_SESSION["sesionPerfilUsuario"];
 /* Registro de acceso a mi curso */
 $idProfesor = $_REQUEST["id"];
@@ -12,12 +14,13 @@ $datosCurso2 = getDatosCurso($_SESSION["sesionIdCurso"]);
 require ("hd.php");
 
 function getListaActividades($idProfesor){
-
+    global $anoActual;
     $sql = "SELECT L.idLista,A.tituloActividad 
             FROM pautaItem as PI
             inner join lista as L on PI.idLista = PI.idLista
             inner join actividad as A on A.idActividad = L.idActividad
-            WHERE idUsuario = ".$idProfesor." and L.idActividad IS NOT NULL 
+            WHERE idUsuario = ".$idProfesor." and L.idActividad IS NOT NULL
+            and PI.fechaRespuestaPautaItem > '$anoActual-01-01' 
             group by L.idLista,A.tituloActividad";
 
     $res = mysql_query($sql);

@@ -26,6 +26,7 @@ function activaDesactiva(rutAlumno,modo){
    <thead>         
   <tr>
   <th>N</th>
+  <th>ID</th>
     <th>Usuario</th>
     <th>Nombre </th>
     <th>Apellido Paterno</th>
@@ -59,6 +60,7 @@ $alumnos = getAlumnosCurso($rbdColegio,$idNivel,$anoCursoColegio,$letraCursoCole
 	  ?>
               <tr onmouseover="this.className='normalActive'" onmouseout="this.className='normal'" class="normal">
               <td><?php echo $i;?></td>
+                <td><?php echo $alumno["idUsuario"];?></td>
                 <td><?php echo $alumno["usuario"];?></td>
                 <td><?php echo $alumno["nombreAlumno"];?></td>
                 <td><?php echo $alumno["apellidoPaternoAlumno"];?></td>

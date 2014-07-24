@@ -42,7 +42,7 @@ $datos_usuario["per_admin"] = 1;
 <div style="background-color:#039; height:34px; margin:0px;">
 	<ul id="button">
         <li><a href="inicio.php" id="boton_inicio">Inicio</a></li>
-        <li><a href="usuarios.php" id="boton_profesores">Usuarios</a></li>
+        <li><a href="usuarios.php" id="boton_usuarios">Usuarios</a></li>
         <li><a href="cursosCapacitacion.php" id="boton_curso">Cursos</a></li>
         <li><a href="jornada.php" id="boton_jornada">Jornadas</a></li>
         <li><a href="publicacion.php" id="boton_publicacion">Publicaciones</a></li>

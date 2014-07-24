@@ -1,21 +1,34 @@
 <?php require("inc/config.php");
-require("../inc/_detalleColegioProyecto.php");
+require_once("../inc/_colegio.php");
 ?> 
- <p> <table class="tablesorter" id="tabla">
+ <p> 
+ <script language="javascript">
+$(document).ready(function() 
+    { 
+    $("#tbl").tablesorter({ 
+      sortList: [[2,1], [1,0]],
+    })  
+  }
+  ); 
+</script>
+ 
+<table class="tablesorter" id="tbl">
    <thead>         
   <tr>
     <th>RBD</th>
     <th>Nombre </th>
+    <th>Congregacion </th>
     <th>Comuna</th>
     <th>Email</th>
-	<th>Opciones</th>
+    <th>Estado</th>
+	  <th>Opciones</th>
     
   </tr>
   </thead>
   <tbody>
   <?php 
  
-    $colegios = getColegios(1);
+    $colegios = getColegiosTodos();
 
   
   if (count($colegios) > 0){
@@ -24,9 +37,11 @@ require("../inc/_detalleColegioProyecto.php");
               <tr>
                 <td><?php echo $colegio["rbdColegio"];?></td>
                 <td><?php echo $colegio["nombreColegio"];?></td>
+                <td><?php echo $colegio["nombreCongregacion"];?></td>
                 <td><?php echo $colegio["nombreComuna"];?></td>
                 <td><?php echo $colegio["emailColegio"];?></td>
-                <td>Editar - Activar - <a href="escuelaDetalle.php?rbdColegio=<?php echo $colegio["rbdColegio"];?>">Ver Ficha</a></td>
+                <td><?php echo $colegio["estadoColegio"];?></td>
+                <td><a href="escuelaDetalle.php?rbdColegio=<? echo $colegio["rbdColegio"];?>">Ver Ficha</a></td>
                
               </tr>
 <?php 		}

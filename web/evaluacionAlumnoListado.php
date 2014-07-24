@@ -16,15 +16,16 @@
             
         $sql = "SELECT u.loginUsuario,u.rutAlumno,a.nombreAlumno,a.apellidoPaternoAlumno,a.apellidoMaternoAlumno,u.idUsuario,a.estadoAlumno
                 FROM `matricula` as m
-                left join usuario as u on m.rutAlumno = u.rutAlumno
-                left join alumno as a on m.rutAlumno = a.rutAlumno
-                left join pautaItem as pi on pi.idUsuario = u.idUsuario
+                join usuario as u on m.rutAlumno = u.rutAlumno
+                join alumno as a on m.rutAlumno = a.rutAlumno
+                join pautaItem as pi on pi.idUsuario = u.idUsuario
                 WHERE m.rbdColegio = '". $rbd."'
                 AND m.idNivel = ".$idNivel."
                 AND m.anoCursoColegio = ".$anoCursoColegio."
                 AND m.letraCursoColegio = "."'$letraCursoColegio'"."
                 AND pi.idLista = ". $idLista ."
                 AND pi.asistio = 1
+                AND pi.fechaRespuestaPautaItem > ".$anoCursoColegio."
                 ORDER BY a.apellidoPaternoAlumno ASC";
         // echo $sql;
         $res = mysql_query($sql);
@@ -73,9 +74,9 @@
     <script type="text/javascript" src="js/jquery.numeric.js"></script>
 
 <body>
-    <button class="btn btn-large btn-primary" onclick="window.location.href = './evaluacionProfesor.php?rbdColegio=<?php echo $rbdColegio; ?>&idNivel=<?php echo $idNivel; ?>&anoCursoColegio=<?php echo $anoCursoColegio; ?>&letraCursoColegio=<?php echo $letraCursoColegio; ?>&escala=5&nombreNivel=null&idLista=<?php echo $idLista; ?>&idPrueba=<?php echo $idPrueba; ?>';">Modificar registro de asistencia  </button>
-    <button class="btn btn-large btn-primary" onclick="xls();">Exportar a XLS</button>
-    <button class="btn btn-large btn-primary" onclick="window.location.href = './evaluacionProfesor.php';">Volver a selección de los cursos</button>
+    <button class="btn btn-large btn-primary" onClick="window.location.href = './evaluacionProfesor.php?rbdColegio=<? echo $rbdColegio; ?>&idNivel=<? echo $idNivel; ?>&anoCursoColegio=<? echo $anoCursoColegio; ?>&letraCursoColegio=<? echo $letraCursoColegio; ?>&escala=5&nombreNivel=null&idLista=<? echo $idLista; ?>&idPrueba=<? echo $idPrueba; ?>';">Modificar registro de asistencia  </button>
+    <button class="btn btn-large btn-primary" onClick="xls();">Exportar a XLS</button>
+    <button class="btn btn-large btn-primary" onClick="window.location.href = './evaluacionProfesor.php';">Volver a selección de los cursos</button>
     
     <div id="actualiza"></div>
         <p>
@@ -172,8 +173,8 @@
     </div>
 
     <div  align="right">
-        <button class="btn btn-large btn-primary" onclick="guarda();">Actualizar Puntaje</button>
-        <button class="btn btn-large btn-primary" onclick="finalizarRegistro();">Finalizar registro de puntaje</button>
+        <button class="btn btn-large btn-primary" onClick="guarda();">Actualizar Puntaje</button>
+        <button class="btn btn-large btn-primary" onClick="finalizarRegistro();">Finalizar registro de puntaje</button>
     </div>
 
     <script>

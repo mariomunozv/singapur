@@ -1,8 +1,7 @@
-<?php 
+<? 
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-
 
 session_start();
 include "../inc/conecta.php";
@@ -16,12 +15,15 @@ include "../inc/_recurso.php";
 include "../inc/_usuario.php";
 include "../inc/_inscripcionCursoCapacitacion.php";
 include "../inc/_detalleActividadCursoCapacitacion.php";
+
+
+
 Conectarse_seg(); 
 
 
 $idTipoRecurso = $_REQUEST["idTipoRecurso"];
 $nombreRecurso = $_REQUEST["nombreRecurso"];
-$urlRecurso = @$_REQUEST["urlRecurso"];
+$urlRecurso = $_REQUEST["urlRecurso"];
 $jornadas = $_REQUEST["idJornada"];
 $idPerfil = $_REQUEST["idPerfil"];
 
@@ -45,7 +47,7 @@ if ($idTipoRecurso == 1){
 				
 			}else{
 				
-				alerta("OcurriÃ³ un problema con el archivo.");
+				alerta("Ocurrió un problema con el archivo.");
 				break;
 			}
 			
@@ -80,8 +82,6 @@ if ($idRecurso){
 }
 
 
-
-
 // a los cursos en donde se encuentran los usuarios de la publicacion
 @$idsCursos = $_REQUEST["idCursoCapacitacion"];
 
@@ -109,15 +109,19 @@ if ($idRecurso){
 								"idCurso" => $idCursoCapacitacion
 									  );
 				$i++;
+
 			}
-
+			
+		}
+		
+		
+		
 	}
-	
-}
 
-// Notificaciones de la publicacion 
+	
+	// Notificaciones de la publicacion 
  
-	if ($notificarPublicacion == 1){ // Si se marcÃ³ el checkbox de notificacion
+	if ($notificarPublicacion == 1){ // Si se marcó el checkbox de notificacion
 
 		foreach ($usuarios as $usuario){
 	

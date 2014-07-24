@@ -1,4 +1,4 @@
-<?php 
+<? 
 ini_set('display_errors','1');
 header('Content-type: application/vnd.ms-excel');
 header("Content-Disposition: attachment; filename=Descarga.xls");
@@ -6,11 +6,12 @@ header("Pragma: no-cache");
 header("Expires: 0");
 require("inc/config.php");
 
-$nivel = $_GET["nivel"];
+//$nivel = $_GET["nivel"];
+$rbd = $_GET["rbd"];
 
 function getRespuestaUsuarioByPauta($idUsuario,$idPauta){
 
-	$sql = "select idItem, puntajeRespuestaItem  from respuestaItem WHERE idUsuario = ".$idUsuario." AND idPautaItem = ".$idPauta;
+	$sql = "select idItem, puntajeRespuestaItem from respuestaItem WHERE idUsuario = ".$idUsuario." AND idPautaItem = ".$idPauta;
 	$res = mysql_query($sql);
 
 	$respuestaUsuarioItem = array();
@@ -23,6 +24,7 @@ function getRespuestaUsuarioByPauta($idUsuario,$idPauta){
 										"valorCorrecta" => $row["valorCorrectaItem"],
 										"puntajeRespuestaItem" => $row["puntajeRespuestaItem"],
 										"opcionCorrecta" => $row["opcionCorrectaItem"]);*/
+
 		$respuestaUsuarioItem[$row["idItem"]] = array("puntajeRespuestaItem" => $row["puntajeRespuestaItem"]);
 	}
 
@@ -30,9 +32,8 @@ function getRespuestaUsuarioByPauta($idUsuario,$idPauta){
 }
 
 
-
 function buscaPauta($idUsuario,$idLista){
-	$sql = "SELECT idPautaItem from pautaItem WHERE idUsuario = ".$idUsuario." AND idLista = ".$idLista." AND fechaRespuestaPautaItem > '2014'";
+	$sql = "SELECT idPautaItem from pautaItem WHERE idUsuario = ".$idUsuario." AND idLista = ".$idLista; //AND fechaRespuestaPautaItem > '2014'"
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	if ($row){
@@ -75,15 +76,16 @@ function getRutProfesor($rbdColegio,$letraCursoColegio,$idNivel,$cursoColegio){
 }
 
 
-function getAlumnosCurso($nivel){
+function getAlumnosColegio($rbd){
+        
         
         $sql = "SELECT m.rbdColegio,m.idNivel,m.letraCursoColegio,m.anoCursoColegio,u.loginUsuario,u.rutAlumno,u.idUsuario,pi.idLista
                 FROM `matricula` as m
                 left join usuario as u on m.rutAlumno = u.rutAlumno 
                 left join pautaItem as pi on pi.idUsuario = u.idUsuario
-                where m.idNivel = '$nivel' 
-				AND pi.fechaRespuestaPautaItem > '2014'
-				AND m.anoCursoColegio = 2014
+                where m.rbdColegio = '$rbd' 
+				
+				
                 ORDER BY m.rbdColegio, m.letraCursoColegio ASC";
 
         /*
@@ -96,7 +98,7 @@ function getAlumnosCurso($nivel){
 				AND pi.fechaRespuestaPautaItem > '2014'
 				AND m.anoCursoColegio = 2014
                 ORDER BY m.rbdColegio, a.apellidoPaternoAlumno ASC";
-        */    
+        */        
         //echo $sql;
 
         $res = mysql_query($sql);
@@ -168,10 +170,11 @@ function getAlumnosCurso($nivel){
   <tbody>
 
 	
-  <?php 
+  <? 
 
-  		$alumnos = getAlumnosCurso($nivel); 
+  		$alumnos = getAlumnosColegio($rbd); 
   		//print_r($alumnos);
+  		
 
 		$i=1;
 
@@ -189,7 +192,10 @@ function getAlumnosCurso($nivel){
 
 					$datosPauta = buscaPauta($alumno["idUsuario"],$alumno['idLista']);
 
+
 					$respuestaUsuario = getRespuestaUsuarioByPauta($alumno["idUsuario"],$datosPauta["idPautaItem"]);
+
+					
 
 					$rutProfesor = getRutProfesor($alumno['rbdColegio'],$alumno['letraCursoColegio'],$alumno['idNivel'],$alumno['anoCursoColegio']);
 
@@ -231,6 +237,8 @@ function getAlumnosCurso($nivel){
 					$i++;
 
 					echo "</tr>";
+
+					
 
 				}
 				

@@ -26,15 +26,23 @@ function inscribirUsuarioCursoCapacitacion( $idPerfil, $idProyectoKlein, $idUsua
 	}
 }
 
+function getNomPerfil($idPerfil){
+	$sql = " SELECT * FROM `perfil` WHERE idPerfil = ".$idPerfil;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	return $row["nombrePerfil"];
+}
+
+
 function getAlumnosCurso($idCursoCapacitacion){
-$sql = "SELECT b.rutProfesor, b.idUsuario, c.rbdColegio ,b.rutEmpleadoKlein, a.idPerfil, b.tipoUsuario
+$sql = "SELECT b.rutProfesor, b.idUsuario, c.rbdColegio ,b.rutEmpleadoKlein, a.idPerfil, b.tipoUsuario, c.implementaProfesor, b.estadoUsuario
         FROM inscripcionCursoCapacitacion a join usuario b on a.idUsuario = b.idUsuario 
              left join profesor c on b.rutProfesor = c.rutProfesor
              left join empleadoklein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
         WHERE b.estadoUsuario = 1 AND a.idCursoCapacitacion= ".$idCursoCapacitacion;
 
 //seccion de consulta para que en el listado de participantes se considere a administrativos y coordinadores generales
-$sql2 ="SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idPerfil, b.tipoUsuario 
+$sql2 ="SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idPerfil, b.tipoUsuario , c.implementaProfesor, b.estadoUsuario
 		FROM usuario b join empleadoklein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
 			 left join profesor c on b.rutProfesor = c.rutProfesor 
     		 left join detalleUsuarioProyectoPerfil e on b.idUsuario = e.idUsuario 
@@ -44,7 +52,7 @@ $sql2 ="SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idP
 							FROM cursoCapacitacion 
 							WHERE idCursoCapacitacion = 53 AND tipoCursoCapacitacion = 'curso'))";*/
 //se agregan los directivos correspondientes.
-$sql3 = "SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idPerfil, b.tipoUsuario 
+$sql3 = "SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idPerfil, b.tipoUsuario , c.implementaProfesor, b.estadoUsuario
 		 FROM usuario b join profesor c on b.rutProfesor = c.rutProfesor 
    	 		  left join detalleUsuarioProyectoPerfil e on b.idUsuario = e.idUsuario 
 		 WHERE b.idUsuario in
@@ -62,6 +70,7 @@ $i=0;
 				$apellidoPaterno = $datosProfe["apellidoPaterno"];
 				$rbdColegio = $row["rbdColegio"];
 				$rut = $row["rutProfesor"];
+				$implementa = ($row["implementaProfesor"] == 1) ? "Si":"No";
 			}
 			if ($row["rutEmpleadoKlein"]!=""){
 				$datosEmpleadoKlein = getNombreFotoUsuarioEmpleadoKlein($row["idUsuario"]);
@@ -69,8 +78,8 @@ $i=0;
 				$apellidoPaterno = $datosEmpleadoKlein["apellidoPaterno"];
 				$rbdColegio ="";
 				$rut = "";
+				$implementa = "";
 			}
-			
 			
 			$alumnosCurso[$i] = array(
 			"idUsuario"=> $row["idUsuario"],
@@ -79,6 +88,9 @@ $i=0;
 			"rbdColegio"=> $rbdColegio,
 			"nombreCompleto" => $nombreCompleto	,
 			"rutProfesor" => $rut	,
+			"nombrePerfil" => getNomPerfil($row['idPerfil']),
+			"implementaProfesor" => $implementa,
+			"estado" => $row["estadoUsuario"],
 			);			
 			
 			$i++;	

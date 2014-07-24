@@ -1,4 +1,4 @@
-<?php
+<?
 session_start();
 include "../inc/conecta.php";
 //include "../inc/_funciones.php";
@@ -21,11 +21,12 @@ function eligeJornada(){
 	
 
 }
+
 function cambiaURL(combo){
 	var idRecurso = document.getElementById("urlRecurso");
 	var urlArchivo = document.getElementById("userfile");
 
-	//alert(combo.selectedIndex)
+	alert(combo.selectedIndex)
 	
 	var x=combo.selectedIndex;
 	var y=combo.options;
@@ -39,7 +40,6 @@ function cambiaURL(combo){
 		idRecurso.disabled = false
 	}
 }
-
 </script>
 
 
@@ -50,7 +50,7 @@ function cambiaURL(combo){
 Tipo de recurso:
 <br>
 <select name="idTipoRecurso" onchange="cambiaURL(this)">
-	<?php armaSelect($arregloTipoRecurso,"TipoRecurso"); ?>
+	<? armaSelect($arregloTipoRecurso,"TipoRecurso"); ?>
 </select>
 
 <br>
@@ -69,17 +69,17 @@ ID objeto/Archivo a publicar:
 
 Curso:
 <br>
-<select name="idCursoCapacitacion[]" size="10" multiple="multiple" class="campos" id="idCursoCapacitacion" onchange="eligeJornada()">
-	<?php armaSelectIdAtributo($arregloCursoCapacitacion,"CursoCapacitacion","nombreCorto"); ?>
+<select name="idCursoCapacitacion[]" size="10" multiple="multiple" class="campos" id="idCursoCapacitacion" onchange="eligeJornada()"  >
+	<? armaSelectIdAtributo($arregloCursoCapacitacion,"CursoCapacitacion","nombreCorto"); ?>
 </select>
 
 <br>
-<br>
+<br> 
 
 Jornada:
 <br>
 <select name="idJornada[]" size="10" multiple="multiple" id="idJornada">
-	<?php //armaSelect($arregloJornada,"Jornada"); ?>
+	<? //armaSelect($arregloJornada,"Jornada"); ?>
 </select>
 
 <br>
@@ -88,7 +88,7 @@ Jornada:
 Perfil:
 <br>
 <select name="idPerfil">
-	<?php armaSelect($arregloPerfil,"Perfil"); ?>
+	<? armaSelect($arregloPerfil,"Perfil"); ?>
 </select>
 
 Notificar

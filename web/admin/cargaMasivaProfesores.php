@@ -29,40 +29,11 @@ for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
 	}
 }
 
-print_r($alumnos);
-echo "<br><br>";
+//print_r($alumnos);
+//echo "<br><br>";
 return($alumnos);
 }
 
-/*
-function asignaPerfilProyectoAlumno($idUsuario, $idPerfil, $idProyectoKlein){
-	$sql_ = "INSERT INTO `perfil_usuario_proyecto` ( `idUsuario` , `idPerfil` , `idProyectoKlein` ";
-	$sql_.=" ) VALUES ( ";
-    $sql_.=" '$idUsuario','$idPerfil', '$idProyectoKlein'  ";
-    $sql_.=" )";
-	 $res = mysql_query($sql_);
-	echo "<br>aca!!!: ".$sql_."<br>";
-	if (!$res) {
-    	info('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
-	}else{
-		echo "<br>Se ha asignado el perfil Profesor al usuario ".$idUsuario;
-		}
-}
-*/
-/*
-function updateAlumno($rutAlumno, $tipoAlumno, $nombreAlumno, $apellidoPaternoAlumno, $apellidoMaternoAlumno, $sexoAlumno, $fechaNacimientoAlumno, $estadoAlumno){
-	$sql_ = "UPDATE `alumno` SET `tipoAlumno` = '".$tipoAlumno."',`nombreAlumno` = '".$nombreAlumno."',`apellidoPaternoAlumno` = '".$apellidoPaternoAlumno."',";
-	$sql_.=" `apellidoMaternoAlumno` = '".$apellidoMaternoAlumno."',`sexoAlumno` = '".$sexoAlumno."',`fechaNacimientoAlumno` = ".$fechaNacimientoAlumno.",";
-    $sql_.=" `estadoAlumno` = ".$estadoAlumno." WHERE CONVERT( `rutAlumno` USING utf8 ) = '".$rutAlumno."'";
-	$res = mysql_query($sql_);
-	echo $sql_;
-	if (!$res) {
-    	info('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
-	}else{
-		echo "<br>Se ha insertado con éxito el alumno ".$nombreAlumno." ".$apeliidoPaternoAlumno," con el rut ".$rutAlumno;
-		}
-}
-*/
 
 
 function guardarProfesor($rutProfesor, $rbdColegio, $idTipoProfesor,$nombreProfesor, $apellidoPaternoProfesor, $apellidoMaternoProfesor, $sexoProfesor, $fechaNacimientoProfesor,$telefonoProfesor ,$emailProfesor,$anosExperienciaProfesor,$asignaturaACargoProfesor,$coordinadorEnlaceProfesor,$implementa,$estadoAlumno){
@@ -71,12 +42,12 @@ function guardarProfesor($rutProfesor, $rbdColegio, $idTipoProfesor,$nombreProfe
 	$sql_ .= "VALUES ('$rutProfesor', '$rbdColegio', '$idTipoProfesor', '$nombreProfesor', '$apellidoPaternoProfesor', '$apellidoMaternoProfesor', ";
 	$sql_.= " '$sexoProfesor', '$fechaNacimientoProfesor', '$telefonoProfesor', '$emailProfesor', '$anosExperienciaProfesor', '$asignaturaACargoProfesor', '$coordinadorEnlaceProfesor', '$implementa', 1)";
 	$res = mysql_query($sql_);
-	echo $sql_;
+	//echo $sql_;
 	
 	if (!$res) {
-    	info('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
+    	echo('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
 	}else{
-		echo "<br>Se ha insertado con éxito el alumno ".$nombreProfesor." ".$apellidoPaternoAlumno," con el rut ".$rutProfesor;
+		echo "<br><br>Se ha insertado con éxito el profesor ".$nombreProfesor." ".$apellidoPaternoProfesor," con el rut ".$rutProfesor;
 		}
 }
 
@@ -89,9 +60,9 @@ function insertaUsuarioProfesor($rutProfesor, $emailUsuario, $loginUsuario, $pas
 	$res = mysql_query($sql_);
 	//echo $sql_;
 	if (!$res) {
-    	info('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
+    	echo('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
 	}else{
-		echo "<br>Se ha insertado el usuario ".$loginUsuario." con el rut ".$rutAlumno;
+		echo "<br>Se ha insertado el usuario ".$loginUsuario." con el rut ".$rutProfesor;
 		$last_id = mysql_insert_id();
 	
 		}
@@ -99,35 +70,17 @@ function insertaUsuarioProfesor($rutProfesor, $emailUsuario, $loginUsuario, $pas
 }
  
 
-/*
-function insertaUsuarioAlumno($rutAlumno, $emailUsuario, $loginUsuario, $passwordUsuario, $estadoUsuario, $tipoUsuario){
-	$sql_ = "INSERT INTO `usuario` ( `rutAlumno` , `emailUsuario` , `loginUsuario` , `passwordUsuario` , `estadoUsuario` , `tipoUsuario` ";
-	$sql_.=" ) VALUES ( ";
-    $sql_.=" '$rutAlumno', '$emailUsuario', '$loginUsuario', '$passwordUsuario', '$estadoUsuario','$tipoUsuario'  ";
-    $sql_.=")";
-	$res = mysql_query($sql_);
-	echo $sql_;
-	if (!$res) {
-    	info('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
-	}else{
-		echo "<br>Se ha insertado el usuario ".$loginUsuario." con el rut ".$rutAlumno;
-		$last_id = mysql_insert_id();
-	
-		}
-	return ($last_id);	
-}
-*/
 function asignaPerfilProyectoProfesor( $idUsuario, $idProyectoKlein, $idPerfil){
 	$sql_ = "INSERT INTO `detalleUsuarioProyectoPerfil` ( `idPerfil` , `idProyectoKlein` , `idUsuario` ";
 	$sql_.=" ) VALUES ( ";
     $sql_.=" '$idPerfil','$idProyectoKlein', '$idUsuario'  ";
     $sql_.=" )";
-	 $res = mysql_query($sql_);
-	echo $sql_;
+	$res = mysql_query($sql_);
+	//echo $sql_;
 	if (!$res) {
-    	info('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
+    	echo('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
 	}else{
-		echo "<br>Se ha asignado el perfil Alumno al usuario ".$idUsuario;
+		echo "<br>Se ha asignado el perfil $idPerfil al usuario ".$idUsuario;
 		}
 }
 
@@ -141,9 +94,9 @@ function inscribirUsuarioCursoCapacitacion( $idPerfil, $idProyectoKlein, $idUsua
 	 $res = mysql_query($sql_);
 	//echo $sql_
 	if (!$res) {
-    	info('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
+    	echo('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
 	}else{
-		echo "<br>Se ha asignado el perfil Alumno al usuario ".$idUsuario;
+		echo "<br>Se ha inscrito en el curso $idCursoCapacitacion al usuario ".$idUsuario;
 		}
 }
 
@@ -210,9 +163,9 @@ switch ($modo){
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], $carpeta.$nombre_archivo)){
 		echo "subio correctamente<br>";
 		$alumnos = leerArchivoExcel($nombre_archivo);
-		print_r($allumnos);
+		//print_r($allumnos);
 		for ($i=1;$i<count($alumnos);$i++){
-			echo $alumnos[$i+1][1]."Alumno<br>";
+			//echo $alumnos[$i+1][1]."Alumno<br>";
 			$rutProfesor = $alumnos[$i+1][1]."-".$alumnos[$i+1][2];
 			$rbdColegio =  $alumnos[$i+1][3];
 			$idTipoProfesor = $alumnos[$i+1][4];
@@ -231,20 +184,34 @@ switch ($modo){
 			$estadoAlumno = 1;;
 			$idCursoCapacitacion = $alumnos[$i+1][16];
 
-			guardarProfesor($rutProfesor, $rbdColegio, $idTipoProfesor,$nombreProfesor, $apellidoPaternoProfesor, $apellidoMaternoProfesor, $sexoProfesor, $fechaNacimientoProfesor,$telefonoProfesor ,$emailProfesor,$anosExperienciaProfesor,$asignaturaACargoProfesor,$coordinadorEnlaceProfesor,$estadoAlumno);
-			
-			// INSERTAR DATOS USUARIO
-			//$rut = explode("-",$rutAlumno); 
-			//$loginUsuario = $rut[0];
-			//$passwordUsuario = md5($rut[0]);
-			$loginUsuario = $alumnos[$i+1][1];
-			$passwordUsuario = md5($alumnos[$i+1][1]);
-			
-			// ASIGNAR UN USUARIO A UN PERFIL DE UN PROYECTO --- INSERTAR DETALLE USUARIO PROYECTO PERFIL
-			$idUsuario = insertaUsuarioProfesor($rutProfesor, $emailProfesor, $loginUsuario, $passwordUsuario, $estadoAlumno, $tipoUsuario);
-			asignaPerfilProyectoProfesor($idUsuario, 1, 1);
-			inscribirUsuarioCursoCapacitacion( 1, 1, $idUsuario, $idCursoCapacitacion);
-			
+			$omitir = $alumnos[$i+1][17];
+
+			if ($omitir != 1){ // Omitir es la columna 17 "Q", si tiene un 1 no se considera la fila del archivo
+				guardarProfesor($rutProfesor, $rbdColegio, $idTipoProfesor,$nombreProfesor, $apellidoPaternoProfesor, $apellidoMaternoProfesor, $sexoProfesor, $fechaNacimientoProfesor,$telefonoProfesor ,$emailProfesor,$anosExperienciaProfesor,$asignaturaACargoProfesor,$coordinadorEnlaceProfesor,$implementaProfesor,$estadoAlumno);
+				
+				
+				// INSERTAR DATOS USUARIO
+				//$rut = explode("-",$rutAlumno); 
+				//$loginUsuario = $rut[0];
+				//$passwordUsuario = md5($rut[0]);
+				
+				if ( strlen($alumnos[$i+1][1]) > 8)
+					$loginFinal = substr($alumnos[$i+1][1],0,8);
+				else
+					$loginFinal = $alumnos[$i+1][1];
+				
+				
+				$loginUsuario = $loginFinal;
+				$passwordUsuario = md5($loginFinal);
+				
+				// ASIGNAR UN USUARIO A UN PERFIL DE UN PROYECTO --- INSERTAR DETALLE USUARIO PROYECTO PERFIL
+				$idUsuario = insertaUsuarioProfesor($rutProfesor, $emailProfesor, $loginUsuario, $passwordUsuario, $estadoAlumno, $tipoUsuario);
+				$perfil = 1;
+				asignaPerfilProyectoProfesor($idUsuario, 1, $perfil);
+				if ($idCursoCapacitacion != ""){
+					inscribirUsuarioCursoCapacitacion( $perfil, 1, $idUsuario, $idCursoCapacitacion);	
+				}
+			}
 		}
 		
 	}else{

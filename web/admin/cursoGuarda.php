@@ -10,9 +10,7 @@ function guardarCurso($rbdColegio, $idNivel, $anoCursoColegio, $letraCursoColegi
 	$res = mysql_query($sql_);
 	if (!$res) {
     	die('Error en la consulta SQL: <br><b>'.$sql_.'</b><br>'. mysql_error());
-	}else{
-		echo "bien";
-		}
+	}
 }
 
 

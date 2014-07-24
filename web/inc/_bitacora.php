@@ -1,6 +1,7 @@
 <?php
 
-$anoActual = date ("Y");
+//$anoActual = date ("Y");
+require("_variablesGlobales.php");
 
 function getNombreSeccionBitacora($idSeccion){
 	$sql ="SELECT * FROM seccionBitacora where idSeccionBitacora = ".$idSeccion;
@@ -124,12 +125,14 @@ function getBitacorasUsuarioCurso($idUsuario,$idCurso){
 
 
 function getBitacorasCompletadasUsuarioCapitulo($idUsuario,$idCapitulo,$idCurso){
+	global $anoActual;
 	$sql = "SELECT b.*";
 	$sql .= " FROM bitacora b, seccionBitacora s";
 	$sql .= " WHERE b.idUsuario =".$idUsuario;
 	$sql .= " AND s.idPadreSeccionBitacora = ".$idCapitulo;
 	$sql .= " AND s.idSeccionBitacora = b.idSeccionBitacora";
 	$sql .= " AND b.idCursoColegio = '".$idCurso."'";
+	$sql .= " AND YEAR(b.fechaCreacionBitacora) = ".$anoActual;
 	//echo $sql."<BR>";
 	$res = mysql_query($sql);
 	while($row = mysql_fetch_array($res)){
@@ -152,11 +155,13 @@ function getBitacorasCompletadasUsuarioCapitulo($idUsuario,$idCapitulo,$idCurso)
 
 /*Funcón que trae todas las bitácoras completadas por un usuario*/
 function getBitacorasCompletadasUsuario($idUsuario,$curso){
+	global $anoActual;
 	$sql = "SELECT *";
 	$sql .= " FROM bitacora b, seccionBitacora s";
 	$sql .= " WHERE b.idUsuario =".$idUsuario;
 	$sql .= " AND s.idSeccionBitacora = b.idSeccionBitacora";
 	$sql .= " AND b.idCursoColegio = '".$curso."'";
+	$sql .= " AND YEAR(b.fechaCreacionBitacora) = ".$anoActual;
 	//echo $sql."<BR>";
 	$res = mysql_query($sql);
 	while($row = mysql_fetch_array($res)){
@@ -179,6 +184,7 @@ function getBitacorasCompletadasUsuario($idUsuario,$curso){
 
 /*Función que trae los usuario que rellenaron un capítulo en la bitacora de un profesor*/
 function getUsuariosIngresanCapitulo($idCapitulo,$idCurso,$idUsuario){
+	global $anoActual;
 	$sql = "SELECT Distinct CONCAT(p.nombreProfesor,' ',p.apellidoPaternoProfesor,' ', p.apellidoMaternoProfesor) as nombreProfesor
 			FROM bitacora b, usuario u, profesor p
 			WHERE b.idSeccionBitacora in 
@@ -188,7 +194,8 @@ function getUsuariosIngresanCapitulo($idCapitulo,$idCurso,$idUsuario){
 			AND b.usuarioIngresa = u.idUsuario
 			AND b.idUsuario =".$idUsuario."
 			AND u.rutProfesor = p.rutProfesor
-			AND b.idCursoColegio = '".$idCurso."'";
+			AND b.idCursoColegio = '".$idCurso."'
+			AND YEAR(b.fechaCreacionBitacora) = ".$anoActual;
 	//echo $sql."<BR>";
 	$res = mysql_query($sql);
 	while($row = mysql_fetch_array($res)){
@@ -203,6 +210,7 @@ function getUsuariosIngresanCapitulo($idCapitulo,$idCurso,$idUsuario){
 con el fin de saber cuantas horas se destinaron a dicho capítulo de acuerdo a lo declaró
 el profesor cuando llenó la bitacora*/
 function getHorasImplementadas($capCompletos, $idUsuario,$idCurso){
+	global $anoActual;
 	$sql = "SELECT SUM(tiempoBitacora) as tiempoCapitulo
 			FROM bitacora b
 			WHERE b.idSeccionBitacora in 
@@ -210,7 +218,7 @@ function getHorasImplementadas($capCompletos, $idUsuario,$idCurso){
 			FROM seccionBitacora s
 			WHERE s.idPadreSeccionBitacora = ".$capCompletos.")
 			AND b.idUsuario = ".$idUsuario."
-			AND b.idCursoColegio = '".$idCurso."'";;
+			AND b.idCursoColegio = '".$idCurso."'";
 	//echo $sql."<BR>";
 	$res = mysql_query($sql);
 	while($row = mysql_fetch_array($res)){
@@ -222,6 +230,7 @@ function getHorasImplementadas($capCompletos, $idUsuario,$idCurso){
 
 /*Función que trae todas las bitácoras de un cápitulo declarado por el profesor */
 function getBitacorasCapitulo($capCompletos,$idUsuario,$idCurso){
+	global $anoActual;
 	$sql = "SELECT b . *
 		FROM bitacora b
 		WHERE b.idSeccionBitacora
@@ -230,7 +239,8 @@ function getBitacorasCapitulo($capCompletos,$idUsuario,$idCurso){
 		FROM seccionBitacora s
 		WHERE idPadreSeccionBitacora =".$capCompletos.")
 			AND b.idUsuario = ".$idUsuario."
-			AND b.idCursoColegio = '".$idCurso."'";;
+			AND b.idCursoColegio = '".$idCurso."'
+			AND YEAR(b.fechaCreacionBitacora) = ".$anoActual;
 	//echo $sql;
 	$res = mysql_query($sql);
 	while($row = mysql_fetch_array($res)){
@@ -252,6 +262,7 @@ function getBitacorasCapitulo($capCompletos,$idUsuario,$idCurso){
 }
 
 function getFechasCapitulo($capCompletos,$idUsuario,$idCurso){
+	global $anoActual;
 	$sql = "SELECT MIN(b.fechaInicio) as fechaInicio, MAX(b.fechaTermino) as fechaTermino
 			FROM bitacora b 
 			WHERE b.idSeccionBitacora IN ( 
@@ -259,7 +270,9 @@ function getFechasCapitulo($capCompletos,$idUsuario,$idCurso){
 				FROM seccionBitacora s 
 				WHERE idPadreSeccionBitacora =".$capCompletos.") 
 			AND b.idUsuario =".$idUsuario."
-			AND b.idCursoColegio = '".$idCurso."'";;
+			AND b.idCursoColegio = '".$idCurso."'
+			AND b.fechaInicio > '0000-00-00'
+			AND YEAR(b.fechaCreacionBitacora) = ".$anoActual;
 	//echo $sql;
 	$res = mysql_query($sql);
 	while($row = mysql_fetch_array($res)){
@@ -284,8 +297,10 @@ function cuentaBitacoras( $idUsuario){
 
 
 function getBitacoraUsuarioCurso($idUsuario,$idCursoColegio){
+	global $anoActual;
 	$sql = "SELECT * FROM bitacora a join seccionBitacora c on a.idSeccionBitacora = c.idSeccionBitacora WHERE idUsuario = ".$idUsuario;
 	$sql .= " AND idCursoColegio = '".$idCursoColegio."'";
+	$sql .= " AND fechaCreacionBitacora > '$anoActual-01-01'";
 	//echo $sql."<BR>";
 	$res = mysql_query($sql);
    	$i = 0;

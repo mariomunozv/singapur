@@ -21,7 +21,10 @@ function getDatosProfesor2($idUsuario){
 			
 		);
 		return ($datosProfesor);
-}	
+}
+
+
+
 function getRutProfesores(){
 		$sql = " SELECT rutProfesor, nombreProfesor, apellidoPaternoProfesor from profesor where not exists (select * from usuario where usuario.rutProfesor = profesor.rutProfesor)";
 		$res = mysql_query($sql); 
@@ -41,16 +44,16 @@ function getRutProfesores(){
 }	
 
 function getProfesoresColegio($rbdColegio){
-	$sql = "SELECT u.idUsuario, p.*";
+	$sql = "SELECT DISTINCT u.idUsuario, p.*";
 	$sql .= " FROM profesor p, usuario u, cursoCapacitacion c, inscripcionCursoCapacitacion i";
 	$sql .= " WHERE rbdColegio = ".$rbdColegio;
 	$sql .= " AND i.idCursoCapacitacion = c.idCursoCapacitacion";
 	$sql .= " AND c.estadoCursoCapacitacion = 1";
 	$sql .= " AND i.idUsuario = u.idUsuario";
-	$sql .= " AND p.rutProfesor = u.rutProfesor";
-	$sql .= " AND c.idCursoCapacitacion > 17";
-	$sql .= " AND c.idCursoCapacitacion <> 28";
-	$sql .= " AND c.idCursoCapacitacion < 35"; //Toma solo los profesores que no participan en los niveles del año 2013
+	$sql .= " AND p.rutProfesor = u.rutProfesor order by p.apellidoPaternoProfesor ASC";
+	//$sql .= " AND c.idCursoCapacitacion > 40";
+	//$sql .= " AND c.idCursoCapacitacion <> 28";
+	//$sql .= " AND c.idCursoCapacitacion < 35"; //Toma solo los profesores que no participan en los niveles del año 2013
 	//echo $sql;
 	$res = mysql_query($sql);
 	$i = 0;
@@ -87,6 +90,17 @@ function getNombreProfesorPorRut($rutProfe){
 	$row = mysql_fetch_array($res);
 	return $row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"];
 
+}
+
+function getImplementaProfesor($rutProfe){
+	$sql = "SELECT implementaProfesor FROM `profesor` where rutProfesor = '".$rutProfe."'";
+	//echo $sql;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if($row['implementaProfesor']==1)
+		return "Si";
+	else
+		return "No";
 }
 
 function getNombreProfesor($rutProfesor){

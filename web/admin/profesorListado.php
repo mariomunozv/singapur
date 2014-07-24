@@ -7,6 +7,7 @@ $rbdColegio = $_REQUEST["rbdColegio"];
    <thead>         
   <tr>
     <th>Rut</th>
+    <th>ID</th>
     <th>Nombre </th>
     <th>Apellido Paterno</th>
     <th>Apellido Materno </th>
@@ -33,6 +34,7 @@ $rbdColegio = $_REQUEST["rbdColegio"];
 	  ?>
               <tr onmouseover="this.className='normalActive'" onmouseout="this.className='normal'" class="normal">
                 <td><?php echo $profesor["rutProfesor"];?></td>
+                <td><?php echo $profesor["idUsuario"];?></td>
                 <td><?php echo $profesor["nombreProfesor"];?></td>
                 <td><?php echo $profesor["apellidoPaternoProfesor"];?></td>
                 <td><?php echo $profesor["apellidoMaternoProfesor"];?></td>

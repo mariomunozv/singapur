@@ -35,4 +35,30 @@ function getTiposRecursosJornada($idJornada,$idPerfil,$idTipo){
 }
 
 
+function setPublicacion($idRecurso,	$idJornada,	$idPerfil, $ordenPublicacion){
+	$sql = "INSERT INTO publicacion (
+			idRecurso,
+			idJornada,
+			idPerfil,
+			ordenPublicacion,
+			estadoPublicacion
+			) VALUES (
+			$idRecurso,
+			$idJornada,
+			$idPerfil,
+			$ordenPublicacion,
+			1
+			)";
+	$res = mysql_query($sql);
+	if (!$res) {
+		info('Error en la consulta SQL: <br><b>'.$sql.'</b><br>'. mysql_error());
+	}else{
+		info('Publicacion realizada satisfactoriamente.');
+		$idPublicacion = mysql_insert_id();
+		return ($idPublicacion);
+	}
+	
+}
+
+
 ?>

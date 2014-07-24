@@ -1,4 +1,4 @@
-<?php
+<?
 session_start();
 
 require '../models/Curso.php';
@@ -29,7 +29,7 @@ if ( empty($asistenciaAlumno) ) {
 ?>
 
 
-  <table class='tablesorter' id='<?php echo $idLista ?>'>
+  <table class='tablesorter' id='<? echo $idLista ?>'>
   <thead>
     <tr>
       <th>Nº</th>
@@ -39,7 +39,7 @@ if ( empty($asistenciaAlumno) ) {
     </tr>
   </thead>
   <tbody>
-      <?php
+      <?
           $i = 1;
           foreach ($asistenciaAlumno as $asistencia)
           {
@@ -60,11 +60,11 @@ if ( empty($asistenciaAlumno) ) {
 
  <script type="text/javascript">
     (function () {
-      var operacionDb = '<?php echo $operacionDb ?>';
+      var operacionDb = '<? echo $operacionDb ?>';
 
-      var confirmaFecha = <?php echo $asistenciaAlumno[0]->fechaConfirmada ? 'true' : 'false'; ?>;
+      var confirmaFecha = <? echo $asistenciaAlumno[0]->fechaConfirmada ? 'true' : 'false'; ?>;
 
-      var tablaId = '<?php echo $idLista ?>';
+      var tablaId = '<? echo $idLista ?>';
 
       var send = false;
 
@@ -81,7 +81,7 @@ if ( empty($asistenciaAlumno) ) {
       });
 
       if (confirmaFecha) {
-        calendar.datepicker("setDate", "<?php echo $asistenciaAlumno[0]->fechaRespuestaPautaItem?>");
+        calendar.datepicker("setDate", "<? echo $asistenciaAlumno[0]->fechaRespuestaPautaItem?>");
       }
 
       var getAlumnosPresentes = function() {

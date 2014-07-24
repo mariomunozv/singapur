@@ -755,7 +755,7 @@ function getDatosLaboratorio($idLaboratorio){
 
 function getAlumnosCurso($rbd,$idNivel,$anoCursoColegio,$letraCursoColegio){
 	$sql = "SELECT b.loginUsuario,b.rutAlumno,c.nombreAlumno,c.estadoAlumno,c.apellidoPaternoAlumno,c.apellidoMaternoAlumno,b.idUsuario FROM `matricula` a join usuario b on a.rutAlumno = b.rutAlumno join alumno c on a.rutAlumno = c.rutAlumno ";
-	$sql.= " WHERE a.rbdColegio = ".$rbd." AND a.idNivel = ".$idNivel." AND a.anoCursoColegio = ".$anoCursoColegio." AND a.letraCursoColegio = "."'$letraCursoColegio'"." ORDER BY c.apellidoPaternoAlumno DESC";
+	$sql.= " WHERE a.rbdColegio = ".$rbd." AND a.idNivel = ".$idNivel." AND a.anoCursoColegio = ".$anoCursoColegio." AND a.letraCursoColegio = "."'$letraCursoColegio'"." ORDER BY c.apellidoPaternoAlumno ASC";
 	//echo $sql;
 	$res = mysql_query($sql);
 	$i = 0;
@@ -879,7 +879,7 @@ function getCursos(){
 		
 	
 	
-function getProfesoresColegio($rbdColegio){
+/*function getProfesoresColegio($rbdColegio){
 	$sql = "SELECT * FROM profesor WHERE rbdColegio = ".$rbdColegio;
 	//echo $sql;
 	$res = mysql_query($sql);
@@ -907,7 +907,47 @@ function getProfesoresColegio($rbdColegio){
 	//print_r($idListas);
 	return($profesores);
 	
-	}	
+	}*/
+
+function getProfesoresColegio($rbdColegio){
+	$sql = "SELECT DISTINCT u.idUsuario, p.*";
+	$sql .= " FROM profesor p, usuario u, cursoCapacitacion c, inscripcionCursoCapacitacion i";
+	$sql .= " WHERE rbdColegio = ".$rbdColegio;
+	$sql .= " AND i.idCursoCapacitacion = c.idCursoCapacitacion";
+	$sql .= " AND c.estadoCursoCapacitacion = 1";
+	$sql .= " AND i.idUsuario = u.idUsuario";
+	$sql .= " AND p.rutProfesor = u.rutProfesor order by p.apellidoPaternoProfesor ASC";
+	//$sql .= " AND c.idCursoCapacitacion > 40"; // Cursos 2014
+	//$sql .= " AND c.idCursoCapacitacion <> 28";
+	//$sql .= " AND c.idCursoCapacitacion < 35"; //Toma solo los profesores que no participan en los niveles del año 2013
+	//echo $sql;
+	$res = mysql_query($sql);
+	$i = 0;
+	while ($row = mysql_fetch_array($res)){
+	
+	$profesores[$i] = array( "idUsuario" => $row["idUsuario"],
+				      "nombreProfesor" => $row["nombreProfesor"],
+					  "apellidoPaternoProfesor" => $row["apellidoPaternoProfesor"],
+					  "apellidoMaternoProfesor" => $row["apellidoMaternoProfesor"],
+					  "sexoProfesor" => $row["sexoProfesor"],
+					  "fechaNacimientoProfesor" => $row["fechaNacimientoProfesor"],
+					  "telefonoProfesor" => $row["telefonoProfesor"],
+					   "emailProfesor" => $row["emailProfesor"],
+					   "anosExperienciaProfesor" => $row["anosExperienciaProfesor"],
+					   "asignaturaACargoProfesor" => $row["asignaturaACargoProfesor"],
+					   "coordinadorEnlaceProfesor" => $row["coordinadorEnlaceProfesor"],
+					   "rutProfesor" => $row["rutProfesor"]
+						);	
+	$i++;
+	
+	}
+	if ($i==0){
+		return(NULL);
+	}
+	//print_r($idListas);
+	return($profesores);
+	
+}		
 
 
 

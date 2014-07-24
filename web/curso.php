@@ -9,6 +9,11 @@ $jornadas = getJornadasCurso($idCurso);
 $idUsuario = $_SESSION["sesionIdUsuario"];
 registraAcceso($idUsuario, 2, 'NULL'); 
 $datosCurso2 = getDatosCurso($_SESSION["sesionIdCurso"]);
+
+if ($datosCurso2["estadoCursoCapacitacion"] == 0){
+	die("El acceso a este curso no esta habilitado");	
+}
+
 require ("hd.php");?>
 
 <script language="javascript">

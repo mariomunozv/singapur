@@ -30,8 +30,8 @@ function leerArchivoExcel($archivo){
 			}
 		}
 		
-		print_r($alumnos);
-		echo "<br><br>";
+		//print_r($alumnos);
+		//echo "<br><br>";
 		return($alumnos);
 }
 
@@ -193,7 +193,7 @@ switch ($modo){
 		$loginUsuario = $rut[0];
 		$passwordUsuario = md5($rut[0]);
 		$idUsuario = insertaUsuarioAlumno($rutAlumno, $emailAlumno, $loginUsuario, $passwordUsuario, $estadoAlumno, $tipoUsuario);
-		asignaPerfilProyectoAlumno($idUsuario, 1, 1);
+		asignaPerfilProyectoAlumno($idUsuario, 2, 1);
 		mostrar_alumnosCurso();
 	break;
 	case "editar":
@@ -261,19 +261,25 @@ switch ($modo){
 					$letraCursoColegio = $alumnos[$i+1][10];
 					$estadoAlumno = 1;
 					$emailAlumno = "";//$alumnos[$i+1][5];
-					if(existeUsuario($rutAlumno)==0)
-					{
-						guardarAlumno($rutAlumno, $tipoAlumno, $nombreAlumno, $apellidoPaternoAlumno, $apellidoMaternoAlumno, $sexoAlumno, $fechaNacimientoAlumno, $estadoAlumno);
-						matriculaAlumno($rutAlumno, $rbdColegio, $idNivel, 2013, $letraCursoColegio);
-						$rut = explode("-",$rutAlumno); 
-						$loginUsuario = $alumnos[$i+1][1];
-						$passwordUsuario = md5($alumnos[$i+1][1]);
-						$idUsuario = insertaUsuarioAlumno($rutAlumno, $emailAlumno, $loginUsuario, $passwordUsuario, $estadoAlumno, $tipoUsuario);
-						asignaPerfilProyectoAlumno($idUsuario, 1, 1);
-					}
-					else
-					{
-						promoverAlumno($rutAlumno, $rbdColegio, $idNivel, 2013, $letraCursoColegio);
+					
+					$omitir = $alumnos[$i+1][11];
+					
+					if ($omitir != 1){ // Omitir es la columna 11 "K", si tiene un 1 no se considera la fila del archivo
+						if(existeUsuario($rutAlumno)==0)
+						{
+							guardarAlumno($rutAlumno, $tipoAlumno, $nombreAlumno, $apellidoPaternoAlumno, $apellidoMaternoAlumno, $sexoAlumno, $fechaNacimientoAlumno, $estadoAlumno);
+							matriculaAlumno($rutAlumno, $rbdColegio, $idNivel, 2014, $letraCursoColegio);
+							$rut = explode("-",$rutAlumno); 
+							$loginUsuario = $alumnos[$i+1][1];
+							$passwordUsuario = md5($alumnos[$i+1][1]);
+							$idUsuario = insertaUsuarioAlumno($rutAlumno, $emailAlumno, $loginUsuario, $passwordUsuario, $estadoAlumno, $tipoUsuario);
+							asignaPerfilProyectoAlumno($idUsuario, 2, 1);
+						}
+						else
+						{
+							//promoverAlumno($rutAlumno, $rbdColegio, $idNivel, 2013, $letraCursoColegio);
+							matriculaAlumno($rutAlumno, $rbdColegio, $idNivel, 2014, $letraCursoColegio);
+						}
 					}
 				}
 				

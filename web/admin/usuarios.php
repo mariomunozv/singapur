@@ -4,6 +4,7 @@
 
 //session_start();
 require("inc/config.php");
+include "../inc/_funciones.php";
 require("../inc/_colegio.php");
 require("../inc/_detalleColegioProyecto.php");
 require("../inc/_profesor.php");
@@ -16,7 +17,7 @@ require("../inc/_perfil.php");
 
 
 require("_head.php"); 
-$menu = "ini"; 
+$menu = "usu"; 
 require("_menu.php");  
 $navegacion = "Usuarios*#";
 require("_navegacion.php");
@@ -38,28 +39,55 @@ function new_(){
 	AJAXPOST("escuelaNuevo.php","",division);
 } 
 
-class_activo('boton_profesores','activo');
+class_activo('boton_usuarios','activo');
 
 </script>
 
-<p>
-<span class="titulo_form">Adminitracion Sistema</span>
+
+<!--inicio seccion importada-->
+
+<script language="javascript">
 
 
+function upload_profesores(){
+  var division = document.getElementById("cargar_aqui");
+  AJAXPOST("uploadProfesor.php","",division);
+} 
+
+function upload_utp(){
+  var division = document.getElementById("cargar_aqui");
+  AJAXPOST("uploadUTP.php","",division);
+} 
+
+function upload_alumnos(){
+  var division = document.getElementById("cargar_aqui");
+  AJAXPOST("uploadAlumnosCurso.php","",division);
+} 
 
 
-<?php 
-//$colegios = getColegiosProyecto(1);
+</script>
+<span class="titulo_form">Usuarios</span>
 
-//$tiposUsuarios = getTiposUsuario();
-
-//$cursosCapacitacion = getCursosCapacitacion();
-//$perfiles = getPerfiles();
-
-
+<br />
+<br />
+<h4>Carga de datos</h4>
+<br />
 
 
+<? 
+boton("Cargar Profesores", "upload_profesores();");
+boton("Cargar UTPs", "upload_utp();");
+boton("Cargar Alumnos", "upload_alumnos();");
 ?>
+
+
+<br />
+<br />
+<div id="cargar_aqui"></div>
+<br />
+<br />
+
+<!--Fin seccion -->
 
 
 <form name="form" action="" method="POST" enctype="multipart/form-data">

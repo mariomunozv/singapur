@@ -31,7 +31,8 @@ function getDatosCurso($idCurso){
 			"idCursoCapacitacion"=> $row["idCursoCapacitacion"],
 			"nombreCortoCursoCapacitacion" => $row["nombreCortoCursoCapacitacion"],
 			"nombreCursoCapacitacion" => $row["nombreCursoCapacitacion"],
-			"descripcionCursoCapacitacion" => $row["descripcionCursoCapacitacion"]
+			"descripcionCursoCapacitacion" => $row["descripcionCursoCapacitacion"],
+			"estadoCursoCapacitacion" => $row["estadoCursoCapacitacion"]
 			);
 		return($datosCurso);
 	}

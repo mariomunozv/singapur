@@ -19,6 +19,7 @@ $idProyecto = 1;
 foreach ($sel as $usuario){
 	inscribirUsuarioCursoCapacitacion( $idPerfil, $idProyecto, $usuario, $idCurso );
 	//echo $usuario." ".$idCurso." ".$idPerfil."<br>";
+	activaUsuario($usuario);
 	}
 
 ?>
