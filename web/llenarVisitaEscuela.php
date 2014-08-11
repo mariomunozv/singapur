@@ -1,4 +1,8 @@
 <?php
+?>
+
+
+<?php
 ini_set("display_errors", "on");
 require "inc/incluidos.php";
 require "hd.php";
@@ -42,7 +46,7 @@ echo $idUsuario;
 <div id="principal">
 <?php
 require "topMenu.php";
-$navegacion = "Home*mural.php?idCurso=$idCurso,Evaluacion*#";
+$navegacion = "Home*curso.php?idCurso=$idCurso,Informes*#,Llenar Visita Escuela*#";
 require "_navegacion.php";
 ?>
 

@@ -28,8 +28,11 @@ $curso = array();//array($coordinador_general, $asesor);
 $mural = array($asesor, $profesor,$utp,$relator_tutor,$empleado_klein,$empleado_klein,$coordinador_general,$visitante);
 $recursos = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$empleado_klein,$visitante);
 $foros = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$visitante);
-$evaluacion = array($asesor, $coordinador_general,$profesor,$utp,$relator_tutor,$directivo,$visitante);
-$bitacora = array($asesor, $coordinador_general,$profesor,$utp,$directivo,$relator_tutor,$visitante);
+$evaluacion = array($coordinador_general,$profesor,$utp,$directivo,$visitante);
+$evaluacion_sin_directivos = array($asesor,$relator_tutor);
+$resultados_evaluaciones = array($asesor, $relator_tutor);
+$bitacora = array($profesor,$utp,$visitante,$directivo);
+$resultados_bitacora = array($coordinador_general, $asesor,$relator_tutor);
 $resultados = array($asesor, $coordinador_general,$relator_tutor);
 //$observacion =array($coordinador_general,$utp);
 $informes = array($coordinador_general,$directivo,$empleado_klein);
@@ -62,8 +65,17 @@ $idCurso = $_SESSION["sesionIdCurso"];
 		        <?php } if (in_array($idPerfil, $bitacora) && $tipoCurso!= "curso" && $tipoCurso !="") { ?>
                 <li><a href="bitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Bitácora</a></li>
 
+                <?php } if (in_array($idPerfil, $resultados_bitacora) && $tipoCurso!= "directivos") { ?>
+                <li><a href="#<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Resultados Bitácora</a></li>
+
                 <?php } if (in_array($idPerfil, $evaluacion) && $tipoCurso!="curso" && $tipoCurso != "") { ?>
                 <li><a href="evaluacionHome.php">Evaluación</a></li>
+
+                <?php } if (in_array($idPerfil, $evaluacion_sin_directivos) && $tipoCurso=="nivel" && $tipoCurso != "") { ?>
+                <li><a href="evaluacionHome.php">Evaluación</a></li>
+
+                <?php } if (in_array($idPerfil, $resultados_evaluaciones) && $tipoCurso=="curso" && $tipoCurso != "") { ?>
+                <li><a href="#">Resultados Evaluaciones</a></li>
 
 				<?php } if (in_array($idPerfil, $resultados) && $tipoCurso == "curso") { ?>
                 <li><a href="actividadescoordinacion.php">Resultados Actividades</a></li>
