@@ -66,7 +66,7 @@ $idCurso = $_SESSION["sesionIdCurso"];
                 <li><a href="bitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Bitácora</a></li>
 
                 <?php } if (in_array($idPerfil, $resultados_bitacora) && $tipoCurso!= "directivos") { ?>
-                <li><a href="#<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Resultados Bitácora</a></li>
+                <li><a href="resultadosBitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Resultados Bitácora</a></li>
 
                 <?php } if (in_array($idPerfil, $evaluacion) && $tipoCurso!="curso" && $tipoCurso != "") { ?>
                 <li><a href="evaluacionHome.php">Evaluación</a></li>
@@ -75,7 +75,7 @@ $idCurso = $_SESSION["sesionIdCurso"];
                 <li><a href="evaluacionHome.php">Evaluación</a></li>
 
                 <?php } if (in_array($idPerfil, $resultados_evaluaciones) && $tipoCurso=="curso" && $tipoCurso != "") { ?>
-                <li><a href="#">Resultados Evaluaciones</a></li>
+                <li><a href="resultadosEvaluaciones.php">Resultados Evaluaciones</a></li>
 
 				<?php } if (in_array($idPerfil, $resultados) && $tipoCurso == "curso") { ?>
                 <li><a href="actividadescoordinacion.php">Resultados Actividades</a></li>

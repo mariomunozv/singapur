@@ -115,27 +115,10 @@ require("_navegacion.php");
 $idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
 
-switch($idPerfil){
-	case 1: //Profesor
 		boton("Ingresar Bitácora","nuevoBitacoraProfe($idPerfil)");
 		echo "&nbsp;";
 		boton("Ver Bitácoras Ingresadas","listaBitacoraProfe($idPerfil)");
-	break;
-	
-	case 3: //Jefe de UTP
-	case 4:
-		boton("Ingresar Bitácora","nuevoBitacoraProfe($idPerfil)");
-		echo "&nbsp;";
-		boton("Ver Bitácoras Ingresadas","listaBitacoraProfe($idPerfil)");
-	break;
 
-	case 5:
-	case 7:
-	case 9:
-	case 20:
-		boton("Bitácora Profesores","revisaBitacoras()");
-	break;
-}
 ?>
 
 	<div id="nuevaBitacora"></div>

@@ -73,7 +73,7 @@ require "_navegacion.php";
           <div id="textoJornada">
             <table>
               <tr>
-                <td>RBD Establecimiento: </td>
+                <td>Establecimiento: </td>
                 <td>
                   <?php getColegiosNuevo($idUsuario); ?>
                   <select name="rbdColegio" class="campos" id="select-RBD" style="max-width:40%;">
@@ -88,6 +88,8 @@ require "_navegacion.php";
                     ?>
                   </select>
                 </td>
+                <td> RBD: </td>
+                <td> ## </td>
               </tr>
               <tr>
                 <td>Asesor: </td>
@@ -95,7 +97,24 @@ require "_navegacion.php";
               </tr>
               <tr>
                 <td>Visita Nº:</td>
-                <td><input type=number min=1></td>
+                <td>
+                  <select>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="">Otro</option>
+                  </select>
+                  
+                  <input type="number" min=12></td>
               </tr>
               <tr>
                 <td>Fecha:</td>

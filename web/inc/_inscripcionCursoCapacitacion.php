@@ -103,8 +103,8 @@ $i=0;
 
 function getAlumnosCursoParaBitacora($idCursoCapacitacion){
 $sql = "SELECT * FROM `inscripcionCursoCapacitacion` a join usuario b on a.idUsuario = b.idUsuario left join profesor c on b.rutProfesor = c.rutProfesor  WHERE a.idCursoCapacitacion= ".$idCursoCapacitacion;
-$sql .= " AND a.idUsuario <> 1";
-$sql .= " AND a.idPerfil < 5";
+//$sql .= " AND a.idUsuario <> 1";
+$sql .= " AND b.rutProfesor <> ''";
 //echo $sql;
 $res = mysql_query($sql);
 $i=0;

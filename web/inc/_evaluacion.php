@@ -26,20 +26,20 @@ function getEvaluacionGrupo($idGrupoEvaluacion, $idUsuario){
 	if($tipoUsuario=="Profesor"){
 		$preQuery = "SELECT distinct idNivel 
 					 FROM cursoColegio a join usuario b on a.rutprofesor = b.rutprofesor 
-					 WHERE idUsuario =".$idUsuario;
+					 WHERE idUsuario =".$idUsuario. " AND a.anoCursoColegio=".date('Y');
 	}
 	if($tipoUsuario =="Directivo" ){
 		$preQuery = "SELECT distinct idNivel
 					 FROM cursoColegio a join usuarioColegio b on a.rbdColegio = b.rbdColegio
-					 WHERE b.idUsuario = ".$idUsuario;
+					 WHERE b.idUsuario = ".$idUsuario." AND a.anoCursoColegio =".date('Y');
 	}
 	if($tipoUsuario =="UTP" ){
 		$preQuery = "SELECT distinct idnivel
 					 FROM profesor a join usuario b on a.rutProfesor = b.rutProfesor
 	 				 left join cursoColegio c  on a.rbdColegio = c.rbdColegio 	
-					 WHERE b.idUsuario = ".$idUsuario." AND b.tipoUsuario = 'UTP'";
+					 WHERE b.idUsuario = ".$idUsuario." AND b.tipoUsuario = 'UTP' AND c.anoCursoColegio=".date('Y');
 	}
-
+	echo $preQuery;
 	//para pruebas
 	$sql = "SELECT * 
 			FROM evaluacion 
