@@ -21,6 +21,25 @@ function cuentaAlumnosCurso($letraCursoColegio,$anoCursoColegio,$rbdColegio,$idN
 	echo $row["resultado"];
 	
 }
+function getColegiosProfesor($rutProfesor,$anoCursoColegio ,$tipoUsuario){
+	$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
+	$sql = "SELECT DISTINCT cu.rbdColegio , co.nombreColegio
+			FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
+			     join usuariocolegio us on us.rbdColegio=cu.rbdColegio
+			     join colegio co on co.rbdColegio=cu.rbdColegio
+			WHERE us.idUsuario = '".$detalleProfesor["idUsuario"]."'
+			AND cu.anoCursoColegio = $anoCursoColegio
+			ORDER BY cu.rbdColegio, nombreNivel, letraCursoColegio";
+	$res = mysql_query($sql);
+	$i = 0;
+	$colegios = array();
+	while ($row = mysql_fetch_array($res)){
+	
+	$colegios[$i] = $row;
+	$i++;
+	}
+	return($colegios);
+}
 
 function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 	$sql = "";
@@ -40,13 +59,23 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 				AND cu.anoCursoColegio = $anoCursoColegio";
 		
 	} else {
-		$sql = "SELECT * 
-				FROM cursoColegio cu join nivel ni 
-				on cu.idNivel = ni.idNivel 
-				WHERE cu.rutProfesor = '$rutProfesor' 
-				AND cu.anoCursoColegio = $anoCursoColegio";
-	}
+		if($tipoUsuario == 21){
+			$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
+			$sql = "SELECT * 
+					FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
+					     join usuariocolegio us on us.rbdColegio=cu.rbdColegio
+					WHERE us.idUsuario = '".$detalleProfesor["idUsuario"]."'
+					AND cu.anoCursoColegio = $anoCursoColegio
+					ORDER BY cu.rbdColegio, nombreNivel, letraCursoColegio";	
 
+		}else{
+			$sql = "SELECT * 
+					FROM cursoColegio cu join nivel ni 
+					on cu.idNivel = ni.idNivel 
+					WHERE cu.rutProfesor = '$rutProfesor' 
+					AND cu.anoCursoColegio = $anoCursoColegio";	
+		}
+	}
 	$res = mysql_query($sql);
 	$i = 0;
 	$cursos = array();
@@ -66,6 +95,14 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 	return($cursos);
 }
 
+function getDatosProfesorPorRut($rutProfesor){
+	$sql = "SELECT p.rbdColegio, u.idUsuario
+			FROM  profesor p join usuario u on p.rutProfesor=u.rutProfesor
+			WHERE  p.rutProfesor =  '$rutProfesor'";
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	return $row;
+}
 
 function getDatosProfesorByRut($rutProfesor){
 	$sql = "SELECT rbdColegio 
@@ -90,6 +127,8 @@ $datosUsuario = DatosUsuario($_SESSION["sesionIdUsuario"]);
 
 ?>
 <script>
+
+
 
 var volver = function () {
 	$('#lugarCarga').hide();
@@ -143,11 +182,28 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 			En el siguiente listado usted encontrará los cursos que tiene asignados en el
 			Sistema. Para ingresar al listado de los alumnos y modificar los puntajes seleccione una de las <img src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> <strong>Pruebas</strong>.
 			</p>
-
+			<?php 
+				$perfilUsuario = $_SESSION['sesionPerfilUsuario'];
+				$colegios = getColegiosProfesor($datosUsuario["rutProfesor"],$anoActual,$perfilUsuario);
+			?>
+			<?php if($perfilUsuario == 21){ ?>
+			<br />
+			<select id="filtro-colegio">
+				<option value="">Seleccione un colegio para filtrar</option>
+				<?php
+					foreach ($colegios as $colegio) {
+						echo "<option value='".$colegio['rbdColegio']."'>".$colegio["nombreColegio"]."</option>";
+					}
+				?>
+			</select>
+			<?php } ?>
 			<table class="tablesorter" id="tabla">
 			  <thead> 
 			          
 			  <tr>
+			  	<?php if($_SESSION["sesionPerfilUsuario"] == 21){ ?> 
+            	<th>Colegio</th>
+            	<?php } ?>
 			    <th>Curso</th>
 			    <th>Año</th>
 			    <th>Profesor Jefe </th>
@@ -156,45 +212,47 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 			    <th>Informe de Evaluación</th>
 			  </tr>
 			  </thead>
-			  <tbody> 
+			  <tbody id="filtrado"> 
 			  <?php 
-			  $perfilUsuario = $_SESSION['sesionPerfilUsuario'];
-			  $cursos = getCursosProfesor($datosUsuario["rutProfesor"],$anoActual, $perfilUsuario);
+			  	$cursos = getCursosProfesor($datosUsuario["rutProfesor"],$anoActual, $perfilUsuario);
 			 
 
-			  if (count($cursos) > 0){
+			  	if (count($cursos) > 0){
 					foreach ($cursos as $curso){
 						$nombre = getNombreProfesor($curso["rutProfesor"]);
 
 
-				  ?>
-			              <tr onMouseOver="this.className='normalActive'" onMouseOut="this.className='normal'" class="normal">
+				?>
+			            <tr id="-" data-rbd="<?php echo $curso['rbdColegio'];?>" onMouseOver="this.className='normalActive'" onMouseOut="this.className='normal'" class="normal">
+			            	<?php if($_SESSION["sesionPerfilUsuario"] == 21){ ?> 
+			            	<td><?php echo $curso["rbdColegio"];?></td>
+			            	<?php } ?>
 			                <td><?php echo $curso["nombreNivel"]." ".$curso["letraCursoColegio"];?></td>
 			                <td><?php echo $curso["anoCursoColegio"];?></td>
 			                <td><?php echo $nombre;?> </td>
-			                  <td><?php cuentaAlumnosCurso($curso["letraCursoColegio"],$curso["anoCursoColegio"],$curso["rbdColegio"],$curso["idNivel"]);?> </td>
+			                <td><?php cuentaAlumnosCurso($curso["letraCursoColegio"],$curso["anoCursoColegio"],$curso["rbdColegio"],$curso["idNivel"]);?> </td>
 			                
-			  <td>
-			  <?php 
-				$i=0;
-				if (isset($pruebasPorCurso[$curso["idNivel"]])) {
-					$pruebas = $pruebasPorCurso[$curso["idNivel"]];
-				}
-			  
-			  
-			  
-			  foreach ($pruebas as $idLista){
-				  $i++;
-				 // para separar P1,P2 de P3,P4
-					if ($i == 3)
-				 	{
-						echo "<br>"; 
-					}
-				  ?>
-			  <a href="javascript:muestraCurso(<?php echo $curso["rbdColegio"];?>,<?php echo $curso["idNivel"];?>,<?php echo $curso["anoCursoColegio"];?>,'<?php echo $curso["letraCursoColegio"];?>',<?php echo $escala.",'".$curso["nombreNivel"]."',".$idLista; ?>)"><img border="0" src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> Prueba <?php echo $i;?></a>
-			  <?php } ?>
-			  
-			  </td>
+							<td>
+							    <?php 
+							    	$i=0;
+								    if (isset($pruebasPorCurso[$curso["idNivel"]])) {
+									    $pruebas = $pruebasPorCurso[$curso["idNivel"]];
+								    }
+							  
+							  
+							  
+							    foreach ($pruebas as $idLista){
+								    $i++;
+								    // para separar P1,P2 de P3,P4
+									if ($i == 3)
+								 	{
+										echo "<br>"; 
+									}
+								  ?>
+							  <a href="javascript:muestraCurso(<?php echo $curso["rbdColegio"];?>,<?php echo $curso["idNivel"];?>,<?php echo $curso["anoCursoColegio"];?>,'<?php echo $curso["letraCursoColegio"];?>',<?php echo $escala.",'".$curso["nombreNivel"]."',".$idLista; ?>)"><img border="0" src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> Prueba <?php echo $i;?></a>
+							  <?php } ?>
+							  
+							  </td>
 			             </a>
 			               
 			              </tr>
@@ -241,5 +299,23 @@ if(@$_SESSION["sesionRbdColegio"] != ""){?>
 
 <script src="./js/highcharts.js"></script>
 <script src="./js/exporting.js"></script>
+<script type="text/javascript">
+
+$('#filtro-colegio').change(function(){
+	if($(this).val()==""){
+		$('tbody tr').show();
+	}else{
+		var rbd = $(this).val();
+		$('tbody tr').each(function(){
+			if($(this).attr("data-rbd")!=rbd){
+				$(this).hide();
+			}else{
+				$(this).show();
+			}
+		});
+	}
+})
+
+</script>
 </body>
 </html>
