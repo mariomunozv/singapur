@@ -64,6 +64,7 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 			$sql = "SELECT * 
 					FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
 					     join usuariocolegio us on us.rbdColegio=cu.rbdColegio
+					     join colegio co on co.rbdColegio=cu.rbdColegio
 					WHERE us.idUsuario = '".$detalleProfesor["idUsuario"]."'
 					AND cu.anoCursoColegio = $anoCursoColegio
 					ORDER BY cu.rbdColegio, nombreNivel, letraCursoColegio";	
@@ -89,7 +90,10 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 		"rutProfesor" => $row["rutProfesor"],
 		"nombreNivel" => $row["nombreNivel"],
 		"nombreCurso" => $row["nombreNivel"]." ".$row["letraCursoColegio"]." - ".$row["anoCursoColegio"]
-		);	
+		);
+	if($tipoUsuario == 21){
+		$cursos[$i]["nombreColegio"]=$row["nombreColegio"];
+	}
 	$i++;
 	}
 	return($cursos);
@@ -225,7 +229,7 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 				?>
 			            <tr id="-" data-rbd="<?php echo $curso['rbdColegio'];?>" onMouseOver="this.className='normalActive'" onMouseOut="this.className='normal'" class="normal">
 			            	<?php if($_SESSION["sesionPerfilUsuario"] == 21){ ?> 
-			            	<td><?php echo $curso["rbdColegio"];?></td>
+			            	<td><?php echo $curso["nombreColegio"];?></td>
 			            	<?php } ?>
 			                <td><?php echo $curso["nombreNivel"]." ".$curso["letraCursoColegio"];?></td>
 			                <td><?php echo $curso["anoCursoColegio"];?></td>
