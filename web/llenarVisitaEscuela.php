@@ -28,7 +28,7 @@ function getColegiosNuevo($idUsuario){
 $idUsuario = $_SESSION["sesionIdUsuario"];
 $idPerfil = $_SESSION["sesionPerfilUsuario"];
 $rbdColegio = getRbdUsuario($idUsuario);
-//echo $idUsuario;
+
 ?>
 <meta charset="iso-8859-1">
 <style type="text/css" media="all">
@@ -199,7 +199,15 @@ require "_navegacion.php";
 
           <div id="textoJornada">
             <h4>Docentes participantes</h4>
-            <select><option>---</option></select>
+            <table id="carga-participantes-docentes-colectivo">
+              <!--lugar de carga -->
+            </table>
+            <br />
+            <button id="agregar-docente-colectivo" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                <span class="ui-button-text">Agregar docente</span>
+            </button>
+            <br /><br />
+            </div>
 
             <h4>Temas abordados en la reunión</h4>
             <table class="tablesorter">
@@ -243,7 +251,7 @@ require "_navegacion.php";
 
         </div>
 
-        <div id="registro-directivos" style="display:_none;" class='cajaCentralFondo'>
+        <div id="registro-directivos" style="display:none;" class='cajaCentralFondo'>
           <div id="cajaCentralTop">
             <p class="titulo_jornada">Reunión con Directivos</p>
           </div>
@@ -512,8 +520,22 @@ require "_navegacion.php";
 <script language="javascript">
     
     var indice_llenado = 0;
-    var participantes_reunion_directivos = 1; 
+    var participantes_reunion_directivos = 1;
+    var docentes_colectivo = 0;
 
+    $('#agregar-docente-colectivo').click(function(e){
+      e.preventDefault();
+
+      if($("#select-RBD").val()!=""){        
+        a = "pide=docentes&rbd="+$("#select-RBD").val()+"&tag=colectivo-"+docentes_colectivo+"&prefix=colectivo";
+        $("#carga-participantes-docentes-colectivo").append("<tr><td id='td-colectivo-"+docentes_colectivo+"'></td><td></td></tr>")
+        var sel = document.getElementById("td-colectivo-"+docentes_colectivo);
+        docentes_colectivo++;
+        AJAXPOST("llenarVisitaEscuela_cursos.php",a,sel);
+      }else{
+        alert("Seleccione un Establecimiento");
+      }
+    });
 
     $("#check-retroalimentacion-1").change(function(){
       if($("#check-retroalimentacion-1").prop("checked")){
@@ -611,6 +633,9 @@ require "_navegacion.php";
     function reset_docentes(){
       $("#lugar_de_carga").html("");
       indice_llenado=0;
+
+      $("#carga-participantes-docentes-colectivo").html("");
+      docentes_colectivo = 0;
     }
     
     $("input[name=apoyo-docentes]").change(function(){
@@ -669,7 +694,7 @@ require "_navegacion.php";
           }
         });
       }
-    }); 
+    });
 
     $("#check-apoyo-docentes-otro").change(function(){
       if($("#check-apoyo-docentes-otro").prop("checked")){

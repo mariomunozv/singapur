@@ -7,7 +7,7 @@ function getDocentes($rbdColegio){
   $res = mysql_query($sql);
   $i = 0;
   while ($row = mysql_fetch_array($res)){
-  $profesores[$i] = array("idProfesor"=> $row["idProfesor"],"nombreProfesor"=>$row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"]." ".$row["nombreProfesor"] );  
+  $profesores[$i] = array("rutProfesor"=> $row["rutProfesor"],"nombreProfesor"=>$row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"]." ".$row["nombreProfesor"] );  
   $i++;
   }
   if ($i==0){
@@ -15,25 +15,6 @@ function getDocentes($rbdColegio){
   }
   return($profesores);
 }
-function getCursos(){
-  $sql = "SELECT * 
-          FROM cursocapacitacion 
-          WHERE estadoCursoCapacitacion = 1 
-          AND tipoCursoCapacitacion = 'curso' 
-          AND ano
-          ORDER BY nombreCortoCursoCapacitacion";
-  $res = mysql_query($sql);
-  $i = 0;
-  while ($row = mysql_fetch_array($res)){
-  $cursos[$i] = array("idCurso"=> $row["idCursoCapacitacion"],"nombreCurso"=>$row["nombreCortoCursoCapacitacion"] );  
-  $i++;
-  }
-  if ($i==0){
-    return(NULL);
-  }
-  return($cursos);
-}
-
 
 ?>
 <?php if($_POST["rbd"]!=""){ ?>
@@ -44,13 +25,13 @@ function getCursos(){
     <tr>
       <td>Docente: </td>
       <td>
-        <select class="select-docente" data-index="<?php echo $_POST['index'] ?>">
+        <select class="select-docente-observado" name="select-docente-observado-<?php echo $_POST['index'] ?>">
           <option value="">----</option>
             <?php 
                 $docentes = getDocentes($_POST["rbd"]);
                 if (count($docentes) > 0){
                   foreach ($docentes as $docente){
-                    echo "<option value='".$docente['idProfesor']."'>".$docente["nombreProfesor"]."</option>";
+                    echo "<option value='".$docente['rutProfesor']."'>".$docente["nombreProfesor"]."</option>";
                   }
                 }
             ?>
@@ -59,19 +40,8 @@ function getCursos(){
       </td>
       <td style="min-width:10px;"></td>
       <td>Curso: </td>
-      <td>
-        <?php $cursos = getCursos(); ?>
-        <select class="select-cursos-docente">
-          <option value="">----</option>
-            <?php 
-                
-                if (count($cursos) > 0){
-                  foreach ($cursos as $curso){
-                    echo "<option value='".$curso['idCurso']."'>".$curso["nombreCurso"]."</option>";
-                  }
-                }
-            ?>
-        </select>
+      <td id="lugar-cargado-cursos-observado-<?php echo $_POST['index'] ?>">
+        <select></select>
       </td>
     </tr>
   </table>
@@ -128,6 +98,13 @@ function getCursos(){
       }else{
         $(this).parent().prev().find("input").val("").prop("disabled",true);
       }
+    });
+
+    $(".select-docente-observado").change(function(){
+      var index = $(this).attr("name").substring(25);
+      a = "tag=observado-"+index+"&pide=cursos&rbd=<?php echo $_POST['rbd']; ?>&rutProfesor="+$(this).val();
+      var sel = document.getElementById("lugar-cargado-cursos-observado-"+index);
+      AJAXPOST("llenarVisitaEscuela_cursos.php",a,sel);
     });
 </script>
 
