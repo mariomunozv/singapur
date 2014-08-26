@@ -11,25 +11,26 @@ $rbdColegio = getRbdUsuario($idUsuario);
 <body>
 <div id="principal">
 <?php 
-	require("topMenu.php"); 
-	$navegacion = "Home*mural.php?idCurso=$idCurso,Evaluacion*evaluacionHome.php,Instrumentos para la Observaci&oacute;n de Clases*#";
-	require("_navegacion.php");
+    require("topMenu.php"); 
+    $navegacion = "Home*curso.php?idCurso=$idCurso,Evaluacion*evaluacionHome.php,Descarga de Instrumentos*#";
+    require("_navegacion.php");
 
 
 ?>
-	
-	<div id="lateralIzq">
-   		<?php require("menuleft.php");	?>
+    
+    <div id="lateralIzq">
+        <?php require("menuleft.php");  ?>
     </div> <!--lateralIzq-->
     
     <div id="lateralDer">
-		<?php require("menuright.php"); ?>
+        <?php require("menuright.php"); ?>
     </div><!--lateralDer-->
     
-	<div id="columnaCentro">
-	<p class="titulo_curso">Evaluaciones de proceso</p>
+    <div id="columnaCentro">
+    <p class="titulo_curso">Evaluaciones de proceso</p>
     <hr /><br />
-	<?php $grupos = getGruposEvaluaciones(); ?>
+    <p class="textoBienvenida">  Atención: error en Ìtem 20 de la prueba de 3º básico, por favor revisar más detalles en Home.</p>
+    <?php $grupos = getGruposEvaluaciones(); ?>
     <?php foreach ($grupos as $grupo) { ?>
     <?php $recursos = getEvaluacionGrupo($grupo["idGrupoEvaluacion"], $idUsuario); ?>
     <?php if(count($recursos[0]) >0 || count($recursos[1]) >0 || count($recursos[2]) >0){ ?>
@@ -76,11 +77,14 @@ $rbdColegio = getRbdUsuario($idUsuario);
                     </ul>
                 </li>
             </ul>
+            <div id="cajaCentralDown">
+            &nbsp; 
+            </div>
         </div>
         <br>
     <?php }} ?>
-		
-		<br>
+        
+        <br>
         <center>
             <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('evaluacionHome.php','_self')">
                 <span class="ui-button-text">Volver</span>
@@ -88,9 +92,9 @@ $rbdColegio = getRbdUsuario($idUsuario);
         </center>
     </div> <!--columnaCentro-->
 
-	<?php 
-    	
-		require("pie.php");
+    <?php 
+        
+        require("pie.php");
     ?> 
  
 </div><!--principal--> 

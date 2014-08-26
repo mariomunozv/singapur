@@ -81,7 +81,7 @@ require "_navegacion.php";
                   <td>Establecimiento: </td>
                   <td>
                     <?php getColegiosNuevo($idUsuario); ?>
-                    <select onchange="reset_docentes();" name="rbdColegio" class="campos" id="select-RBD" style="max-width:40%;">
+                    <select onchange="reset_docentes();resetReunionDirectivos();resetDocentesColectivo();" name="rbdColegio" class="campos" id="select-RBD">
                       <option value="">----</option>
                       <?php 
                           $colegios = getColegiosNuevo($idUsuario);
@@ -149,13 +149,13 @@ require "_navegacion.php";
           <div id="textoJornada">
             <h4>Apoyo a docentes en forma individual</h4>
             ¿Observó docentes? 
-            <select id="observo-docentes">
+            <select id="observo-docentes" name="select-observo-docentes">
               <option value="si">Si</option>
               <option value="no">No</option>
             </select>
             <div id="lugar_de_carga"></div>
             <br />
-            <button id="boton-agregar-docente" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <button style="display:none;" id="boton-agregar-docente" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                 <span class="ui-button-text">Agregar docente observado</span>
             </button>
          </div>
@@ -177,10 +177,10 @@ require "_navegacion.php";
             </h4>
             <table>
               <tr>
-                <td><input type="checkbox" name="apoyo-docentes"></td><td>Apoyo a docentes en forma  colectiva</td>
+                <td><input onchange="resetDocentesColectivo();" type="checkbox" name="apoyo-docentes"></td><td>Apoyo a docentes en forma  colectiva</td>
               </tr>
               <tr>
-                <td><input type="checkbox" name="reunion-directivos"></td><td>Reunión con Directivos</td>
+                <td><input onchange="resetReunionDirectivos();" type="checkbox" name="reunion-directivos"></td><td>Reunión con Directivos</td>
               </tr>
             </table>
             <div id="lugar_de_carga_trabajo_docentes"></div>
@@ -199,7 +199,7 @@ require "_navegacion.php";
 
           <div id="textoJornada">
             <h4>Docentes participantes</h4>
-            <table id="carga-participantes-docentes-colectivo">
+            <table class="tablesorter" id="carga-participantes-docentes-colectivo">
               <!--lugar de carga -->
             </table>
             <br />
@@ -243,12 +243,10 @@ require "_navegacion.php";
             <h4>Acuerdos o compromisos</h4>
             <textarea style="resize:none; width:100%;height:40px;"></textarea>
             <br /><br />
-          </div>
-
-          <div id="cajaCentralDown">
+            <div id="cajaCentralDown">
              &nbsp;
           </div>
-
+          </div>
         </div>
 
         <div id="registro-directivos" style="display:none;" class='cajaCentralFondo'>
@@ -267,18 +265,7 @@ require "_navegacion.php";
                 </tr>
               </thead>
               <tbody id="tabla-contenedor-participante-reunion">
-                <tr>
-                  <td></td>
-                  <td>
-                    <select style='width:98%;' name="participante-reunion-cargo-1">
-                      <option>Director</option>
-                      <option>Coordinador</option>
-                      <option>UTP</option>
-                      <option>Otro</option>
-                    </select>
-                  </td>
-                  <td><input style='width:98%;' name="participante-reunion-nombre-1"></td>
-                </tr>
+                
               </tbody>
             </table>
             <button style="float:right;" id="boton-agregar-participante" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
@@ -502,13 +489,12 @@ require "_navegacion.php";
              &nbsp;
           </div>
         </div>
+        <br />
+        <button id="" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <span class="ui-button-text">Guardar</span>
+        </button>
+        <br />
       </div>
-      <br />
-      <button id="" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-          <span class="ui-button-text">Guardar</span>
-      </button>
-      <br />
-
     </form>
     <br>
   </div>
@@ -520,23 +506,32 @@ require "_navegacion.php";
 <script language="javascript">
     
     var indice_llenado = 0;
-    var participantes_reunion_directivos = 1;
+    var participantes_reunion_directivos = 0;
     var docentes_colectivo = 0;
 
     $('#agregar-docente-colectivo').click(function(e){
       e.preventDefault();
 
-      if($("#select-RBD").val()!=""){        
+      if($("#select-RBD").val()!=""){      
         a = "pide=docentes&rbd="+$("#select-RBD").val()+"&tag=colectivo-"+docentes_colectivo+"&prefix=colectivo";
         $("#carga-participantes-docentes-colectivo").append("<tr><td id='td-colectivo-"+docentes_colectivo+"'></td><td></td></tr>")
         var sel = document.getElementById("td-colectivo-"+docentes_colectivo);
         docentes_colectivo++;
+        if(docentes_colectivo==5){
+          $("#agregar-docente-colectivo").hide();
+        }
         AJAXPOST("llenarVisitaEscuela_cursos.php",a,sel);
       }else{
         alert("Seleccione un Establecimiento");
       }
     });
-
+    $("#select-RBD").change(function(){
+      if($(this).val()!=""){
+        $(".select-participante-reunion-cargo").prop("disabled","");
+      }else{
+        $(".select-participante-reunion-cargo").prop("disabled","disabled");
+      }
+    });
     $("#check-retroalimentacion-1").change(function(){
       if($("#check-retroalimentacion-1").prop("checked")){
         $("#indicar-retroalimentacion-1").show();
@@ -633,9 +628,15 @@ require "_navegacion.php";
     function reset_docentes(){
       $("#lugar_de_carga").html("");
       indice_llenado=0;
+      if($("#select-RBD").val()!="" && $("#observo-docentes").val()=="si" ){
+        $("#boton-agregar-docente").show();
+      }else{
+        $("#boton-agregar-docente").hide();
+      }
 
       $("#carga-participantes-docentes-colectivo").html("");
       docentes_colectivo = 0;
+      $("#agregar-docente-colectivo").show();
     }
     
     $("input[name=apoyo-docentes]").change(function(){
@@ -655,9 +656,12 @@ require "_navegacion.php";
 
     $("#observo-docentes").change(function(){
       if($(this).val() == "si"){
-        $("#boton-agregar-docente").show();
+        if($("#select-RBD").val()!=""){
+          $("#boton-agregar-docente").show();
+        }
         $("#lugar_de_carga").html("");
         indice_llenado=0;
+        $("#boton-agregar-docente").css("display","display");
       }
       if($(this).val() == "no"){
         $("#boton-agregar-docente").hide();
@@ -668,10 +672,36 @@ require "_navegacion.php";
 
     $('#boton-agregar-participante').click(function(e){
       e.preventDefault();
-      participantes_reunion_directivos++;
-      var str = "<tr><td></td><td><select style='width:98%;' name='participante-reunion-cargo-"+participantes_reunion_directivos+"'><option>Director</option><option>Coordinador</option><option>UTP</option><option>Otro</option></select></td><td><input style='width:98%;' name='participante-reunion-nombre-"+participantes_reunion_directivos+"'></td></tr>";
-      $("#tabla-contenedor-participante-reunion").append(str);
-      
+      if(participantes_reunion_directivos<5){
+        participantes_reunion_directivos++;
+        var str = "<tr><td></td><td><select disabled class='select-participante-reunion-cargo' style='width:98%;' name='participante-reunion-cargo-"+participantes_reunion_directivos+"'><option value=''>---</option><option>Director</option><option>Coordinador</option><option>UTP</option><option>Otro</option></select><br><input class='otro-participante-reunion-cargo' style='width:95%;margin-top:5px;display:none;' placeholder='¿cual?' name='otro-participante-reunion-cargo-"+participantes_reunion_directivos+"'></td><td id='td-directivos-"+participantes_reunion_directivos+"'></td></tr>";
+        $("#tabla-contenedor-participante-reunion").append(str);
+        if(participantes_reunion_directivos == 5){
+          $("#boton-agregar-participante").hide();
+        }
+        if($("#select-RBD").val()!=""){
+          $(".select-participante-reunion-cargo[name=participante-reunion-cargo-"+participantes_reunion_directivos+"]").prop("disabled","");
+        }
+
+        $(".select-participante-reunion-cargo[name=participante-reunion-cargo-"+participantes_reunion_directivos+"]").change(function(){
+          if($(this).val()!=""){
+            var indice = $(this).prop("name").substr(27);
+            var display="&display1=none&display2=";
+            if($(this).val()=="Otro"){
+              $("[name=otro-participante-reunion-cargo-"+indice+"]").show();
+              display="&display2=none&display1=";
+            }else{
+              $("[name=otro-participante-reunion-cargo-"+indice+"]").hide();
+            }
+            a = "pide=docentes&rbd="+$("#select-RBD").val()+"&tag=directivos-"+indice+"&prefix=directivos"+display;
+            var sel = document.getElementById("td-directivos-"+indice);
+            AJAXPOST("llenarVisitaEscuela_cursos.php",a,sel);
+          }
+        });
+
+      }else{
+        alert("El maximo de directivos registrados es de 5.");
+      }
 
     });
     $('#boton-agregar-docente').click(function(e){
@@ -690,6 +720,9 @@ require "_navegacion.php";
           type:  'POST',
           success:  function (response) {
             indice_llenado++;
+            if(indice_llenado==5){
+              $("#boton-agregar-docente").css("display","none");
+            }
             $("#lugar_de_carga").append(response);
           }
         });
@@ -704,6 +737,36 @@ require "_navegacion.php";
 
       }
     });
+    $(".select-participante-reunion-cargo").change(function(){
+      if($(this).val()!=""){
+        var indice = "1";
+        var display="&display1=none&display2=";
+        if($(this).val()=="Otro"){
+          $("[name=otro-participante-reunion-cargo-"+indice+"]").show();
+          display="&display2=none&display1=";
+        }else{
+          $("[name=otro-participante-reunion-cargo-"+indice+"]").hide();
+        }
+        a = "pide=docentes&rbd="+$("#select-RBD").val()+"&tag=directivos-"+indice+"&prefix=directivos"+display;
+        var sel = document.getElementById("td-directivos-"+indice);
+        AJAXPOST("llenarVisitaEscuela_cursos.php",a,sel);
+      }
+    });
+    function resetReunionDirectivos(){
+      if($('#select-RBD').val()!="" && $("input[name=reunion-directivos]").prop("checked")){
+        $("#boton-agregar-participante").show();
+        $("#tabla-contenedor-participante-reunion").html("");
+      }else{
+        $("#tabla-contenedor-participante-reunion").html("<p>Para agregar participantes seleccione un establecimiento</p>");
+        $("#boton-agregar-participante").hide();
+        participantes_reunion_directivos=0;
+      }
+    }
+    function resetDocentesColectivo(){
+      docentes_colectivo=0;
+      $("#carga-participantes-docentes-colectivo").html("");
+      $("#agregar-docente-colectivo").show();
+    }
 
 </script>
 

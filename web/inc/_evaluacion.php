@@ -39,7 +39,7 @@ function getEvaluacionGrupo($idGrupoEvaluacion, $idUsuario){
 	 				 left join cursoColegio c  on a.rbdColegio = c.rbdColegio 	
 					 WHERE b.idUsuario = ".$idUsuario." AND b.tipoUsuario = 'UTP' AND c.anoCursoColegio=".date('Y');
 	}
-	echo $preQuery;
+	//echo $preQuery;
 	//para pruebas
 	$sql = "SELECT * 
 			FROM evaluacion 

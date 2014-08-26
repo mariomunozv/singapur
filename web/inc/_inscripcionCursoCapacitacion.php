@@ -192,7 +192,7 @@ function getUsuariosCurso($idCurso){
 function getCursoUs($idUsuario){
 	$sql_user = "SELECT * FROM usuario WHERE idUsuario=".$idUsuario;
 	$res_user = mysql_query($sql_user);
-	$tipoUsuario = mysql_fetch_array($res_user)["tipoUsuario"];
+	$tipoUsuario = mysql_fetch_array($res_user["tipoUsuario"]);
 	if($tipoUsuario=="Directivo"){
 		$sql = "SELECT idCursoCapacitacion 
 				FROM cursoCapacitacion 

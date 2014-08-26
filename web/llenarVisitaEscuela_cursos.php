@@ -3,7 +3,25 @@ require("admin/inc/config.php");
 require("inc/_funciones.php");
 //Funciones
 function getDocentes($rbdColegio){
-  $sql = "SELECT * FROM profesor WHERE rbdColegio = ".$rbdColegio." AND estadoProfesor = 1 ORDER BY apellidoPaternoProfesor";
+  $sql = "SELECT DISTINCT pr.rutProfesor, pr.apellidoPaternoProfesor, pr.apellidoMaternoProfesor, pr.nombreProfesor
+          FROM profesor pr join cursoColegio cu on cu.rutProfesor=pr.rutProfesor
+          WHERE cu.rbdColegio = ".$rbdColegio."
+          AND pr.estadoProfesor = 1 
+          AND cu.anoCursoColegio = ".date("Y")."
+          ORDER BY pr.apellidoPaternoProfesor";
+  if(substr($_POST['tag'],0,9)=="directivo"){
+    $sql = "SELECT DISTINCT pr.rutProfesor, pr.apellidoPaternoProfesor, pr.apellidoMaternoProfesor, pr.nombreProfesor
+            FROM profesor pr join usuario us on pr.rutProfesor=us.rutProfesor
+                 join usuariocolegio uscol on us.idUsuario = uscol.idUsuario
+            WHERE (pr.rbdColegio = $rbdColegio
+                    AND us.tipoUsuario ='UTP'
+                    ) 
+               OR (uscol.rbdColegio=$rbdColegio
+                   AND pr.estadoProfesor = 1
+                   AND us.tipoUsuario='Directivo' )
+            ORDER BY pr.apellidoPaternoProfesor";
+            echo $sql;
+  }
   $res = mysql_query($sql);
   $i = 0;
   while ($row = mysql_fetch_array($res)){
@@ -36,8 +54,12 @@ function getCursos($rutProfesor,$rbdColegio){
 
 ?>
 <?php if($_POST["pide"]=="docentes"){ ?>
-
-        <select class="select-docente-<?php echo $_POST['prefix']?>" name="select-docente-<?php echo $_POST['tag'] ?>">
+        <?php 
+          if($_POST["prefix"]== "colectivo"){ 
+            echo "<span>Docente: </span>"; 
+          } 
+        ?>
+        <select style="width:200px;display:<?php echo $_POST['display2']; ?>;" class="select-docente-<?php echo $_POST['prefix']?>" name="select-docente-<?php echo $_POST['tag'] ?>">
           <option value="">----</option>
             <?php 
                 $docentes = getDocentes($_POST["rbd"]);
@@ -47,22 +69,48 @@ function getCursos($rutProfesor,$rbdColegio){
                   }
                 }
             ?>
-            <option value="">Otro</option>
+            <option value="otr">Otro</option>
         </select>
+        <?php
+          if(substr($_POST["tag"],0,9)== "directivo"){ 
+            echo "<br /><input style='width:65%;margin-top:0px;display:".$_POST["display1"].";' placeholder='¿cual?' name='otro-participante-reunion-".$_POST["tag"]."'>";
+          }
+        ?>
+
+
 <?php if($_POST["prefix"]=="colectivo"){ ?>
 <script type="text/javascript">
-  $(".select-docente-colectivo").change(function(){
+  $(".select-docente-colectivo[name=select-docente-<?php echo $_POST['tag'] ?>]").change(function(){
       var index = $(this).attr("name").substring(25);
       a = "tag=colectivo-"+index+"&pide=cursos&rbd="+$("#select-RBD").val()+"&rutProfesor="+$(this).val();
-      var sel = $(this).parent().next(); //document.getElementById("lugar-cargado-cursos-observado-"+index);
+      var sel = $(this).parent().next();
       AJAXPOST("llenarVisitaEscuela_cursos.php",a,sel);
     });
 </script>
+<?php }elseif(substr($_POST["tag"],0,9)=="directivo"){ ?>
+<script type="text/javascript">
+  $("[name=select-docente-<?php echo $_POST['tag'] ?>]").change(function(){
+    if($(this).val()=="otr"){
+      $("[name=otro-participante-reunion-<?php echo $_POST['tag'] ?>]").show();
+    }else{
+      $("[name=otro-participante-reunion-<?php echo $_POST['tag'] ?>]").hide();
+    }
+  });
+</script>
 <?php } ?>
 
-<?php }elseif ($_POST["pide"]=="cursos"){ ?>
 
-        <select class="select-cursos" name="select-cursos-<?php echo $_POST['tag'] ?>">
+<?php }elseif ($_POST["pide"]=="cursos"){ ?>
+  
+  <?php if($_POST["rutProfesor"]=="otr"){ ?>
+        <span style='margin-left:25px;'>Docente: </span>
+        <input style="width:185px;" type="text" placeholder="Nombre Docente" name="input-otro-docente-<?php echo $_POST['tag'] ?>">
+        <br />
+        <span style='margin-left:25px;'>Curso: </span>
+        <input style="width:200px;" type="text" placeholder="Nombre curso" name="input-otro-cursos-<?php echo $_POST['tag'] ?>">
+  <?php }else{ ?>
+        <span style='margin-left:25px;'>Curso: </span>
+        <select style="width:200px;" class="select-cursos" name="select-cursos-<?php echo $_POST['tag'] ?>">
           <option value="">----</option>
             <?php 
                 $cursos = getCursos($_POST["rutProfesor"],$_POST["rbd"]);
@@ -73,7 +121,7 @@ function getCursos($rutProfesor,$rbdColegio){
                 }
             ?>
         </select>
-
+  <?php } ?>
 <?php } ?>
 
 

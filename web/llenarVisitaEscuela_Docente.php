@@ -3,7 +3,19 @@ require("admin/inc/config.php");
 require("inc/_funciones.php");
 //Funciones
 function getDocentes($rbdColegio){
-  $sql = "SELECT * FROM profesor WHERE rbdColegio = ".$rbdColegio." AND estadoProfesor = 1 ORDER BY apellidoPaternoProfesor";
+  $sql = "SELECT * 
+          FROM profesor 
+          WHERE rbdColegio = $rbdColegio 
+          AND estadoProfesor = 1 
+          ORDER BY apellidoPaternoProfesor";
+
+  $sql = "SELECT DISTINCT pr.rutProfesor, pr.apellidoPaternoProfesor, pr.apellidoMaternoProfesor, pr.nombreProfesor
+          FROM profesor pr join cursoColegio cu on cu.rutProfesor=pr.rutProfesor
+          WHERE cu.rbdColegio = ".$rbdColegio."
+          AND pr.estadoProfesor = 1 
+          AND cu.anoCursoColegio = ".date("Y")."
+          ORDER BY pr.apellidoPaternoProfesor";
+
   $res = mysql_query($sql);
   $i = 0;
   while ($row = mysql_fetch_array($res)){
@@ -35,13 +47,11 @@ function getDocentes($rbdColegio){
                   }
                 }
             ?>
-            <option value="">Otro</option>
+            <option value="otr">Otro</option>
         </select>
       </td>
-      <td style="min-width:10px;"></td>
-      <td>Curso: </td>
       <td id="lugar-cargado-cursos-observado-<?php echo $_POST['index'] ?>">
-        <select></select>
+        
       </td>
     </tr>
   </table>
