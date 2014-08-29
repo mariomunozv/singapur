@@ -48,6 +48,16 @@
         </div>
           <form id='form-observacion' action="#" method="post" class="form-horizontal">
             <div class="well">
+              <?php if($_SESSION["sesionPerfilUsuario"]==23){ ?>
+              <div class="control-group">
+                <label class="control-label" for="inputAsesor">Asesor</label>
+                <div class="controls" style="margin-top:5px;">
+                  <label style="margin-bottom:-5px"><?php echo $_SESSION['sesionNombreUsuario']; ?></label>
+                  <input type="hidden" name="idAsesor" value="<?php echo $_SESSION['sesionIdUsuario']; ?>">
+                </div>
+              </div>
+              <?php } ?>
+
               <div class="control-group">
                 <label class="control-label" for="inputInstitucion">Institución</label>
                 <div class="controls">
@@ -127,6 +137,23 @@
                 </div>
               </div>
 
+              <div class="control-group">
+                <label class="control-label" for="inputPaginasTexto">Grabación de Clases</label>
+                <div class="controls">
+                  <table class="table">
+                    <tr>
+                      <td>Si</td>
+                      <td><input value="1" type="Radio" name="grabacion-clases"></td>
+                      <td class="span2"></td>
+                      <td>No</td>
+                      <td><input value="0" type="Radio" name="grabacion-clases"></td>
+                      <td class="span6"></td>
+                    </tr>
+                  </table>
+                  </input>
+                </div>
+              </div>
+              
               <div class="control-group">
                 <label class="control-label" for="inputFecha">Fecha</label>
                 <div class="controls">

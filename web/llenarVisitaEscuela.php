@@ -47,6 +47,7 @@ $rbdColegio = getRbdUsuario($idUsuario);
     background-color: #eee;
   }
 </style>
+
 <body>
 <div id="principal">
 <?php
@@ -81,7 +82,7 @@ require "_navegacion.php";
                   <td>Establecimiento: </td>
                   <td>
                     <?php getColegiosNuevo($idUsuario); ?>
-                    <select onchange="reset_docentes();resetReunionDirectivos();resetDocentesColectivo();" name="rbdColegio" class="campos" id="select-RBD">
+                    <select style="width:90%;" onchange="reset_docentes();resetReunionDirectivos();resetDocentesColectivo();" name="rbdColegio" class="campos" id="select-RBD">
                       <option value="">----</option>
                       <?php 
                           $colegios = getColegiosNuevo($idUsuario);
@@ -105,7 +106,7 @@ require "_navegacion.php";
                 <tr>
                   <td>Visita Nº:</td>
                   <td>
-                    <select id="select-cantidad-visitas">
+                    <select name="numeroVisita" id="select-cantidad-visitas">
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -121,19 +122,19 @@ require "_navegacion.php";
                       <option value="">Otro</option>
                     </select>
                     &nbsp;&nbsp;
-                    <input style="display:none;width:56px;" type="number" id="input-cantidad-visitas" min=12></td>
+                    <input style="display:none;width:56px;" name="numeroVisitaOtro" value="13" type="number" id="input-cantidad-visitas" min=13></td>
                 </tr>
                 <tr>
                   <td>Fecha:</td>
-                  <td><input type=date></td>
+                  <td><input name="fechaVisita" type="text" id="datepicker"></td>
                 </tr>
                 <tr>
                   <td>Hora llegada:</td>
-                  <td><input type=time></td>
+                  <td><input type="time" name="horaLlegada"></td>
                 </tr>
                 <tr>
                   <td>Hora salida:</td>
-                  <td><input type=time></td>
+                  <td><input type="time" name="horaSalida"></td>
                 </tr>
               </table>
            </div>
@@ -503,6 +504,12 @@ require "_navegacion.php";
 
 </div>
 
+
+<script>
+$(function() {
+    $( "#datepicker" ).datepicker();
+});
+</script>
 <script language="javascript">
     
     var indice_llenado = 0;

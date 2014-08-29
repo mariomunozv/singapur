@@ -296,6 +296,11 @@ var Pauta = function (tipoUsuario, rut) {
       valid = false;
     }
 
+    if ( $("input[name=grabacion-clases]:checked").val()==undefined ) {
+      errors.push('Señale si se realizó la grabacion de la clase');
+      valid = false;
+    }
+
     if ( calendar.datepicker( "getDate" ) === null ) {
       errors.push('Seleccione Fecha');
       valid = false;

@@ -129,6 +129,8 @@ function save($args)
   $pauta->letraCurso = $curso[0];
   $pauta->anoCurso = $curso[1];
   $pauta->visibilidadUTP = $_POST['tipoUsuario'] == 'UTP' ? 1 : 0;
+  $pauta->grabaClase = $_POST["grabacion-clases"];
+  $pauta->idUsuario = $_POST["idAsesor"];
   $result = $pauta->save();
 
   $response = array();
