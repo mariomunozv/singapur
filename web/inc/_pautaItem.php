@@ -1,6 +1,7 @@
 <?php 
 function buscaPauta($idUsuario,$idLista){
-	$sql = "SELECT * from pautaItem WHERE idUsuario = ".$idUsuario." AND idLista = ".$idLista;
+	$sql = "SELECT * from pautaItem WHERE idUsuario = ".$idUsuario." AND idLista = ".$idLista." AND fechaRespuestaPautaItem > '".date("Y")."'";
+	//echo $sql;
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	if ($row){

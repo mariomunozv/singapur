@@ -38,12 +38,12 @@ function getAlumnosCurso($idCursoCapacitacion){
 $sql = "SELECT b.rutProfesor, b.idUsuario, c.rbdColegio ,b.rutEmpleadoKlein, a.idPerfil, b.tipoUsuario, c.implementaProfesor, b.estadoUsuario
         FROM inscripcionCursoCapacitacion a join usuario b on a.idUsuario = b.idUsuario 
              left join profesor c on b.rutProfesor = c.rutProfesor
-             left join empleadoklein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
+             left join empleadoKlein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
         WHERE b.estadoUsuario = 1 AND a.idCursoCapacitacion= ".$idCursoCapacitacion;
 
 //seccion de consulta para que en el listado de participantes se considere a administrativos y coordinadores generales
 $sql2 ="SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.idPerfil, b.tipoUsuario , c.implementaProfesor, b.estadoUsuario
-		FROM usuario b join empleadoklein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
+		FROM usuario b join empleadoKlein d on b.rutEmpleadoKlein = d.rutEmpleadoKlein
 			 left join profesor c on b.rutProfesor = c.rutProfesor 
     		 left join detalleUsuarioProyectoPerfil e on b.idUsuario = e.idUsuario 
 		WHERE b.tipoUsuario = 'Coordinador General' AND b.estadoUsuario = 1 ";
@@ -57,9 +57,10 @@ $sql3 = "SELECT b.rutProfesor,b.idUsuario, c.rbdColegio,b.rutEmpleadoKlein, e.id
    	 		  left join detalleUsuarioProyectoPerfil e on b.idUsuario = e.idUsuario 
 		 WHERE b.idUsuario in
     						(SELECT a.idUsuario
-    						 FROM usuarioColegio a join cursoCapacitacionColegio b on a.rbdColegio = b.rbdColegio
+    						 FROM usuarioColegio a join cursocapacitacioncolegio b on a.rbdColegio = b.rbdColegio
     						 WHERE b.idCursoCapacitacion = ".$idCursoCapacitacion.")";
 $sql = "(".$sql.") UNION (".$sql2.") UNION (".$sql3.")";
+//echo $sql;
 $res = mysql_query($sql);
 $i=0;
 	while($row = mysql_fetch_array($res)){
@@ -192,8 +193,7 @@ function getUsuariosCurso($idCurso){
 function getCursoUs($idUsuario){
 	$sql_user = "SELECT * FROM usuario WHERE idUsuario=".$idUsuario;
 	$res_user = mysql_query($sql_user);
-	$aux = mysql_fetch_array($res_user);
-	$tipoUsuario = $aux["tipoUsuario"];
+	$tipoUsuario = mysql_fetch_array($res_user["tipoUsuario"]); //  modificado 22.07
 	if($tipoUsuario=="Directivo"){
 		$sql = "SELECT idCursoCapacitacion 
 				FROM cursoCapacitacion 
@@ -257,7 +257,7 @@ function getCursosUsuario($idUsuario){
 				where estadoCursoCapacitacion = 1
 				AND tipoCursoCapacitacion = 'directivos'
 				AND idCursoCapacitacion in (SELECT idCursoCapacitacion 
-					                        FROM cursocapacitacioncolegio a JOIN usuariocolegio b
+					                        FROM cursocapacitacioncolegio a JOIN usuarioColegio b
 					                        ON a.rbdColegio = b.rbdColegio
 					                        WHERE b.idUsuario = ".$idUsuario."  )
 				ORDER BY(nombreCortoCursoCapacitacion)";

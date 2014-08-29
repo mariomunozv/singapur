@@ -1,6 +1,12 @@
 <?php 
 $idCurso = $_SESSION["sesionIdCurso"];
+
+if ($idCurso == ""){
+	$_SESSION["sesionIdCurso"] = $_GET["idCurso"];
+}
+
 $idPerfil = $_SESSION["sesionPerfilUsuario"];
+
 ?>
 <script language="javascript">
 function cambiaCurso(idCurso){
@@ -17,6 +23,20 @@ function cambiaCurso(idCurso){
 	}
 		
 }
+
+function _loadCurso(){
+	var idCurso = $("#cambiaCurso option:selected").val();
+	var tipoPerfil= "<?php echo $idPerfil; ?>";
+	if (idCurso != ""){
+		if(tipoPerfil == 21){
+			window.location.href="bitacora.php?idCurso="+idCurso;
+		}else{
+			window.location.href="curso.php?idCurso="+idCurso;
+		}
+	}
+		
+}
+
 </script>
 
 
@@ -42,3 +62,9 @@ function cambiaCurso(idCurso){
 	</select>
 </div>
 <?php //} ?>
+
+<?php 
+if ($idCurso == ""){ 
+	?>
+	<script>_loadCurso();</script>
+<?php } ?>

@@ -25,7 +25,7 @@
                 AND m.letraCursoColegio = "."'$letraCursoColegio'"."
                 AND pi.idLista = ". $idLista ."
                 AND pi.asistio = 1
-                AND pi.fechaRespuestaPautaItem > ".$anoCursoColegio."
+                AND pi.fechaRespuestaPautaItem > '".$anoCursoColegio."'
                 ORDER BY a.apellidoPaternoAlumno ASC";
         // echo $sql;
         $res = mysql_query($sql);

@@ -1,5 +1,5 @@
 <?php 
-// ini_set('display_errors','On');
+ ini_set('display_errors','On');
 
 ob_start("ob_gzhandler");
 require("inc/incluidos.php"); 
@@ -27,6 +27,7 @@ function calculaNotaPorEscala($escala, $puntajeMaximo, $puntajeObtenido) {
 }
 
 if(!isset($_SESSION["sesionRbdColegio"])){
+	echo "sesion";
 		$_SESSION["sesionRbdColegio"] = $_REQUEST["rbdColegio"];
 		$_SESSION["sesionIdNivel"] = $_REQUEST["idNivel"];
 		$_SESSION["sesionAnoCursoColegio"]  = $_REQUEST["anoCursoColegio"];
@@ -94,6 +95,8 @@ function getAlumnosCurso2($rbd, $idNivel, $anoCursoColegio, $letraCursoColegio, 
                 AND m.anoCursoColegio = ".$anoCursoColegio."
                 AND m.letraCursoColegio = "."'$letraCursoColegio'"."
                 AND pi.idLista = ". $idLista ."
+				AND pi.asistio = 1
+                AND pi.fechaRespuestaPautaItem > '".$anoCursoColegio."'
                 ORDER BY a.apellidoPaternoAlumno ASC";
 	//echo $sql;
 	$res = mysql_query($sql);
@@ -452,10 +455,13 @@ if (count($al) > 0) {
 	foreach ($al as $alumno) {
 		if ($alumno['asistio']) {
 			$datosPauta = buscaPauta($alumno["idUsuario"],$idLista);
-			if ($datosPauta["resultadoListaPautaItem"] === NULL) {
+			
+			if ($datosPauta["resultadoListaPautaItem"] == NULL) {
 				$ingresoCompletado = false;
 			}
+			
 			$nota = calculaNotaPorEscala($escala, $datosLista["puntajeTotalLista"], $datosPauta["resultadoListaPautaItem"]);
+			
 			$alumno["nota"] = $nota;
 			$alumno["datosPauta"] = $datosPauta;
 		}
@@ -466,10 +472,13 @@ if (count($al) > 0) {
 }
 
 if ($ingresoCompletado) {
+	
 	for($i=0;$i<count($items);$i++){
 	    $totalItem[$i] = 0;
 		foreach ($alumnos as $alumno){
+			
 			if ($alumno['asistio']) {
+				
 				$respuesta = getRespuestaUsuarioItem($items[$i]["idItem"],$alumno["idUsuario"],$alumno["datosPauta"]["idPautaItem"]);
 				$totalItem[$i] = $totalItem[$i] + $respuesta["puntajeRespuestaItem"];
 			}
@@ -508,6 +517,7 @@ if ($ingresoCompletado) {
 			<?php 
 			if (count($alumnos) > 0){
 				 $i = 1;
+				 $noAsistieron = array();
 				foreach ($alumnos as $alumno){ 
 					if ($alumno['asistio'] == 1) {
 			  			?>

@@ -58,7 +58,7 @@ function isActividad($idActividad){
 function getIntentos($idActividad,$idUsuario){
 	global $anoActual;
 	//$sql ="SELECT * FROM pautaItem as PI inner join lista as L on PI.idLista = L.idLista WHERE idActividad = ".$idActividad." and idUsuario = ".$idUsuario." ORDER BY porcentajeLogroPautaItem DESC limit 3";
-	$sql ="SELECT * FROM pautaItem as PI inner join lista as L on PI.idLista = L.idLista WHERE idActividad = ".$idActividad." and idUsuario = ".$idUsuario." AND YEAR(PI.fechaRespuestaPautaItem) > ".$anoActual." ORDER BY fechaRespuestaPautaItem ASC limit 3";
+	$sql ="SELECT * FROM pautaItem as PI inner join lista as L on PI.idLista = L.idLista WHERE idActividad = ".$idActividad." and idUsuario = ".$idUsuario." AND PI.fechaRespuestaPautaItem > '".$anoActual."' ORDER BY fechaRespuestaPautaItem ASC limit 3";
 	//echo $sql;
 	$res = mysql_query($sql);
 	$i=0;
@@ -149,6 +149,7 @@ $nombreCurso = getNombreCortoCurso($_SESSION["sesionIdCurso"]);
 		</thead>
 		<tbody>
 		<?php $intentos = getIntentos($idActividad,$idUsuario);
+
 		   
 		   $i = 1;
 		   $maxPorcentaje = 0; 

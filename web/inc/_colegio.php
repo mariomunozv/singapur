@@ -1,7 +1,6 @@
 <?php 
  
-
-function getColegiosTodos(){
+ function getColegiosTodos(){
 	$sql = "SELECT * FROM 
 	colegio col 
 	left join congregacion con
@@ -9,7 +8,6 @@ function getColegiosTodos(){
 	join comuna com 
 	on col.idComuna = com.idComuna";
 	//echo $sql;
-	
 	$res = mysql_query($sql);
 	$i = 0;
 	while ($row = mysql_fetch_array($res)){
@@ -21,12 +19,33 @@ function getColegiosTodos(){
 					  "nombreCongregacion" => $row["nombre"]
 					  );	
 	$i++;
+	
 	}
 	if ($i==0){
 		return(NULL);
 	}
 	return($colegios);
 }
+ 
+/* function getColegios(){
+	$sql = "SELECT * FROM colegio a left join comuna  b on a.idComuna = b.idComuna";
+
+	$res = mysql_query($sql);
+	$i=0;
+	while($row = mysql_fetch_array($res)){
+	
+	$colegio[$i] = array( "rbdColegio" => $row["rbdColegio"],
+					  "nombreColegio" => $row["nombreColegio"],
+					  "emailColegio" => $row["emailColegio"],
+					  "nombreComuna" => $row["nombreComuna"],
+					  "direccionColegio" => $row["direccionColegio"],
+					  "telefonoColegio" => $row["telefonoColegio"],
+					  "paginaWebColegio" => $row["paginaWebColegio"],
+					 "logoColegio" => $row["logoColegio"] );	
+	$i++;
+	}
+	return($colegio);
+	 } */
  function getColegiosNuevo(){
 	$sql = "SELECT * FROM colegio WHERE estadoColegio = 1 ORDER BY nombreColegio ";
 	$res = mysql_query($sql);
@@ -57,5 +76,18 @@ function getDatosColegio($rbdColegio){
 					 "logoColegio" => $row["logoColegio"] );	
 	return($datosColegio);
 } 
+
+function getRbdUsuario($idUsuario){
+	$sql = "SELECT rbdColegio 
+		FROM profesor
+		WHERE rutProfesor in (
+		SELECT rutProfesor
+		FROM usuario
+		WHERE idUsuario = ".$idUsuario.")";
+	//echo $sql;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_row($res);
+	return $row[0];
+}
 
 ?>

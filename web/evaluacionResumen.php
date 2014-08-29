@@ -93,6 +93,8 @@ function getAlumnosCurso2($rbd, $idNivel, $anoCursoColegio, $letraCursoColegio, 
                 AND m.anoCursoColegio = ".$anoCursoColegio."
                 AND m.letraCursoColegio = "."'$letraCursoColegio'"."
                 AND pi.idLista = ". $idLista ."
+				AND pi.asistio = 1
+                AND pi.fechaRespuestaPautaItem > '".$anoCursoColegio."'
                 ORDER BY a.apellidoPaternoAlumno ASC";
 	//echo $sql;
 	$res = mysql_query($sql);
@@ -415,12 +417,15 @@ function calculaPromedioCompetenciaMatematica($idCompetencia,$items){
 
 function getAlumnosConPauta($alumnos,$idLista){
 	$alumnosConPauta = 0;
-	foreach($alumnos as $alumno)
-	{
-		if ($alumno['asistio'] == 1) {
-			$alumnosConPauta += 1;
-		}
+	if (count($alumnos) > 0){
+		foreach($alumnos as $alumno)
+		{
+			if ($alumno['asistio'] == 1) {
+				$alumnosConPauta += 1;
+			}
+		}	
 	}
+	
 	return($alumnosConPauta);
 }
 
@@ -442,13 +447,15 @@ $alumnos = array();
 
 
 $ingresoCompletado = true;
+
 if (count($al) > 0) {
 	foreach ($al as $alumno) {
 		if ($alumno['asistio']) {
 			$datosPauta = buscaPauta($alumno["idUsuario"],$idLista);
-			if ($datosPauta["resultadoListaPautaItem"] === NULL) {
+			if ( $datosPauta["resultadoListaPautaItem"] == NULL) {
 				$ingresoCompletado = false;
 			}
+			
 			$nota = calculaNotaPorEscala($escala, $datosLista["puntajeTotalLista"], $datosPauta["resultadoListaPautaItem"]);
 			$alumno["nota"] = $nota;
 			$alumno["datosPauta"] = $datosPauta;
@@ -458,7 +465,7 @@ if (count($al) > 0) {
 } else {
 	$ingresoCompletado = false;
 }
-
+ 
 if ($ingresoCompletado) {
 
 	for($i=0;$i<count($items);$i++){
@@ -490,7 +497,9 @@ if ($ingresoCompletado) {
 	    	<li><a href="#tabsResultadoGeneral" style="font-size:10px">Resultado General</a></li>
 	    	<li><a href="#tabsComparacion" style="font-size:10px">Comparación</a></li>
 		</ul>
-		<div id="tabsResultadosIndividuales">
+		
+        
+        <div id="tabsResultadosIndividuales">
 		    <table class="tablesorter" id="tabla"> 
 		   	<thead>  
 	   		<tr>
@@ -510,19 +519,27 @@ if ($ingresoCompletado) {
 					    <option value="0.7" <? if ($escala == 0.7){ echo 'selected="selected"';}?>>70%</option>
 					</select>
 	            </th>
-			    <? } ?>
+			    <? }
+					else{
+					?>
+                    	<input id="escala" name="escala" type="hidden" value="<? echo $escala; ?>" />
+                    <?	
+					}
+					
+				 ?>
 			</tr>
 			</thead>
 			<tbody>
 			<? 
 			if (count($alumnos) > 0){
 				 $i = 1;
+				$noAsistieron = array(); 
 				foreach ($alumnos as $alumno){ 
 					if ($alumno['asistio'] == 1) {
 						// $datosPauta = buscaPauta($alumno["idUsuario"],$idLista);
 						// $nota = calculaNotaPorEscala($escala, $datosLista["puntajeTotalLista"], $datosPauta["resultadoListaPautaItem"]);
 			  			?>
-				        <tr onmouseover="this.className='normalActive'" onmouseout="this.className='<? echo $claseTR; ?>'" class="<? echo $claseTR; ?>">
+				        <tr onmouseover="this.className='normalActive'" onmouseout="this.className='normal'" class="normal">
 							<td><? echo $i;?></td>
 							<td  style="text-align:left;"><? echo $alumno["apellidoPaternoAlumno"]." ".$alumno["nombreAlumno"];?></td>
 							<td style="text-align:center;"><? echo $alumno["datosPauta"]["resultadoListaPautaItem"] == NULL ? 0 : $alumno["datosPauta"]["resultadoListaPautaItem"];?></td>
@@ -586,7 +603,7 @@ if ($ingresoCompletado) {
 			<? 
 			for($i=0;$i<count($items);$i++){ 
 			?>
-			<tr>
+			<tr onmouseover="this.className='normalActive'" onmouseout="this.className='normal'" class="normal">
 				<td style="text-align:center;"><? echo $items[$i]["enunciadoItem"]; ?></td>
 				<td style="text-align:left;"><? echo getTareaMatematicaItem($items[$i]["idItem"]); ?></td>
 				<td style="text-align:left;"><? echo getNivelComplejidadItem($items[$i]["idItem"]); ?></td>
