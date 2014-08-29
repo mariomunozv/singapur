@@ -13,6 +13,15 @@ require '../models/PautaObservacion/indicadorGestion.php';
 require '../models/PautaObservacion/indicadorCondiciones.php';
 require '../models/PautaObservacion/PautaObservacion.php';
 
+require "../inc/incluidos.php";
+
+function nombreProfesor($rutProfesor){
+  $sql = "SELECT * FROM v35.profesor where rutProfesor='$rutProfesor'";
+  $res = mysql_query($sql);
+  $row = mysql_fetch_array($res);
+  return $row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"];
+}
+
 function filter($array, $delimiter) {
   $filterElements = array();
   foreach ($_POST as $key => $value) {
@@ -130,7 +139,6 @@ function save($args)
   $pauta->anoCurso = $curso[1];
   $pauta->visibilidadUTP = $_POST['tipoUsuario'] == 'UTP' ? 1 : 0;
   $pauta->grabaClase = $_POST["grabacion-clases"];
-  $pauta->idUsuario = $_POST["idAsesor"];
   $result = $pauta->save();
 
   $response = array();
@@ -161,6 +169,7 @@ function informe($rut = null, $tipoUsuario = null)
   <th>Apartado</th>
   <th>Paginas Texto</th>
   <th>Paginas Texto Ejercitacion</th>
+  <th>Grabación de Clases</th>
   <th>a</th>
   <th>b</th>
   <th>c</th>
@@ -212,6 +221,7 @@ HTML;
       <td>$apartado</td>
       <td>$pauta->paginasTexto</td>
       <td>$pauta->paginasTextoEjercitacion</td>
+      <td>$pauta->grabaClase</td>
       <td>$indCondicion->a</td>
       <td>$indCondicion->b</td>
       <td>$indCondicion->c</td>
@@ -248,7 +258,7 @@ HTML;
 HTML;
 
   header('Content-type: application/vnd.ms-excel');
-  header("Content-Disposition: attachment; filename=Descarga.xls");
+  header("Content-Disposition: attachment; filename=".nombreProfesor($pauta->rutProfesor)."_".date("d-m-Y").".xls");
   header("Pragma: no-cache");
   header("Expires: 0");
   echo $titulos;

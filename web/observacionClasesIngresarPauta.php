@@ -53,7 +53,6 @@
                 <label class="control-label" for="inputAsesor">Asesor</label>
                 <div class="controls" style="margin-top:5px;">
                   <label style="margin-bottom:-5px"><?php echo $_SESSION['sesionNombreUsuario']; ?></label>
-                  <input type="hidden" name="idAsesor" value="<?php echo $_SESSION['sesionIdUsuario']; ?>">
                 </div>
               </div>
               <?php } ?>
@@ -143,10 +142,10 @@
                   <table class="table">
                     <tr>
                       <td>Si</td>
-                      <td><input value="1" type="Radio" name="grabacion-clases"></td>
+                      <td><input value="Si" type="Radio" name="grabacion-clases"></td>
                       <td class="span2"></td>
                       <td>No</td>
-                      <td><input value="0" type="Radio" name="grabacion-clases"></td>
+                      <td><input value="No" type="Radio" name="grabacion-clases"></td>
                       <td class="span6"></td>
                     </tr>
                   </table>

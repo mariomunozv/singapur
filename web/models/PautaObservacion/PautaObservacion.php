@@ -9,7 +9,6 @@ class PautaObservacion
   public $idCongregacion;
   public $rbdColegio;
   public $rutProfesor;
-  public $idUsuario;
   public $rutResponsable;
   public $idLibro;
   public $idCapitulo;
@@ -34,7 +33,7 @@ class PautaObservacion
 
     $db->connectDb();
 
-    $query = "INSERT INTO pautaObservacion (paginasTexto, paginasTextoEjercitacion, fecha, idCongregacion, rbdColegio, rutProfesor,idUsuario, rutResponsable, idLibro, idCapitulo, idApartado, horaInicio, horaTermino, preguntaGestion, preguntaCondiciones, anoCurso, letraCurso, indicadoresGestion, indicadoresCondiciones, visibilidadUTP,grabaClase) VALUES(:paginasTexto, :paginasTextoEjercitacion, :fecha, :idCongregacion, :rbdColegio, :rutProfesor,:idUsuario, :rutResponsable, :idLibro, :idCapitulo, :idApartado, :horaInicio, :horaTermino, :preguntaGestion, :preguntaCondiciones, :anoCurso, :letraCurso, :indicadoresGestion, :indicadoresCondiciones, :visibilidadUTP,:grabaClase)";
+    $query = "INSERT INTO pautaObservacion (paginasTexto, paginasTextoEjercitacion, fecha, idCongregacion, rbdColegio, rutProfesor, rutResponsable, idLibro, idCapitulo, idApartado, horaInicio, horaTermino, preguntaGestion, preguntaCondiciones, anoCurso, letraCurso, indicadoresGestion, indicadoresCondiciones, visibilidadUTP,grabaClase) VALUES(:paginasTexto, :paginasTextoEjercitacion, :fecha, :idCongregacion, :rbdColegio, :rutProfesor, :rutResponsable, :idLibro, :idCapitulo, :idApartado, :horaInicio, :horaTermino, :preguntaGestion, :preguntaCondiciones, :anoCurso, :letraCurso, :indicadoresGestion, :indicadoresCondiciones, :visibilidadUTP,:grabaClase)";
 
     $st = $db->getPDO()->prepare($query);
 
@@ -44,7 +43,6 @@ class PautaObservacion
     $st->bindParam('idCongregacion', $this->idCongregacion );
     $st->bindParam('rbdColegio', $this->rbdColegio );
     $st->bindParam('rutProfesor', $this->rutProfesor );
-    $st->bindParam('idUsuario', $this->idUsuario );
     $st->bindParam('rutResponsable', $this->rutResponsable );
     $st->bindParam('idLibro', $this->idLibro );
     $st->bindParam('idCapitulo', $this->idCapitulo );
