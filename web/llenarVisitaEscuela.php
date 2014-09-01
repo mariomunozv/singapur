@@ -69,9 +69,9 @@ require "_navegacion.php";
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec interdum risus, ut aliquet nunc. Sed vitae ullamcorper nisi. Nulla tincidunt, libero sit amet consequat gravida, tortor quam viverra lorem, eu cursus dolor lectus vel libero. Pellentesque ac consequat enim, ac laoreet enim.
     </p>
-      <form action="pruebas.php" method="POST">
+      <form id="form-visita-escuela" action="pruebas.php" method="POST">
         <div>
-          <div class='cajaCentralFondo'>
+          <div id="datos-generales" class='cajaCentralFondo'>
             <div id="cajaCentralTop">
               <p class="titulo_jornada">Datos Generales</p>
             </div>
@@ -100,7 +100,10 @@ require "_navegacion.php";
                 <tr>
                   <td>Asesor: </td>
                   <td id="campo_asesor">
-                    <?php if($_SESSION["sesionPerfilUsuario"]==23 || $_SESSION["sesionPerfilUsuario"]==5 ){echo $_SESSION["sesionNombreUsuario"];} ?>
+                    <?php if($_SESSION["sesionPerfilUsuario"]==23 || $_SESSION["sesionPerfilUsuario"]==5 ){
+                      echo $_SESSION["sesionNombreUsuario"];} 
+                      echo "<input type='hidden' name='idAsesor' value='".$_SESSION["sesionIdUsuario"]."'>";
+                    ?>
                   </td>
                 </tr>
                 <tr>
@@ -236,13 +239,13 @@ require "_navegacion.php";
                   <td><input type="checkbox" name="docentes-colectivo-4"></td>
                 </tr>
                 <tr>
-                  <td>Otros: <input disabled name="apoyo-docentes-otro" id="apoyo-docentes-otro"></td>
+                  <td>Otros: <input class="validar-disabled" disabled name="apoyo-docentes-otro" id="apoyo-docentes-otro"></td>
                   <td><input id="check-apoyo-docentes-otro" type="checkbox" name="docentes-colectivo-5"></td>
                 </tr>
               </tbody>
             </table>
             <h4>Acuerdos o compromisos</h4>
-            <textarea style="resize:none; width:100%;height:40px;"></textarea>
+            <textarea name="acuerdos-docentes-colectivo" style="resize:none; width:100%;height:40px;"></textarea>
             <br /><br />
             <div id="cajaCentralDown">
              &nbsp;
@@ -283,11 +286,11 @@ require "_navegacion.php";
               </thead>
               <tbody>
                 <tr>
-                  <td>Factores Institucionales<br> <input id="indicar-factores-institucionales" name="indicar-factores-institucionales" placeholder="¿Indicar cuáles?" style="width:98%;display:none;"></td>
+                  <td>Factores Institucionales<br> <input class="validar-display" id="indicar-factores-institucionales" name="indicar-factores-institucionales" placeholder="¿Indicar cuáles?" style="width:98%;display:none;"></td>
                   <td><input id="check-factores-institucionales" name="check-factores-institucionales" type="checkbox"></td>
                 </tr>
                 <tr>
-                  <td>Factores Pedagógicos<br> <input id="indicar-factores-pedagogicos" name="indicar-factores-pedagogicos" placeholder="¿Indicar cuáles?" style="width:98%;display:none;"></td>
+                  <td>Factores Pedagógicos<br> <input class="validar-display" id="indicar-factores-pedagogicos" name="indicar-factores-pedagogicos" placeholder="¿Indicar cuáles?" style="width:98%;display:none;"></td>
                   <td><input id="check-factores-pedagogicos" name="check-factores-pedagogicos" type="checkbox"></td>
                 </tr>
               </tbody>
@@ -306,7 +309,7 @@ require "_navegacion.php";
                   <td>
                     1. Avances y logros que aprecian como consecuencia de la implementación del Método Singapur (Estudiante/Docente).
                     <br> 
-                    <input id="indicar-retroalimentacion-1" name="indicar-retroalimentacion-1" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-1" name="indicar-retroalimentacion-1" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-1" name="check-retroalimentacion-1" type="checkbox"></td>
                 </tr>
@@ -314,7 +317,7 @@ require "_navegacion.php";
                   <td>
                     2. Análisis de resultados de los aprendizajes de los estudiantes.
                     <br> 
-                    <input id="indicar-retroalimentacion-2" name="indicar-retroalimentacion-2" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-2" name="indicar-retroalimentacion-2" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-2" name="check-retroalimentacion-2" type="checkbox"></td>
                 </tr>
@@ -322,7 +325,7 @@ require "_navegacion.php";
                   <td>
                     3. Reporte del monitoreo realizado por el CFK
                     <br> 
-                    <input id="indicar-retroalimentacion-3" name="indicar-retroalimentacion-3" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-3" name="indicar-retroalimentacion-3" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-3" name="check-retroalimentacion-3" type="checkbox"></td>
                 </tr>
@@ -330,7 +333,7 @@ require "_navegacion.php";
                   <td>
                     4. Otro (especifique)
                     <br> 
-                    <input id="indicar-retroalimentacion-4" name="indicar-retroalimentacion-4" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-4" name="indicar-retroalimentacion-4" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-4" name="check-retroalimentacion-4" type="checkbox"></td>
                 </tr>
@@ -338,7 +341,7 @@ require "_navegacion.php";
             </table>
             <br />
             <h4>Acuerdos o compromisos</h4>
-            <textarea id="area-retroalimentacion" style="resize:none; width:100%;height:40px;"></textarea>
+            <textarea id="area-retroalimentacion" name="acuerdos-directivo-visita" style="resize:none; width:100%;height:40px;"></textarea>
             <br /><br />
           </div>
 
@@ -351,7 +354,7 @@ require "_navegacion.php";
 
         <div class='cajaCentralFondo'>
           <div id="cajaCentralTop">
-            <p class="titulo_jornada">Monitoreo del Colegio</p>
+            <p id="monitoreo-del-colegio" class="titulo_jornada">Monitoreo del Colegio</p>
           </div>
           <br>
           <div id="textoJornada">
@@ -365,124 +368,124 @@ require "_navegacion.php";
               </tr>
               <tr>
                 <td>1. El establecimiento cuenta con los materiales didácticos necesario para desarrollar las actividades.</td>
-                <td><input type="radio" value="si" name="fac-1"></td>
-                <td><input type="radio" value="no" name="fac-1"></td>
-                <td><input type="radio" value="n/o" name="fac-1"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-1"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-1"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-1"></td>
               </tr>
               <tr>
                 <td>2. En el colegio se les  facilita a los profesores el acceso a los materiales didácticos.</td>
-                <td><input type="radio" value="si" name="fac-2"></td>
-                <td><input type="radio" value="no" name="fac-2"></td>
-                <td><input type="radio" value="n/o" name="fac-2"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-2"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-2"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-2"></td>
               </tr>
               <tr>
                 <td>3. Las horas de clases semanales son suficientes para implementar el MS.</td>
-                <td><input type="radio" value="si" name="fac-3"></td>
-                <td><input type="radio" value="no" name="fac-3"></td>
-                <td><input type="radio" value="n/o" name="fac-3"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-3"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-3"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-3"></td>
               </tr>
               <tr>
                 <td>4. Los docentes están implementando los capítulos en los tiempos programados.</td>
-                <td><input type="radio" value="si" name="fac-4"></td>
-                <td><input type="radio" value="no" name="fac-4"></td>
-                <td><input type="radio" value="n/o" name="fac-4"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-4"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-4"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-4"></td>
               </tr>
               <tr>
                 <td>5. Los docentes están trabajando con los textos PSL, no con otros recursos o recursos extras.</td>
-                <td><input type="radio" value="si" name="fac-5"></td>
-                <td><input type="radio" value="no" name="fac-5"></td>
-                <td><input type="radio" value="n/o" name="fac-5"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-5"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-5"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-5"></td>
               </tr>
               <tr>
                 <td>6. Los docentes de un mismo nivel se reúnen para preparar las clases, analizar los resultados en las evaluaciones y/o analizar lo ocurrido en las clases.</td>
-                <td><input type="radio" value="si" name="fac-6"></td>
-                <td><input type="radio" value="no" name="fac-6"></td>
-                <td><input type="radio" value="n/o" name="fac-6"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-6"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-6"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-6"></td>
               </tr>
               <tr>
                 <td>7. Las clases se desarrollan sin interrupciones externas (entrega de información, consultas al profesor(a), etc.) que afectan el proceso de enseñanza/ aprendizaje.</td>
-                <td><input type="radio" value="si" name="fac-7"></td>
-                <td><input type="radio" value="no" name="fac-7"></td>
-                <td><input type="radio" value="n/o" name="fac-7"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-7"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-7"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-7"></td>
               </tr>
               <tr>
                 <td>8. Las características de la sala son las adecuadas para un buen desarrollo de la clase (sin ruidos externos, bancos y sillas adecuadas, buena iluminación, entre otras).</td>
-                <td><input type="radio" value="si" name="fac-8"></td>
-                <td><input type="radio" value="no" name="fac-8"></td>
-                <td><input type="radio" value="n/o" name="fac-8"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-8"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-8"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-8"></td>
               </tr>
               <tr>
                 <td>9. El ambiente que hay en el colegio mientras se desarrollan las clases facilita el aprendizaje.</td>
-                <td><input type="radio" value="si" name="fac-9"></td>
-                <td><input type="radio" value="no" name="fac-9"></td>
-                <td><input type="radio" value="n/o" name="fac-9"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-9"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-9"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-9"></td>
               </tr>
               <tr>
                 <td>10. Los recursos que hay en la clase facilita el proceso de enseñanza/ aprendizaje.</td>
-                <td><input type="radio" value="si" name="fac-10"></td>
-                <td><input type="radio" value="no" name="fac-10"></td>
-                <td><input type="radio" value="n/o" name="fac-10"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-10"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-10"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-10"></td>
               </tr>
               <tr>
                 <td>11. Los docentes se sienten apoyados por el equipo directivo.</td>
-                <td><input type="radio" value="si" name="fac-11"></td>
-                <td><input type="radio" value="no" name="fac-11"></td>
-                <td><input type="radio" value="n/o" name="fac-11"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-11"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-11"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-11"></td>
               </tr>
               <tr>
                 <td>12. El/los docente(s) participa(n) del curso virtual (descargando material, desarrollando las actividades virtuales, participando en foros, etc.).</td>
-                <td><input type="radio" value="si" name="fac-12"></td>
-                <td><input type="radio" value="no" name="fac-12"></td>
-                <td><input type="radio" value="n/o" name="fac-12"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-12"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-12"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-12"></td>
               </tr>
               <tr>
                 <td>13. El/los docente(s) completa(n) el instrumento de seguimiento (Bitácora).</td>
-                <td><input type="radio" value="si" name="fac-13"></td>
-                <td><input type="radio" value="no" name="fac-13"></td>
-                <td><input type="radio" value="n/o" name="fac-13"></td>
+                <td><input class="factor" type="radio" value="si" name="fac-13"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-13"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-13"></td>
               </tr>
               <tr>
-                <td>Otro: <input name="fac-otro" style="width:88%;" disabled></td>
-                <td><input type="radio" value="si" name="fac-14"></td>
-                <td><input type="radio" value="no" name="fac-14"></td>
-                <td><input type="radio" value="n/o" name="fac-14"></td>
+                <td>Otro: <input class="validar-disabled" name="fac-otro" style="width:88%;" disabled></td>
+                <td><input class="factor" type="radio" value="si" name="fac-14"></td>
+                <td><input class="factor" type="radio" value="no" name="fac-14"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-14"></td>
               </tr>
             </table>
             <p>Refiérase a cómo los indicadores  marcados con NO, están afectando la implementación y/o cómo obtuvo la información:</p>
-            <textarea disabled id="area-observacion-monitoreo" style="resize:none; width:100%;height:40px;"></textarea>
+            <textarea class="validar-disabled" name="refieraseMarcadosNo" disabled id="area-observacion-monitoreo" style="resize:none; width:100%;height:40px;"></textarea>
             <br /><br /><br />
-
+            <span id="comp-span"></span>
             <h4>Los docentes cumplen los compromisos adquiridos</h4>
             <table>
               <tr>
                 <td>
-                  Si <input type="radio" name="cumplen-compromisos-docentes" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Si <input class="radio-compromisos" type="radio" name="cumplen-compromisos-docentes" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
                 <td>  
-                  No <input type="radio" name="cumplen-compromisos-docentes" value="no">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  No <input class="radio-compromisos" type="radio" name="cumplen-compromisos-docentes" value="no">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
                 <td>  
-                  No hay compromisos <input type="radio" name="cumplen-compromisos-docentes" value="n/a">
+                  No hay compromisos <input class="radio-compromisos" type="radio" name="cumplen-compromisos-docentes" value="n/a">
                 </td>
               </tr>
             </table>
-            <textarea disabled id="compromisos-docentes" placeholder="¿Cuáles?" style="resize:none; width:100%;height:40px;"></textarea>
+            <textarea class="validar-disabled" name="detalle-cumplen-docentes" disabled id="compromisos-docentes" placeholder="¿Cuáles?" style="resize:none; width:100%;height:40px;"></textarea>
             <br><br>
             <h4>Los directivos cumplen los compromisos adquiridos</h4>
             <table>
               <tr>
                 <td>
-                  Si <input type="radio" name="cumplen-compromisos-directivos" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  Si <input class="radio-compromisos" type="radio" name="cumplen-compromisos-directivos" value="si">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
                 <td>  
-                  No <input type="radio" name="cumplen-compromisos-directivos" value="no">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  No <input class="radio-compromisos" type="radio" name="cumplen-compromisos-directivos" value="no">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
                 <td>  
-                  No hay compromisos <input type="radio" name="cumplen-compromisos-directivos" value="n/a">
+                  No hay compromisos <input class="radio-compromisos" type="radio" name="cumplen-compromisos-directivos" value="n/a">
                 </td>
               </tr>
             </table>
-            <textarea id="compromisos-directivos" disabled placeholder="¿Cuáles?" style="resize:none; width:100%;height:40px;"></textarea>
+            <textarea name="detalle-cumplen-directivos" class="validar-disabled" id="compromisos-directivos" disabled placeholder="¿Cuáles?" style="resize:none; width:100%;height:40px;"></textarea>
             <br /><br />
           </div>
 
@@ -491,7 +494,7 @@ require "_navegacion.php";
           </div>
         </div>
         <br />
-        <button id="" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        <button id="boton-submit" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
             <span class="ui-button-text">Guardar</span>
         </button>
         <br />
@@ -510,6 +513,7 @@ $(function() {
     $( "#datepicker" ).datepicker();
 });
 </script>
+
 <script language="javascript">
     
     var indice_llenado = 0;
@@ -681,7 +685,7 @@ $(function() {
       e.preventDefault();
       if(participantes_reunion_directivos<5){
         participantes_reunion_directivos++;
-        var str = "<tr><td></td><td><select disabled class='select-participante-reunion-cargo' style='width:98%;' name='participante-reunion-cargo-"+participantes_reunion_directivos+"'><option value=''>---</option><option>Director</option><option>Coordinador</option><option>UTP</option><option>Otro</option></select><br><input class='otro-participante-reunion-cargo' style='width:95%;margin-top:5px;display:none;' placeholder='¿cual?' name='otro-participante-reunion-cargo-"+participantes_reunion_directivos+"'></td><td id='td-directivos-"+participantes_reunion_directivos+"'></td></tr>";
+        var str = "<tr><td></td><td><select disabled class='select-participante-reunion-cargo' style='width:98%;' name='participante-reunion-cargo-"+participantes_reunion_directivos+"'><option value=''>---</option><option value='Director'>Director</option><option value='Coordinador'>Coordinador</option><option value='UTP'>UTP</option><option value='Otro'>Otro</option></select><br><input class='otro-participante-reunion-cargo' style='width:95%;margin-top:5px;display:none;' placeholder='¿cual?' name='otro-participante-reunion-cargo-"+participantes_reunion_directivos+"'></td><td id='td-directivos-"+participantes_reunion_directivos+"'></td></tr>";
         $("#tabla-contenedor-participante-reunion").append(str);
         if(participantes_reunion_directivos == 5){
           $("#boton-agregar-participante").hide();
@@ -703,6 +707,9 @@ $(function() {
             a = "pide=docentes&rbd="+$("#select-RBD").val()+"&tag=directivos-"+indice+"&prefix=directivos"+display;
             var sel = document.getElementById("td-directivos-"+indice);
             AJAXPOST("llenarVisitaEscuela_cursos.php",a,sel);
+          }else{
+            var indice = $(this).prop("name").substr(27);
+            $("#td-directivos-"+indice).html("");
           }
         });
 
@@ -774,6 +781,99 @@ $(function() {
       $("#carga-participantes-docentes-colectivo").html("");
       $("#agregar-docente-colectivo").show();
     }
+
+    $("#boton-submit").click(function(e){
+      e.preventDefault();
+      seguir=true;
+      $(".validar-display").each(function(){
+        if(seguir){
+          if($(this).css("display")!="none" && $(this).val()==""){
+            seguir = false;
+            $(this).focus();
+            error="Este campo es obligatorio";
+          }
+        }
+      });
+      $(".validar-disabled").each(function(){
+        if(seguir){
+          if($(this).prop("disabled")==false && $(this).val()==""){
+            seguir = false;
+            $(this).focus();
+            error="Este campo es obligatorio";
+          }
+        }
+      });
+      if(seguir){
+        if( $(".factor:checked").length <14  ){
+          seguir = false;
+          $('html,body').animate({
+              scrollTop: $("#monitoreo-del-colegio").offset().top
+          }, 500);
+          error="Todos los indicadores deben ser contestados.";
+        }
+      }
+      if(seguir){
+        if( $(".radio-compromisos:checked").length < 2 ){
+          seguir = false;
+          $('html,body').animate({
+              scrollTop: $("#comp-span").offset().top
+          }, 500);
+          error="Conteste acerca de los compromisos anteriores para cada reunión.";
+        }
+      }
+      if(seguir){
+        $.ajax({
+          data:  $("#form-visita-escuela").serialize(),
+          url:   'guardarVisitaEscuela.php',
+          type:  'POST',
+          success:  function (resp) {
+            switch (parseInt(resp)){
+              case 1:
+                alert("Debe ser asesor.");
+                break;
+              case 2:
+                alert("Debe escoger un establecimiento.");
+                $('html,body').animate({ scrollTop: $("#datos-generales").offset().top }, 500);
+                break;
+              case 3:
+                alert("Debe seleccionar una fecha.");
+                $('html,body').animate({ scrollTop: $("#datos-generales").offset().top }, 500);
+                break;
+              case 4:
+                alert("Debe seleccionar el numero de visita."); 
+                $('html,body').animate({ scrollTop: $("#datos-generales").offset().top }, 500);
+                break;
+              case 5:
+                alert("Las horas de llegada y salida son obligatorias.");
+                $('html,body').animate({ scrollTop: $("#datos-generales").offset().top }, 500);
+                break;
+              case 6:
+                alert("Ya se registró ese numero de visita para este establecimiento.");
+                $('html,body').animate({ scrollTop: $("#datos-generales").offset().top }, 500);
+                $("#select-cantidad-visitas").focus();
+                break;
+              case 7:
+                alert("");
+                break;
+              case 8:
+                alert("");
+                break;
+              case 9:
+                alert("");
+                break;
+              default:
+                $("body").append(resp);
+                break;
+            }
+          },
+          error: function(resp){
+            alert("Error: "+resp);
+          }
+        });
+      }else{ 
+        alert(error) 
+      }
+    });
 
 </script>
 

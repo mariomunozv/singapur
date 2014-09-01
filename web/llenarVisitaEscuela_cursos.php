@@ -20,7 +20,6 @@ function getDocentes($rbdColegio){
                    AND pr.estadoProfesor = 1
                    AND us.tipoUsuario='Directivo' )
             ORDER BY pr.apellidoPaternoProfesor";
-            echo $sql;
   }
   $res = mysql_query($sql);
   $i = 0;

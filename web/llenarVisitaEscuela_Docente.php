@@ -89,7 +89,7 @@ function getDocentes($rbdColegio){
           <td><input type="checkbox" name="doc6-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Otros <input disabled id="input-otro-<?php echo $_POST['index'] ?>"></td>
+          <td>Otros <input  class="validar-disabled" disabled id="input-otro-<?php echo $_POST['index'] ?>"></td>
           <td><input class="check-otros-individual" type="checkbox" name="doc7-<?php echo $_POST['index'] ?>"></td>
         </tr>
       </tbody>
