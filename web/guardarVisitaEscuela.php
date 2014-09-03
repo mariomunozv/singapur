@@ -2,7 +2,6 @@
 require("inc/incluidos.php");
 require("inc/_visitaEscuela.php");
 
-
 //validacion de datos
 if( $_POST["idAsesor"]!=""){
 	if($_POST["rbdColegio"]!=""){

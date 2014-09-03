@@ -239,7 +239,7 @@ require "_navegacion.php";
                   <td><input type="checkbox" name="docentes-colectivo-4"></td>
                 </tr>
                 <tr>
-                  <td>Otros: <input class="validar-disabled" disabled name="apoyo-docentes-otro" id="apoyo-docentes-otro"></td>
+                  <td>Otros: <input class="validar-disabled" style="width:98%;" disabled name="apoyo-docentes-otro" id="apoyo-docentes-otro"></td>
                   <td><input id="check-apoyo-docentes-otro" type="checkbox" name="docentes-colectivo-5"></td>
                 </tr>
               </tbody>
@@ -853,17 +853,17 @@ $(function() {
                 $("#select-cantidad-visitas").focus();
                 break;
               case 7:
-                alert("");
+                alert("Ocurrió un error inesperado al guardar su información.");
                 break;
               case 8:
-                alert("");
+                alert("Registro de vidita a escuela registrado correctamente.");
                 break;
               case 9:
-                alert("");
+                alert("Se registro la vidita pero ocurrió un error al registrar la observación a docentes.");
                 break;
-              default:
-                $("body").append(resp);
-                break;
+              //default:
+              //  $("body").append(resp);
+              //  break;
             }
           },
           error: function(resp){

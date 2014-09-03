@@ -42,11 +42,11 @@ td,th{
         <table cellspacing="0" style="width:100%;" id="datos-generales" class="table">
             <tr>
                 <td style="width: 33%">RBD Establecimiento: <?php echo $datos["rbdColegio"]; ?></td>
-                <td style="width: 33%">Asesor:<?php echo $datos["nombreAsesorVisitaEscuela"]; ?></td>
-                <td style="width: 33%">Nº Visita:<?php echo $datos["numeroVisitaEscuela"]; ?></td>
+                <td style="width: 33%">Asesor: <?php echo $datos["nombreAsesorVisitaEscuela"]; ?></td>
+                <td style="width: 33%">Nº Visita: <?php echo $datos["numeroVisitaEscuela"]; ?></td>
             </tr>
             <tr>
-                <td>Fecha: <?php echo $datos["fechaVisitaEscuela"]; ?></td>
+                <td>Fecha: <?php echo substr($datos["fechaVisitaEscuela"],8)."/".substr($datos["fechaVisitaEscuela"],5,2)."/".substr($datos["fechaVisitaEscuela"],0,4); ?></td>
                 <td>Hora de llegada: <?php echo substr($datos["horaLlegadaVisitaEscuela"],0,5); ?></td>
                 <td>Hora de salida: <?php echo substr($datos["horaSalidaVisitaEscuela"],0,5); ?></td>
             </tr>

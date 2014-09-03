@@ -73,29 +73,33 @@ function getDocentes($rbdColegio){
           <td><input type="checkbox" name="doc2-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Preparación y/o estudio de una clase a implementar</td>
+          <td>Modelamiento de clase</td>
           <td><input type="checkbox" name="doc3-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Retroalimentación de la clase observada.</td>
+          <td>Preparación y/o estudio de una clase a implementar</td>
           <td><input type="checkbox" name="doc4-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Análisis de resultados</td>
+          <td>Retroalimentación de la clase observada.</td>
           <td><input type="checkbox" name="doc5-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Dificultades surgidas durante la implementación y logros</td>
+          <td>Análisis de resultados</td>
           <td><input type="checkbox" name="doc6-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Otros <input  class="validar-disabled" disabled id="input-otro-<?php echo $_POST['index'] ?>"></td>
-          <td><input class="check-otros-individual" type="checkbox" name="doc7-<?php echo $_POST['index'] ?>"></td>
+          <td>Dificultades surgidas durante la implementación y logros</td>
+          <td><input type="checkbox" name="doc7-<?php echo $_POST['index'] ?>"></td>
+        </tr>
+        <tr>
+          <td>Otros <input style="width:80%" class="validar-disabled" name="otroAccionDocente-<?php echo $_POST['index']; ?>" disabled id="input-otro-<?php echo $_POST['index'] ?>"></td>
+          <td><input class="check-otros-individual" type="checkbox" name="doc8-<?php echo $_POST['index']; ?>"></td>
         </tr>
       </tbody>
     </table>
     Observaciones:<br />
-    <textarea style="resize:none;width:100%;height:40px;"></textarea>
+    <textarea name="observacionTrabajoDocentes-<?php echo $_POST['index']; ?>" style="resize:none;width:100%;height:40px;"></textarea>
   </div>  
   
   <br />
@@ -110,7 +114,7 @@ function getDocentes($rbdColegio){
       }
     });
 
-    $(".select-docente-observado").change(function(){
+    $(".select-docente-observado[name=select-docente-observado-<?php echo $_POST['index'] ?>]").change(function(){
       var index = $(this).attr("name").substring(25);
       a = "tag=observado-"+index+"&pide=cursos&rbd=<?php echo $_POST['rbd']; ?>&rutProfesor="+$(this).val();
       var sel = document.getElementById("lugar-cargado-cursos-observado-"+index);
