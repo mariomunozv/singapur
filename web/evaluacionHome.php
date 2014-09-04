@@ -25,7 +25,7 @@ $rbdColegio = getRbdUsuario($idUsuario);
 <div id="principal">
 <?php
 require "topMenu.php";
-$navegacion = "Home*mural.php?idCurso=$idCurso,Evaluacion*#";
+$navegacion = "Home*curso.php?idCurso=$idCurso,Evaluacion*#";
 require "_navegacion.php";
 ?>
 
