@@ -73,7 +73,7 @@ function guardarUsuario(){
 			else if($tipo == "Asesor")$tipo = 23;
 			else if($tipo == "Empleado Klein")$tipo = 20;
 			else if($tipo == "Coordinador General")$tipo = 9;
-			$sql2 = "INSERT INTO detalleusuarioproyectoperfil(idPerfil ,idProyectoKlein ,idUsuario) VALUES(".$tipo.",  1, ".$idUsuario.")";
+			$sql2 = "INSERT INTO detalleUsuarioProyectoPerfil(idPerfil ,idProyectoKlein ,idUsuario) VALUES(".$tipo.",  1, ".$idUsuario.")";
 			$res2 = mysql_query($sql2);
 			//mysql_insert_id();
 			if (!$res2) {
@@ -82,12 +82,12 @@ function guardarUsuario(){
 			}else{
 				if($tipo == 21){
 					//$sql3 = "INSERT INTO inscripcioncursocapacitacion(idPerfil ,idProyectoKlein ,idUsuario, idCursoCapacitacion) VALUES(".$tipo.",  1, ".$idUsuario.",28)";
-					$sql3="INSERT INTO usuariocolegio(rbdColegio, idUsuario) VALUES(".$_POST["rbdColegio"].",".$idUsuario.")";
+					$sql3="INSERT INTO usuarioColegio(rbdColegio, idUsuario) VALUES(".$_POST["rbdColegio"].",".$idUsuario.")";
 					$res3 = mysql_query($sql3);
 					if(!$res3){
 						info('Error en la consulta SQL: <br><b>'.$sql.'</b><br>'. mysql_error());
 						mysql_query("DELETE FROM usuario WHERE idUsuario = ".$idUsuario);
-						mysql_query("DELETE FROM detalleusuarioproyectoperfil WHERE idUsuario = ".$idUsuario);
+						mysql_query("DELETE FROM detalleUsuarioProyectoPerfil WHERE idUsuario = ".$idUsuario);
 						mysql_query("DELETE FROM profesor WHERE rutProfesor =".$_POST['nuevo_rut']);
 					}
 					else{
