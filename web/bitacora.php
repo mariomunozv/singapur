@@ -51,16 +51,26 @@ function nuevoBitacoraAula($idJornada){
 		AJAXPOST("nuevaBitacoraUtp2.php","",division,false, iniciar);  
 	}
 */	
-function nuevoBitacoraProfe(idPeril){  
+function nuevoBitacoraProfe(idPerfil){  
 		var division = document.getElementById("nuevaBitacora");
-		var a = "perfil="+idPeril; 
+		var a = "perfil="+idPerfil; 
 		AJAXPOST("nuevaBitacoraProfe.php",a,division,false, iniciar);  
 }
-
+function nuevoBitacoraDirectivo(idPerfil){  
+		var division = document.getElementById("nuevaBitacora");
+		var a = "perfil="+idPerfil; 
+		AJAXPOST("nuevaBitacoraDirectivo.php",a,division,false, iniciar);  
+}
 function listaBitacoraProfe(idPeril){  
 		var division = document.getElementById("nuevaBitacora");
 		var a = "perfil="+idPeril; 
 		AJAXPOST("bitacoraUsuarioListado.php",a,division,false, iniciar);  
+}
+
+function listaBitacoraDirectivo(idPeril){  
+		var division = document.getElementById("nuevaBitacora");
+		var a = "perfil="+idPeril; 
+		AJAXPOST("bitacoraUsuarioListadoDirectivo.php",a,division,false, iniciar);  
 }
 
 function muestraBitacoras(){  
@@ -114,11 +124,15 @@ require("_navegacion.php");
 <?php 
 $idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
-
+	if ($idPerfil==1 ||$idPerfil==3){ 
 		boton("Ingresar Bitácora","nuevoBitacoraProfe($idPerfil)");
 		echo "&nbsp;";
 		boton("Ver Bitácoras Ingresadas","listaBitacoraProfe($idPerfil)");
-
+	}elseif ($idPerfil==21) {
+		boton("Ingresar Bitácora","nuevoBitacoraDirectivo($idPerfil)");
+		echo "&nbsp;";
+		boton("Ver Bitácoras Ingresadas","listaBitacoraDirectivo($idPerfil)");
+	}
 ?>
 
 	<div id="nuevaBitacora"></div>
@@ -134,7 +148,11 @@ if (isset ($_REQUEST["idSeccionBitacora"])){
 ?>
 	<input name="idSeccionBitacora" id="idSeccionBitacora" class="campos" type="hidden" value="<?php echo @$_REQUEST["idSeccionBitacora"]; ?>" />
     <script>
+	<?php if ($idPerfil==1 ||$idPerfil==3){echo $idPerfil;?>
 		nuevoBitacoraProfe(<?php echo $idPerfil?>);
+		<?php }elseif ($idPerfil==21) {?>
+		nuevoBitacoraDirectivo(<?php echo $idPerfil?>);
+		<?php }?>
 	</script>
 <?php }
 
