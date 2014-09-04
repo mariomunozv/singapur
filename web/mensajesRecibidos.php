@@ -44,17 +44,23 @@ $idPerfil = getIdPerfilUsuario($idUsuario);
 	// Si el usuario tiene perfil de coordinador (idPefil=3), 
 	// puede acceder a los mensajes hechos a los tutores además de los propios
 	
-		$res = getMensajesUsuario($idUsuario); 
-	
-	
+		$res = getMensajesUsuario($idUsuario);
+		
 	
 	
 	if (mysql_num_rows($res) > 0 ){
 		while($row = mysql_fetch_array($res)){
+				
+				//echo "de".$row["deMensaje"];
 			switch(getTipoUsuario($row["deMensaje"])){
+				
 				case "Empleado Klein":
 				$datosDeUsuario = getNombreFotoUsuarioEmpleadoKlein($row["deMensaje"]);
+				$texto_de = $datosDeUsuario["nombre"]." ".$datosDeUsuario["apellidoPaterno"];
+				break;
 				
+				case "Coordinador General":
+				$datosDeUsuario = getNombreFotoUsuarioEmpleadoKlein($row["deMensaje"]);
 				$texto_de = $datosDeUsuario["nombre"]." ".$datosDeUsuario["apellidoPaterno"];
 				break;
 				case "Profesor":
@@ -64,14 +70,25 @@ $idPerfil = getIdPerfilUsuario($idUsuario);
 				break;
 				
 				}
+				//echo "para".getTipoUsuario($row["paraMensaje"])."#";
+				
 			switch(getTipoUsuario($row["paraMensaje"])){
 				case "Empleado Klein":
 				$datosParaUsuario = getNombreFotoUsuarioEmpleadoKlein($row["paraMensaje"]);
-				$texto_para = $datosDeUsuario["nombre"]." ".$datosDeUsuario["apellidoPaterno"];
+				$texto_para = $datosParaUsuario["nombre"]." ".$datosParaUsuario["apellidoPaterno"];
 				break;
+				
+				case "Coordinador General":
+				
+				//echo $row["paraMensaje"];
+				$datosParaUsuario = getNombreFotoUsuarioEmpleadoKlein($row["paraMensaje"]);
+				//print_r($datosParaUsuario);
+				$texto_para = $datosParaUsuario["nombre"]." ".$datosParaUsuario["apellidoPaterno"];
+				break;
+				
 				case "Profesor":
 				$datosParaUsuario = getDatosProfesor2($row["paraMensaje"]);
-				$texto_para = $datosDeUsuario["nombreParaMostrar"];
+				$texto_para = $datosParaUsuario["nombreParaMostrar"];
 				break;
 				
 				}
