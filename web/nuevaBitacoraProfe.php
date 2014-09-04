@@ -133,7 +133,7 @@ if (isset ($_REQUEST["idSeccionBitacora"])){
 			<?php 
 			if($idPerfil == 1){
 				echo "<option value=".$usuario['idUsuario'].">".$usuario['nombre']." ".$usuario['apellidoPaterno']."</option>";
-			}else if($idPerfil == 3 || $idPerfil == 4){
+			}else if($idPerfil == 3 || $idPerfil == 21){
 				foreach($profesores as $profesor){
 					echo "<option value=".$profesor['idUsuario'].">".$profesor['nombreProfesor']." ".$profesor['apellidoPaternoProfesor']."</option>";
 				}
