@@ -1,15 +1,12 @@
 <?php
-
 @include "inc/_accesoRecurso.php";
 @include "inc/_bitacoraClase.php";
 @include "inc/_comentario.php";
-
+@include "inc/_colegio.php"; // Agregada 22.07
 @include "inc/_cursoCapacitacion.php";
 @include "inc/_detalleColegioProyecto.php";
 @include "inc/_detalleUsuarioProyectoPerfil.php";
-
 @include "inc/_empleadoKlein.php";
-
 @include "inc/_evento.php";
 @include "inc/_glosario.php";
 @include "inc/_inscripcionCursoCapacitacion.php";
@@ -25,7 +22,8 @@
 @include "inc/_seccionBitacora.php";
 @include "inc/_tema.php";
 @include "inc/_usuario.php";
-@include "inc/_conlegio.php";
+
+//@include "inc/_conlegio.php"; // modificado 22.07
 
 
 // Ej: ordenar($alumnosCurso,array("idPerfil"=>"ASC","nombreCompleto"=>"ASC"));
@@ -418,7 +416,6 @@ if (count ( array_diff_assoc ( $root, $request ) ) > 0) {
     die('No existe el archivo');
 
 }
-
 
 function limpiar_caracteres_especiales($s) {
 	$s = ereg_replace("[сртук]","a",$s);
