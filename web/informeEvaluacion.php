@@ -25,7 +25,7 @@ function getColegiosProfesor($rutProfesor,$anoCursoColegio ,$tipoUsuario){
 	$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
 	$sql = "SELECT DISTINCT cu.rbdColegio , co.nombreColegio
 			FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
-			     join usuariocolegio us on us.rbdColegio=cu.rbdColegio
+			     join usuarioColegio us on us.rbdColegio=cu.rbdColegio
 			     join colegio co on co.rbdColegio=cu.rbdColegio
 			WHERE us.idUsuario = '".$detalleProfesor["idUsuario"]."'
 			AND cu.anoCursoColegio = $anoCursoColegio
@@ -63,7 +63,7 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 			$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
 			$sql = "SELECT * 
 					FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
-					     join usuariocolegio us on us.rbdColegio=cu.rbdColegio
+					     join usuarioColegio us on us.rbdColegio=cu.rbdColegio
 					     join colegio co on co.rbdColegio=cu.rbdColegio
 					WHERE us.idUsuario = '".$detalleProfesor["idUsuario"]."'
 					AND cu.anoCursoColegio = $anoCursoColegio
@@ -224,8 +224,6 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 			  	if (count($cursos) > 0){
 					foreach ($cursos as $curso){
 						$nombre = getNombreProfesor($curso["rutProfesor"]);
-
-
 				?>
 			            <tr id="-" data-rbd="<?php echo $curso['rbdColegio'];?>" onMouseOver="this.className='normalActive'" onMouseOut="this.className='normal'" class="normal">
 			            	<?php if($_SESSION["sesionPerfilUsuario"] == 21){ ?> 
@@ -271,7 +269,7 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 			</table>
 
 			<center>
-	            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('evaluacionHome.php','_self')">
+	            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('evaluacionHome.php','_self')">
 	                <span class="ui-button-text">Volver</span>
 	            </button>
 	        </center>
