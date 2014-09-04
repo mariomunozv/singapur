@@ -59,11 +59,11 @@ require ("hd.php");
             </div>
             
             <div id="textoJornada">
-                <<< Falta detallar texto >>>
+                Pauta de Observaci&#243;n de Clases 
               <br><br>
 
               <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('observacionClases.php','_self')" value="Ingresar/Ver Pautas" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('observacionClases.php','_self')" value="Ingresar/Ver Pautas" />
               </div>
               <br />
 
