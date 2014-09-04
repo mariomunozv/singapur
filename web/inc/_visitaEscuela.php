@@ -109,6 +109,34 @@ function getNombreProfe($rut){
     return ($nombre);
 }
 
+function validarVisitaEscuela($idVisita, $idUsuario){
+    $tipo = getTipoUser($idUsuario);
+    if($tipo=="Directivo" || $tipo =="UTP"){
+        $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
+                FROM visitaEscuela ve JOIN usuariocolegio uc ON ve.rbdColegio = uc.rbdColegio
+                WHERE uc.idUsuario=$idUsuario
+                AND ve.idVisitaEscuela = $idVisita
+                AND anoVisitaEscuela=".date("Y");  
+    }
+    elseif($tipo == "Asesor"){
+        $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
+                FROM visitaEscuela
+                WHERE idAsesorVisitaEscuela=$idUsuario
+                AND idVisitaEscuela = $idVisita
+                AND anoVisitaEscuela=".date("Y");  
+    }
+    elseif($tipo == "Coordinador General" ||$tipo == "Empleado Klein" ){
+        $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
+                FROM visitaEscuela
+                WHERE idVisitaEscuela = $idVisita
+                AND anoVisitaEscuela=".date("Y");  
+    }
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res);
+    if(count($row)>1){ return 1; }
+    return 0;
+}
+
 function crearObservacionDocente($post, $idVisita){
     if($post["select-observo-docentes"]=="si"){
         for($i=0; $i<5 ; $i++){
@@ -207,34 +235,267 @@ function crearVisitaEscuela($post){
 }
 
 function getInfoVisitaUsuario($idUsuario){
-        $tipo = getTipoUser($idUsuario);
-        if($tipo=="Directivo" || $tipo =="UTP"){
-            $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
-                    FROM visitaEscuela ve JOIN usuariocolegio uc ON ve.rbdColegio = uc.rbdColegio
-                    WHERE uc.idUsuario=$idUsuario
-                    AND anoVisitaEscuela=".date("Y");  
-        }
-        elseif($tipo == "Asesor"){
-            $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
-                    FROM visitaEscuela
-                    WHERE idAsesorVisitaEscuela=$idUsuario
-                    AND anoVisitaEscuela=".date("Y");  
-        }
-        elseif($tipo == "Coordinador General" ||$tipo == "Empleado Klein" ){
-            $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
-                    FROM visitaEscuela
-                    WHERE anoVisitaEscuela=".date("Y");  
-        }
-        $res = mysql_query($sql);
-        while($row = mysql_fetch_array($res)){
-            $informes[$i] = $row;
-            $i++;
-        }
-        if ($i == 0){
-            $informes = array();  
-        } 
-        return($informes);
+    $tipo = getTipoUser($idUsuario);
+    if($tipo=="Directivo" || $tipo =="UTP"){
+        $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
+                FROM visitaEscuela ve JOIN usuariocolegio uc ON ve.rbdColegio = uc.rbdColegio
+                WHERE uc.idUsuario=$idUsuario
+                AND anoVisitaEscuela=".date("Y");  
     }
+    elseif($tipo == "Asesor"){
+        $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
+                FROM visitaEscuela
+                WHERE idAsesorVisitaEscuela=$idUsuario
+                AND anoVisitaEscuela=".date("Y");  
+    }
+    elseif($tipo == "Coordinador General" ||$tipo == "Empleado Klein" ){
+        $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
+                FROM visitaEscuela
+                WHERE anoVisitaEscuela=".date("Y");  
+    }
+    $res = mysql_query($sql);
+    while($row = mysql_fetch_array($res)){
+        $informes[$i] = $row;
+        $i++;
+    }
+    if ($i == 0){
+        $informes = array();  
+    } 
+    return($informes);
+}
+
+function getVisitasUsuario($idUsuario){
+    $tipo = getTipoUser($idUsuario);
+    if($tipo == "Coordinador General" ||$tipo == "Empleado Klein" ){
+        $sql = "SELECT *
+                FROM visitaEscuela
+                WHERE anoVisitaEscuela=".date("Y");  
+    }
+    $res = mysql_query($sql);
+    while($row = mysql_fetch_array($res)){
+        $informes[$i] = $row;
+        $i++;
+    }
+    if ($i == 0){
+        $informes = array();  
+    } 
+    return($informes);
+}
+
+function booleano($i){
+    if($i){
+        return "Si";
+    }else{
+        return "No";
+    }
+}
+
+function informeExcel()
+{
+
+    $titulos =<<<HTML
+    <table>
+    <tr>
+        <th colspan='34'></th>
+        <th colspan='50'>Trabajo con docentes de forma individual</th>
+        <th colspan='12' rowspan='2'>Trabajo colectivo con docentes</th>
+        <th rowspan ='2' colspan='18'>Reunion con directivos</th>
+    </tr>
+    <tr>
+       <th colspan='9'>Datos Generales</th>
+       <th colspan='10'>Observación de clases</th>
+       <th colspan='15'>Factores que afectan la implementación</th>
+       <th colspan='10'>Trabajo con Docente 1</th>
+       <th colspan='10'>Trabajo con Docente 2</th>
+       <th colspan='10'>Trabajo con Docente 3</th>
+       <th colspan='10'>Trabajo con Docente 4</th>
+       <th colspan='10'>Trabajo con Docente 5</th>
+    </tr>
+    <tr>
+        <th rowspan='2'>ID</th>
+        <th rowspan='2'>Año</th>
+        <th rowspan='2'>Fecha de ingreso</th>
+        <th rowspan='2'>RBD establecimiento</th>
+        <th rowspan='2'>Asesor</th>
+        <th rowspan='2'>nº Visita</th>
+        <th rowspan='2'>Fecha de la visita</th>
+        <th rowspan='2'>Hora de llegada a la escuela</th>
+        <th rowspan='2'>Hora de salida de la escuela</th>
+        <th rowspan='2'>Nombre del docente 1</th>
+        <th rowspan='2'>Curso 1</th>
+        <th rowspan='2'>Nombre del docente 2</th>
+        <th rowspan='2'>Curso 2</th>
+        <th rowspan='2'>Nombre del docente 3</th>
+        <th rowspan='2'>Curso 3</th>
+        <th rowspan='2'>Nombre del docente 4</th>
+        <th rowspan='2'>Curso 4</th>
+        <th rowspan='2'>Nombre del docente 5</th>
+        <th rowspan='2'>Curso 5</th>
+        <th rowspan='2'>Indicador 1</th>
+        <th rowspan='2'>Indicador 2</th>
+        <th rowspan='2'>Indicador 3</th>
+        <th rowspan='2'>Indicador 4</th>
+        <th rowspan='2'>Indicador 5</th>
+        <th rowspan='2'>Indicador 6</th>
+        <th rowspan='2'>Indicador 7</th>
+        <th rowspan='2'>Indicador 8</th>
+        <th rowspan='2'>Indicador 9</th>
+        <th rowspan='2'>Indicador 10</th>
+        <th rowspan='2'>Indicador 11</th>
+        <th rowspan='2'>Indicador 12</th>
+        <th rowspan='2'>Indicador 13</th>
+        <th rowspan='2'>Indicador 14</th>
+        <th rowspan='2'>Refierase a indicadores marcados</th>
+        <th rowspan='2'>Nomnbre docente 1</th>
+        <th rowspan='2'>Curso 1</th>
+        <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan='2'>Nomnbre docente 2</th>
+        <th rowspan='2'>Curso 2</th>
+        <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan='2'>Nomnbre docente 3</th>
+        <th rowspan='2'>Curso 3</th>
+        <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan='2'>Nomnbre docente 4</th>
+        <th rowspan='2'>Curso 4</th>
+        <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan='2'>Nomnbre docente 5</th>
+        <th rowspan='2'>Curso 5</th>
+        <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan='2'>Nombre docente 1</th>
+        <th rowspan='2'>Nombre docente 2</th>
+        <th rowspan='2'>Nombre docente 3</th>
+        <th rowspan='2'>Nombre docente 4</th>
+        <th rowspan='2'>Nombre docente 5</th>
+        <th rowspan='2'>Se cumplen acuerdos o compromisos</th>
+        <th rowspan='1' colspan="5">Temas abordados</th>
+        <th rowspan='2'>Acuerdos o compromisos</th>
+        <th rowspan='1' colspan='2'>Directivo 1</th>
+        <th rowspan='1' colspan='2'>Directivo 2</th>
+        <th rowspan='1' colspan='2'>Directivo 3</th>
+        <th rowspan='1' colspan='2'>Directivo 4</th>
+        <th rowspan='1' colspan='2'>Directivo 5</th>
+        <th rowspan='2'>Se cumplen compromisos anteriores</th>
+        <th colspan='2'>Temas abordados en la reunión</th>
+        <th colspan='4'>Retroalimentación al establecimiento</th>
+        <th rowspan='2'>Acuerdos y compromisos</th>
+    </tr>
+    <tr>
+        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
+        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
+        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
+        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
+        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
+        <th>Tema 1</th><th>Tema 2</th><th>Tema 3</th><th>Tema 4</th><th>Tema 5</th>
+        <th>Nombre del directivo 1</th>
+        <th>Cargo del directivo 1</th>
+        <th>Nombre del directivo 2</th>
+        <th>Cargo del directivo 2</th>
+        <th>Nombre del directivo 3</th>
+        <th>Cargo del directivo 3</th>
+        <th>Nombre del directivo 4</th>
+        <th>Cargo del directivo 4</th>
+        <th>Nombre del directivo 5</th>
+        <th>Cargo del directivo 5</th>
+        <th>Tema 1</th>
+        <th>Tema 2</th>
+        <th>Tema 1</th>
+        <th>Tema 2</th>
+        <th>Tema 3</th>
+        <th>Tema 4:otro</th>
+    </tr>
+    <tbody>
+HTML;
+
+$datos = getVisitasUsuario($_SESSION["sesionIdUsuario"]);
+    foreach ($datos as $val) {
+        $arreglo = [38,39,40,41,42,58,60,62,64,66,68];
+        foreach($arreglo as $i){
+            $val[$i] = $val[$i] ? "Si: " : "No";
+        }
+        $val[7]=substr($val[7], 8,2)."/".substr($val[7],5,2)."/".substr($val[7], 0,4)." [".substr($val[7], 11,5)."]";
+        $val[8]=substr($val[8], 8,2)."/".substr($val[8],5,2)."/".substr($val[8], 0,4);
+        $val[9]=substr($val[9], 0,5);
+        $val[10]=substr($val[10], 0,5);
+        $tabla .=<<<HTML
+            <tr>
+                <td>$val[0]</td>
+                <td>$val[1]</td>
+                <td>$val[7]</td>
+                <td>$val[2]</td>
+                <td>$val[6]</td>
+                <td>$val[4]</td>
+                <td>$val[8]</td>
+                <td>$val[9]</td>
+                <td>$val[10]</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>$val[21]</td>
+                <td>$val[22]</td>
+                <td>$val[23]</td>
+                <td>$val[24]</td>
+                <td>$val[25]</td>
+                <td>$val[26]</td>
+                <td>$val[27]</td>
+                <td>$val[28]</td>
+                <td>$val[29]</td>
+                <td>$val[30]</td>
+                <td>$val[31]</td>
+                <td>$val[32]</td>
+                <td>$val[33]</td>
+                <td>$val[34]: $val[35]</td>
+                <td>$val[36]</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>$val[11]</td>
+                <td>$val[12]</td>
+                <td>$val[13]</td>
+                <td>$val[14]</td>
+                <td>$val[15]</td>
+                <td>$val[37]: $val[56]</td>
+                <td>$val[38]</td><!--tema1-->
+                <td>$val[39]</td><!--tema2-->
+                <td>$val[40]</td><!--tema3-->
+                <td>$val[41]</td><!--tema4-->
+                <td>$val[42]</td><!--tema5-->
+                <td>$val[44]</td>
+
+                <td>$val[45]</td><!--directivo-->
+                <td>$val[50]</td><!--curso-->
+
+                <td>$val[46]</td><!--directivo-->
+                <td>$val[51]</td><!--curso-->
+
+                <td>$val[47]</td><!--directivo-->
+                <td>$val[52]</td><!--curso-->
+
+                <td>$val[48]</td><!--directivo-->
+                <td>$val[53]</td><!--curso-->
+
+                <td>$val[49]</td><!--directivo-->
+                <td>$val[54]</td><!--curso-->
+
+                <td>$val[55]: $val[57]</td>
+                <td>$val[58]$val[59]</td>
+                <td>$val[60]$val[61]</td>
+                <td>$val[62]$val[63]</td>
+                <td>$val[64]$val[65]</td>
+                <td>$val[66]$val[67]</td>
+                <td>$val[68]$val[69]</td>
+                <td>$val[70]</td>
+
+            </tr>
+HTML;
+    }
+    $tabla.=<<<HTML
+    </tbody>
+    </table>
+HTML;
+
+  header('Content-type: application/vnd.ms-excel');
+  header("Content-Disposition: attachment; filename=visitaEscuela[".date("d-m-Y")."].xls");
+  header("Pragma: no-cache");
+  header("Expires: 0");
+  echo $titulos;
+  echo $tabla;
+}
 
 
 ?>

@@ -1,7 +1,8 @@
 <?php
 require("../admin/inc/config.php");
 require("../inc/_visitaEscuela.php");
-if ($_SESSION["sesionTipoUsuario"]=="Asesor"||$_SESSION["sesionTipoUsuario"]=="Relator/Tutor"||$_SESSION["sesionTipoUsuario"]=="Coordinador General"||$_SESSION["sesionTipoUsuario"]=="Empleado Klein"){ ?>
+
+if (($_SESSION["sesionTipoUsuario"]=="Asesor"||$_SESSION["sesionTipoUsuario"]=="Relator/Tutor"||$_SESSION["sesionTipoUsuario"]=="Coordinador General"||$_SESSION["sesionTipoUsuario"]=="Empleado Klein") && validarVisitaEscuela($_GET["v"],$_SESSION["sesionIdUsuario"])){ ?>
 
 
 <style type="text/Css">
@@ -35,8 +36,8 @@ td,th{
     <h3 style="text-align:center;">Registro de Visita a Escuela</h3>
     <h4>Datos Generales</h4>
     <?php
-        $datos = getInfoVisita($_GET["idVisita"]);
-        $docentes = getDocentesVisita($_GET["idVisita"]);
+        $datos = getInfoVisita($_GET["v"]);
+        $docentes = getDocentesVisita($_GET["v"]);
     ?>
         
         <table cellspacing="0" style="width:100%;" id="datos-generales" class="table">

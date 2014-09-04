@@ -1,9 +1,9 @@
 <?php
 require("../admin/inc/config.php");
 require("../inc/_visitaEscuela.php");
+
+if(validarVisitaEscuela($_GET["v"],$_SESSION["sesionIdUsuario"]) ){
 ?>
-
-
 <style type="text/Css">
 
 
@@ -36,8 +36,8 @@ td,th{
     <br>
     <h4>Datos Generales</h4>
     <?php
-        $datos = getInfoVisita($_GET["idVisita"]);
-        $docentes = getDocentesVisita($_GET["idVisita"]);
+        $datos = getInfoVisita($_GET["v"]);
+        $docentes = getDocentesVisita($_GET["v"]);
     ?>
         
         <table cellspacing="0" style="width:100%;" id="datos-generales" class="table">
@@ -91,7 +91,7 @@ td,th{
         </tr>
     </table>
     <table style="margin-top:5px;">
-        <tr><td style="width: 100%">Profesores:</td></tr>
+        <tr><th style="width: 100%">Profesores:</th></tr>
         <?php if($datos["nombreDocenteColectivo1"]!=""){echo "<tr><td>".$datos["nombreDocenteColectivo1"]."</td></tr>";}?>
         <?php if($datos["nombreDocenteColectivo2"]!=""){echo "<tr><td>".$datos["nombreDocenteColectivo2"]."</td></tr>";}?>
         <?php if($datos["nombreDocenteColectivo3"]!=""){echo "<tr><td>".$datos["nombreDocenteColectivo3"]."</td></tr>";}?>
@@ -163,7 +163,11 @@ td,th{
 
 </page>
 
+<?php   }else{
+            header('Location: ../descargaVisitaEscuela.php');
+        }
 
+ ?>
 
 
 

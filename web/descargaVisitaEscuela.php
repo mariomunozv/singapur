@@ -59,14 +59,24 @@ require("inc/_visitaEscuela.php");
                         <td><?php echo $inf["anoVisitaEscuela"] ?></td>
                         <td><?php echo $inf["nombreAsesorVisitaEscuela"] ?></td>
                         <td>
-                            <a href="informes/informeVisitaEscuela.php?idVisita=<?php echo $inf['idVisitaEscuela'] ?>&tipo=resumen" target="_blank">
+                            <a href="informes/informeVisitaEscuela.php?v=<?php echo $inf['idVisitaEscuela'] ?>&tipo=resumen" target="_blank">
                                 <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> Resumen
                             </a>
                             <?php if ($_SESSION["sesionTipoUsuario"]=="Asesor" || $_SESSION["sesionTipoUsuario"]=="Relator/Tutor" || $_SESSION["sesionTipoUsuario"]=="Coordinador General" || $_SESSION["sesionTipoUsuario"]=="Empleado Klein"){ ?>
                             <br />
-                            <a href="informes/informeVisitaEscuela.php?idVisita=<?php echo $inf['idVisitaEscuela'] ?>&tipo=completo" target="_blank">
+                            <a href="informes/informeVisitaEscuela.php?v=<?php echo $inf['idVisitaEscuela'] ?>&tipo=completo" target="_blank">
                                 <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> Completo
                             </a>
+                            <?php } ?>
+                            <?php if($_SESSION["sesionTipoUsuario"]=="Coordinador General"){ ?>
+                                <br />
+                                <form class="descarga-excel">
+                                    <input type="hidden" name="idVisita" value="<?php echo $inf['idVisitaEscuela']; ?>">
+                                    <a href="" target="blank">
+                                        <img border="0" src="img/excel.png" width="14" height="14" alt="Descargar Excel" title="Descargar Excel" /> Excel
+                                    </a>
+                                </form>
+                                
                             <?php } ?>
                         </td>
                     </tr>
@@ -91,6 +101,12 @@ require("inc/_visitaEscuela.php");
         require("pie.php");
         
     ?> 
+    <script type="text/javascript">
+        $('.descarga-excel').submit(function(e){
+            var form = $(this);
+            form.prop( "action", "./informes/informeExcelVisitaEscuela.php" );
+        });
+    </script>
  
 </div><!--principal--> 
 </body>
