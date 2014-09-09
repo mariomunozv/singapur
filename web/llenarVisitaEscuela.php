@@ -1,29 +1,7 @@
 <?php
-?>
-
-
-<?php
 ini_set("display_errors", "on");
 require "inc/incluidos.php";
 require "hd.php";
-//require "inc/_colegio.php";
-
-
-
-function getColegiosNuevo($idUsuario){
-  $sql = "SELECT * FROM colegio a join usuarioColegio b WHERE estadoColegio = 1 AND a.rbdColegio = b.rbdColegio AND b.idUsuario = ".$idUsuario." ORDER BY nombreColegio";
-  $res = mysql_query($sql);
-  $i = 0;
-  while ($row = mysql_fetch_array($res)){
-  $colegios[$i] = array("idColegio"=> $row["rbdColegio"],"nombreColegio"=>$row["nombreColegio"] );  
-  $i++;
-  }
-  if ($i==0){
-    return(NULL);
-  }
-  return($colegios);
-}
-
 
 $idUsuario = $_SESSION["sesionIdUsuario"];
 $idPerfil = $_SESSION["sesionPerfilUsuario"];
@@ -81,11 +59,11 @@ require "_navegacion.php";
                 <tr>
                   <td>Establecimiento: </td>
                   <td>
-                    <?php getColegiosNuevo($idUsuario); ?>
-                    <select style="width:90%;" onchange="reset_docentes();resetReunionDirectivos();resetDocentesColectivo();" name="rbdColegio" class="campos" id="select-RBD">
+                    <?php getColegiosNuevoUsuario($idUsuario); ?>
+                    <select style="width:90%;" onChange="reset_docentes();resetReunionDirectivos();resetDocentesColectivo();" name="rbdColegio" class="campos" id="select-RBD">
                       <option value="">----</option>
                       <?php 
-                          $colegios = getColegiosNuevo($idUsuario);
+                          $colegios = getColegiosNuevoUsuario($idUsuario);
                           if (count($colegios) > 0){
                             foreach ($colegios as $colegio){
                               echo "<option value='".$colegio['idColegio']."'>".$colegio["nombreColegio"]."</option>";
@@ -100,7 +78,7 @@ require "_navegacion.php";
                 <tr>
                   <td>Asesor: </td>
                   <td id="campo_asesor">
-                    <?php if($_SESSION["sesionPerfilUsuario"]==23 || $_SESSION["sesionPerfilUsuario"]==5 ){
+                    <?php if($_SESSION["sesionPerfilUsuario"]==23 || $_SESSION["sesionPerfilUsuario"]==5 || $_SESSION["sesionPerfilUsuario"]==9){
                       echo $_SESSION["sesionNombreUsuario"];} 
                       echo "<input type='hidden' name='idAsesor' value='".$_SESSION["sesionIdUsuario"]."'>";
                     ?>
@@ -181,10 +159,10 @@ require "_navegacion.php";
             </h4>
             <table>
               <tr>
-                <td><input onchange="resetDocentesColectivo();" type="checkbox" name="apoyo-docentes"></td><td>Apoyo a docentes en forma  colectiva</td>
+                <td><input onChange="resetDocentesColectivo();" type="checkbox" name="apoyo-docentes"></td><td>Apoyo a docentes en forma  colectiva</td>
               </tr>
               <tr>
-                <td><input onchange="resetReunionDirectivos();" type="checkbox" name="reunion-directivos"></td><td>Reunión con Directivos</td>
+                <td><input onChange="resetReunionDirectivos();" type="checkbox" name="reunion-directivos"></td><td>Reunión con Directivos</td>
               </tr>
             </table>
             <div id="lugar_de_carga_trabajo_docentes"></div>
@@ -827,7 +805,7 @@ $(function() {
           url:   'guardarVisitaEscuela.php',
           type:  'POST',
           success:  function (resp) {
-            switch (parseInt(resp)){
+             switch (parseInt(resp)){
               case 1:
                 alert("Debe ser asesor.");
                 break;

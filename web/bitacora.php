@@ -129,8 +129,8 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
 		echo "&nbsp;";
 		boton("Ver Bitácoras Ingresadas","listaBitacoraProfe($idPerfil)");
 	}elseif ($idPerfil==21) {
-		boton("Ingresar Bitácora","nuevoBitacoraDirectivo($idPerfil)");
-		echo "&nbsp;";
+		/*boton("Ingresar Bitácora","nuevoBitacoraDirectivo($idPerfil)");
+		echo "&nbsp;";*/
 		boton("Ver Bitácoras Ingresadas","listaBitacoraDirectivo($idPerfil)");
 	}
 ?>

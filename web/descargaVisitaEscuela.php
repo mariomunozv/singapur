@@ -10,7 +10,7 @@ require("inc/_visitaEscuela.php");
 <div id="principal">
 <?php 
     require("topMenu.php"); 
-    $navegacion = "Home*mural.php?idCurso=$idCurso,Informes*#,Descargar Visita Escuela*#";
+    $navegacion = "Home*mural.php?idCurso=$idCurso,Informes*informes.php,Descargar Visita Escuela*#";
     require("_navegacion.php");
     $informes = getInfoVisitaUsuario($_SESSION["sesionIdUsuario"]);
 ?>

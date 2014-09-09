@@ -10,7 +10,7 @@ require ("hd.php");
 	require("topMenu.php"); 
 	$navegacion = "Home*mural.php?idCurso=$idCurso,Informes*#";
 	require("_navegacion.php");
-
+$idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
 ?>
 	
@@ -29,19 +29,32 @@ require ("hd.php");
         <p class="titulo_curso">Informes de Actividades: </p>
         <hr />
         <br />
-   
+  	 	<div id="textoBienvenida">
+       	  <p class="textoBienvenida">
+            La pauta observacion de clases permitirá tener un registro a las respecto a la 
+            observaciones que realizan los asesores de las clases que los docentes realizan 
+            en la implementación en aula del Método Singapur            
+			</p><br />
+        </div><!--textoBienvenida-->
         <div id="cajaCentralFondo" >
+        <?php 
+    	
+		$idPerfil = $_SESSION["sesionPerfilUsuario"];  
+
+		if ($idPerfil==9 ||$idPerfil==5 ||$idPerfil==23 ){ ?>
         
             <div id="cajaCentralTop">
                 <p class="titulo_jornada">
-				Informe de Evaluaciones
+				Llenar Visitas Escuela
                 </p>
             </div>
             
-            <div id="textoJornada">
-				<i>Aun no hay informes disponibles</i>
-            <br><br>
-
+              <div id="textoJornada">
+               Se pueden llenar las visitas escuela
+              <br><br>
+			 <div class='block-btn'>
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Llenar visita escuela" />
+              </div>
             </div>
             
             <div id="cajaCentralDown">
@@ -51,7 +64,30 @@ require ("hd.php");
         </div> <!--cajaCentralFondo-->
 		<br>
         <div id="cajaCentralFondo" >
+       
+        <div id="cajaCentralTop">
+                <p class="titulo_jornada">
+				Ver Visitas Escuela
+                </p>
+            </div>
+            
+              <div id="textoJornada">
+               Lista de Visitas Ingresadas
+              <br><br>
+			 <div class='block-btn'>
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('informes/informeVisitaEscuela.php','_self')" value="Ver visita escuela" />
+              </div>
+            </div>
+            
+            <div id="cajaCentralDown">
+            &nbsp; 
+            </div>
+         <?php } ?>   
+        </div> <!--cajaCentralFondo-->
         
+		<br>
+        <div id="cajaCentralFondo" >
+      
             <div id="cajaCentralTop">
                 <p class="titulo_jornada">
                 Pauta de Observaci&#243;n de Clases  
@@ -80,6 +116,7 @@ require ("hd.php");
 
 	<?php 
     	
+
 		require("pie.php");
 		
     ?> 

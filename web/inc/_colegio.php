@@ -60,7 +60,19 @@
 	return($colegios);
 }
 
-
+function getColegiosNuevoUsuario($idUsuario){
+  $sql = "SELECT * FROM colegio a join usuarioColegio b WHERE estadoColegio = 1 AND a.rbdColegio = b.rbdColegio AND b.idUsuario = ".$idUsuario." ORDER BY nombreColegio";
+  $res = mysql_query($sql);
+  $i = 0;
+  while ($row = mysql_fetch_array($res)){
+  $colegios[$i] = array("idColegio"=> $row["rbdColegio"],"nombreColegio"=>$row["nombreColegio"] );  
+  $i++;
+  }
+  if ($i==0){
+    return(NULL);
+  }
+  return($colegios);
+}
 function getDatosColegio($rbdColegio){
 	$sql = "SELECT * FROM colegio a left join comuna  b on a.idComuna = b.idComuna WHERE rbdColegio = ".$rbdColegio;
 	//echo $sql;
