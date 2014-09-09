@@ -408,7 +408,7 @@ HTML;
 
 $datos = getVisitasUsuario($_SESSION["sesionIdUsuario"]);
     foreach ($datos as $val) {
-        $arreglo = [38,39,40,41,42,58,60,62,64,66,68];
+        $arreglo = array(38,39,40,41,42,58,60,62,64,66,68);
         foreach($arreglo as $i){
             $val[$i] = $val[$i] ? "Si: " : "No";
         }
