@@ -17,14 +17,6 @@ require("../inc/_nivel.php");
 function cancelar(){
 	if(confirm("Cancelar esta operación?")){ location.href="evaluaciones.php"; }  
 }
-function save_evaluacion(){
-	if(confirm("Seguro que desea crear esta evaluación?")){
-
-		var division = document.getElementById("evaluacion_nueva");
-		var a = $(".campos").fieldSerialize();
-		AJAXPOST("evaluacionGuarda.php",a,division);
-	}
-} 
 
 function cambio_nuevo_grupo(){
 	if ($('#checkNuevo').is(":checked")){
@@ -37,7 +29,7 @@ function cambio_nuevo_grupo(){
 }
 
 </script>      
-
+<form action="evaluacionGuarda.php" method="POST" enctype="multipart/form-data">
 <table>
 <tr valign="top">
   <td>
@@ -74,7 +66,7 @@ function cambio_nuevo_grupo(){
 
 			<tr>
 				<th align="right">A&ntilde;o(*)</th> 
-				<td><input type="number" name="anoEvaluacion" value="" class="campos" id="anoEvaluacion"></td>
+				<td><input type="number" name="anoEvaluacion" value="2014" class="campos" id="anoEvaluacion"></td>
 			</tr>
 			<tr>
 				<th align="right">Nombre(*)</th> 
@@ -82,7 +74,7 @@ function cambio_nuevo_grupo(){
 			</tr>  
 			<tr>
 				<th align="right">URL(*)</th> 
-				<td><input type="text" name="urlEvaluacion" placeholder="ej:/subir/docs/1_Basico.pdf" value="" class="campos" id="urlEvaluacion"></td>
+				<td><input name="urlEvaluacion" id="urlEvaluacion" type="file" class="campos"></td>
 			</tr>  
 			<tr>
 				<th align="right">Estado(*)</th> 
@@ -108,13 +100,13 @@ function cambio_nuevo_grupo(){
 			<th></th>
 			<td style="vertical-align:top;">
 			  	<br />
-				<a class="button" href="javascript:save_evaluacion();"><span><div class="save">Grabar</div></span></a>
+				<input name="Enviar" type="submit" value="Guardar"/>
 				<a class="button" href="javascript:cancelar();"><span><div class="delete">Cancelar</div></span></a>
 			</td>
 		</tr>		
 
 </tr>
 </table>
-	
+</form>	
     
             
