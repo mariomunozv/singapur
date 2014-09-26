@@ -1,10 +1,8 @@
-<?php 
-	
-?>
 
 
 <?php
 $tipoCurso = getTipoCurso($_SESSION['sesionIdCurso']);
+//echo "tipo:".$tipoCurso;
 $idPerfil =  $_SESSION["sesionPerfilUsuario"];
 //echo $idPerfil;
 //Asignacion de permisos para limitacion del menu

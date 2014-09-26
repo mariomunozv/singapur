@@ -36,7 +36,7 @@ function getResultadoCapitulos($idPautaItem,$idUsuario){
 }
 
 function getRespuestaItem($idPautaItem,$idUsuario){
-    $sql ="SELECT * FROM respuestaItem WHERE idPautaItem = ".$idPautaItem." and idUsuario = ".$idUsuario."";
+    $sql ="SELECT * FROM respuestaItem ri JOIN item i ON ri.idItem= i.idItem WHERE idPautaItem = ".$idPautaItem." and idUsuario = ".$idUsuario."";
     $res = mysql_query($sql);
     $i=0;
     while($row = mysql_fetch_array($res)){
@@ -44,7 +44,8 @@ function getRespuestaItem($idPautaItem,$idUsuario){
             "idItem"=> $row["idItem"],
             "opcionSeleccionadaItem"=> $row["opcionSeleccionadaItem"],
             "opcionCorrectaItem" => $row["opcionCorrectaItem"],
-            "puntajeRespuestaItem" => $row["puntajeRespuestaItem"]);    
+            "puntajeRespuestaItem" => $row["puntajeRespuestaItem"],
+			"puntajeItem"=> $row["puntajeItem"]);    
     }
     
     return $respuestasItem;
@@ -146,6 +147,7 @@ function closer() {
             $opcionSeleccionadaItem = $row["opcionSeleccionadaItem"];
             $opcionCorrectaItem = $row["opcionCorrectaItem"];
             $puntajeRespuestaItem = $row["puntajeRespuestaItem"];   
+			$puntajeItem = $row["puntajeItem"];  
 
             $isCorrecta = false;
 
@@ -172,11 +174,10 @@ function closer() {
             echo "<tr>";
             echo "<td><center>".($i+1)."</center></td>";
             //echo $lista["idItem"]."--ID";
-            $totalPuntosItem = 1;
             echo "<td><center>"." (".$puntajeRespuestaItem.") </center></td><td><center>".$imagen."</center></td>";
-            echo "<td><center>".$totalPuntosItem." </center></td><td><center><a href='series/verItemContestado.php?idProfesor=".$idProfesor."&idItem=".$idItem."&idPautaItem=".$idPautaItem."' rel='shadowbox;height=550;width=1000'>Ver Item</a></center></td>";
+            echo "<td><center>".$puntajeItem." </center></td><td><center><a href='series/verItemContestado.php?idProfesor=".$idProfesor."&idItem=".$idItem."&idPautaItem=".$idPautaItem."' rel='shadowbox;height=550;width=1000'>Ver Item</a></center></td>";
             @$totalObtenidos = $totalObtenidos + $puntajeRespuestaItem;
-            @$totalPuntos =$totalPuntos+$totalPuntosItem;
+            @$totalPuntos =$totalPuntos+$puntajeItem;
             $i++;
             echo '</tr>';
         }

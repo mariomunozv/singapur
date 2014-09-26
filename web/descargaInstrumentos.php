@@ -12,7 +12,7 @@ $rbdColegio = getRbdUsuario($idUsuario);
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	$navegacion = "Home*curso.php?idCurso=$idCurso,Evaluacion*evaluacionHome.php,Descarga de Instrumentos*#";
+	$navegacion = "Evaluacion*evaluacionHome.php,Descarga de Instrumentos*#";
 	require("_navegacion.php");
 
 

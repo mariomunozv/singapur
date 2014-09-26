@@ -30,7 +30,7 @@ $rbdColegio = getRbdUsuario($idUsuario);
 <div id="principal">
 <?php
 require "topMenu.php";
-$navegacion = "Home*curso.php?idCurso=$idCurso,Informes*#,Llenar Visita Escuela*#";
+$navegacion = "Informes*informes.php,Visita Escuela*visitaEscuela.php,Llenar Visita Escuela*#";
 require "_navegacion.php";
 ?>
 
@@ -137,7 +137,7 @@ require "_navegacion.php";
             </select>
             <div id="lugar_de_carga"></div>
             <br />
-            <button style="display:none;" id="boton-agregar-docente" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <button  id="boton-agregar-docente" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                 <span class="ui-button-text">Agregar docente observado</span>
             </button>
          </div>
@@ -264,11 +264,11 @@ require "_navegacion.php";
               </thead>
               <tbody>
                 <tr>
-                  <td>Factores Institucionales<br> <input class="validar-display" id="indicar-factores-institucionales" name="indicar-factores-institucionales" placeholder="¿Indicar cuáles?" style="width:98%;display:none;"></td>
+                  <td>Factores Institucionales<br> <input class="validar-display" id="indicar-factores-institucionales" name="indicar-factores-institucionales" placeholder="¿Cuáles?" style="width:98%;display:none;"></td>
                   <td><input id="check-factores-institucionales" name="check-factores-institucionales" type="checkbox"></td>
                 </tr>
                 <tr>
-                  <td>Factores Pedagógicos<br> <input class="validar-display" id="indicar-factores-pedagogicos" name="indicar-factores-pedagogicos" placeholder="¿Indicar cuáles?" style="width:98%;display:none;"></td>
+                  <td>Factores Pedagógicos<br> <input class="validar-display" id="indicar-factores-pedagogicos" name="indicar-factores-pedagogicos" placeholder="¿Cuáles?" style="width:98%;display:none;"></td>
                   <td><input id="check-factores-pedagogicos" name="check-factores-pedagogicos" type="checkbox"></td>
                 </tr>
               </tbody>
@@ -287,7 +287,7 @@ require "_navegacion.php";
                   <td>
                     1. Avances y logros que aprecian como consecuencia de la implementación del Método Singapur (Estudiante/Docente).
                     <br> 
-                    <input class="validar-display" id="indicar-retroalimentacion-1" name="indicar-retroalimentacion-1" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-1" name="indicar-retroalimentacion-1" placeholder="¿Cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-1" name="check-retroalimentacion-1" type="checkbox"></td>
                 </tr>
@@ -295,7 +295,7 @@ require "_navegacion.php";
                   <td>
                     2. Análisis de resultados de los aprendizajes de los estudiantes.
                     <br> 
-                    <input class="validar-display" id="indicar-retroalimentacion-2" name="indicar-retroalimentacion-2" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-2" name="indicar-retroalimentacion-2" placeholder="¿Cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-2" name="check-retroalimentacion-2" type="checkbox"></td>
                 </tr>
@@ -303,15 +303,15 @@ require "_navegacion.php";
                   <td>
                     3. Reporte del monitoreo realizado por el CFK
                     <br> 
-                    <input class="validar-display" id="indicar-retroalimentacion-3" name="indicar-retroalimentacion-3" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-3" name="indicar-retroalimentacion-3" placeholder="¿Cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-3" name="check-retroalimentacion-3" type="checkbox"></td>
                 </tr>
                 <tr>
                   <td>
-                    4. Otro (especifique)
+                    4. Otro (espec&iacute;fique)
                     <br> 
-                    <input class="validar-display" id="indicar-retroalimentacion-4" name="indicar-retroalimentacion-4" placeholder="¿Indicar cuáles?" style="width:98%;display:none;">
+                    <input class="validar-display" id="indicar-retroalimentacion-4" name="indicar-retroalimentacion-4" placeholder="¿Cuáles?" style="width:98%;display:none;">
                   </td>
                   <td><input id="check-retroalimentacion-4" name="check-retroalimentacion-4" type="checkbox"></td>
                 </tr>
@@ -663,7 +663,7 @@ $(function() {
       e.preventDefault();
       if(participantes_reunion_directivos<5){
         participantes_reunion_directivos++;
-        var str = "<tr><td></td><td><select disabled class='select-participante-reunion-cargo' style='width:98%;' name='participante-reunion-cargo-"+participantes_reunion_directivos+"'><option value=''>---</option><option value='Director'>Director</option><option value='Coordinador'>Coordinador</option><option value='UTP'>UTP</option><option value='Otro'>Otro</option></select><br><input class='otro-participante-reunion-cargo' style='width:95%;margin-top:5px;display:none;' placeholder='¿cual?' name='otro-participante-reunion-cargo-"+participantes_reunion_directivos+"'></td><td id='td-directivos-"+participantes_reunion_directivos+"'></td></tr>";
+        var str = "<tr><td></td><td><select disabled class='select-participante-reunion-cargo' style='width:98%;' name='participante-reunion-cargo-"+participantes_reunion_directivos+"'><option value=''>---</option><option value='Director'>Director</option><option value='Coordinador'>Coordinador</option><option value='UTP'>UTP</option><option value='Otro'>Otro</option></select><br><input class='otro-participante-reunion-cargo' style='width:95%;margin-top:5px;display:none;' placeholder='¿Cuál?' name='otro-participante-reunion-cargo-"+participantes_reunion_directivos+"'></td><td id='td-directivos-"+participantes_reunion_directivos+"'></td></tr>";
         $("#tabla-contenedor-participante-reunion").append(str);
         if(participantes_reunion_directivos == 5){
           $("#boton-agregar-participante").hide();
@@ -805,7 +805,7 @@ $(function() {
           url:   'guardarVisitaEscuela.php',
           type:  'POST',
           success:  function (resp) {
-             switch (parseInt(resp)){
+			 switch (parseInt(resp)){
               case 1:
                 alert("Debe ser asesor.");
                 break;
@@ -834,14 +834,14 @@ $(function() {
                 alert("Ocurrió un error inesperado al guardar su información.");
                 break;
               case 8:
-                alert("Registro de vidita a escuela registrado correctamente.");
+                alert("Registro de visita a escuela registrado correctamente.");
                 break;
               case 9:
-                alert("Se registro la vidita pero ocurrió un error al registrar la observación a docentes.");
+                alert("Se registro la visita pero ocurrió un error al registrar la observación a docentes.");
                 break;
               //default:
-              //  $("body").append(resp);
-              //  break;
+               // $("body").append(resp);
+               // break;
             }
           },
           error: function(resp){

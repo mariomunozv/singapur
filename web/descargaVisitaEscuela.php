@@ -10,7 +10,7 @@ require("inc/_visitaEscuela.php");
 <div id="principal">
 <?php 
     require("topMenu.php"); 
-    $navegacion = "Home*mural.php?idCurso=$idCurso,Informes*informes.php,Descargar Visita Escuela*#";
+    $navegacion = "Informes*informes.php,Visita Escuela*visitaEscuela.php,Descargar Visita Escuela*#";
     require("_navegacion.php");
     $informes = getInfoVisitaUsuario($_SESSION["sesionIdUsuario"]);
 ?>
@@ -45,7 +45,7 @@ require("inc/_visitaEscuela.php");
                       
               <tr>
                 <th>Colegio</th>
-                <th>Numero visita</th>
+                <th>N&uacute;mero visita</th>
                 <th>A&ntilde;o</th>
                 <th>Asesor</th>
                 <th></th>
@@ -60,19 +60,19 @@ require("inc/_visitaEscuela.php");
                         <td><?php echo $inf["nombreAsesorVisitaEscuela"] ?></td>
                         <td>
                             <a href="informes/informeVisitaEscuela.php?v=<?php echo $inf['idVisitaEscuela'] ?>&tipo=resumen" target="_blank">
-                                <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> Resumen
+                                <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver m�s" /> Resumen
                             </a>
                             <?php if ($_SESSION["sesionTipoUsuario"]=="Asesor" || $_SESSION["sesionTipoUsuario"]=="Relator/Tutor" || $_SESSION["sesionTipoUsuario"]=="Coordinador General" || $_SESSION["sesionTipoUsuario"]=="Empleado Klein"){ ?>
                             <br />
                             <a href="informes/informeVisitaEscuela.php?v=<?php echo $inf['idVisitaEscuela'] ?>&tipo=completo" target="_blank">
-                                <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> Completo
+                                <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver m&aacute;s" title="Ver m�s" /> Completo
                             </a>
                             <?php } ?>
                             <?php if($_SESSION["sesionTipoUsuario"]=="Coordinador General"){ ?>
                                 <br />
                                 <form class="descarga-excel">
                                     <input type="hidden" name="idVisita" value="<?php echo $inf['idVisitaEscuela']; ?>">
-                                    <a href="" target="blank">
+                                    <a href="/informes/informeExcelVisitaEscuela.php" target="blank">
                                         <img border="0" src="img/excel.png" width="14" height="14" alt="Descargar Excel" title="Descargar Excel" /> Excel
                                     </a>
                                 </form>

@@ -12,7 +12,8 @@ if( $_POST["idAsesor"]!=""){
 					$fecha = $_POST["fechaVisita"];
 					if( !existePK(substr($fecha, 6),$numeroVisita,$_POST["rbdColegio"]) ){
 						crearVisitaEscuela($_POST);
-						//echo "asd".$_POST["caca"]."asd";
+						//echo "asd".$_POST["12345"]."asd";
+					
 					}else{
 						echo 6;
 					}

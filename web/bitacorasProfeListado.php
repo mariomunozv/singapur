@@ -18,7 +18,7 @@ foreach($bitacoras as $bitacora){
 	$i++;
 	}
 }
-//print_r($secciones);
+print_r($secciones);
 ?>
 <table width="10%" border="0" align="center" class="tablesorter">
 	<tr>

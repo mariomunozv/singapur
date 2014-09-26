@@ -8,7 +8,7 @@ require ("hd.php");
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	$navegacion = "Home*mural.php?idCurso=$idCurso,Informes*#";
+	$navegacion = "Informes*#";
 	require("_navegacion.php");
 $idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
@@ -37,32 +37,11 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
 			</p><br />
         </div><!--textoBienvenida-->
         <div id="cajaCentralFondo" >
-        <?php 
-    	
+        
+    	<?php
 		$idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
-		if ($idPerfil==9 ||$idPerfil==5 ||$idPerfil==23 ){ ?>
-        
-            <div id="cajaCentralTop">
-                <p class="titulo_jornada">
-				Llenar Visitas Escuela
-                </p>
-            </div>
-            
-              <div id="textoJornada">
-               Se pueden llenar las visitas escuela
-              <br><br>
-			 <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Llenar visita escuela" />
-              </div>
-            </div>
-            
-            <div id="cajaCentralDown">
-            &nbsp; 
-            </div>
-            
-        </div> <!--cajaCentralFondo-->
-		<br>
+        if ($idPerfil==9 ||$idPerfil==5 || $idPerfil==23 ||$idPerfil==21 || $idPerfil==3){ ?>
         <div id="cajaCentralFondo" >
        
         <div id="cajaCentralTop">
@@ -75,14 +54,15 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
                Lista de Visitas Ingresadas
               <br><br>
 			 <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('informes/informeVisitaEscuela.php','_self')" value="Ver visita escuela" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('visitaEscuela.php','_self')" value="Registro de visita a escuela" />
               </div>
             </div>
             
             <div id="cajaCentralDown">
             &nbsp; 
             </div>
-         <?php } ?>   
+         <?php } ?>  
+          
         </div> <!--cajaCentralFondo-->
         
 		<br>
