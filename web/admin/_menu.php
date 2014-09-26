@@ -54,6 +54,7 @@ $datos_usuario["per_admin"] = 1;
         <li><a href="aspectosDidacticos.php" id="boton_cuenta">Aspectos Didacticos</a></li>
         <li><a href="actividadNew.php" id="boton_actividadNew">Actividades New</a></li>
         <li><a href="evaluaciones.php" id="boton_evaluaciones">Evaluaciones</a></li>
+        <li><a href="descargas.php" id="boton_evaluaciones">Descargas</a></li>
 	</ul>
 </div>
 

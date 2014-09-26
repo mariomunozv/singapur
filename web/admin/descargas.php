@@ -159,12 +159,37 @@ function getAlumnosCurso(){
 
 			</div>
 		</div>
-
-
 	</div>
+ 	<div class="well" style="background-color: #dceaf4;">
 
-</div>
+		<div class="row">
+			<div span="span4">
+				<center>
+					<h3>Resultados de Bitacora</h3>					
+						<input class="btn btn-large btn-success download" type="button" name="Descargar" id="Descargar" value="Descargar .XLS" onclick="resultadoBitacora()"/>
+				</center>
 
+				</div>
+			</div>
+
+
+		</div>
+	
+	<div class="well" style="background-color: #dceaf4;">
+
+		<div class="row">
+			<div span="span4">
+				<center>
+					<h3>Resultados visita escuela</h3>					
+						<input class="btn btn-large btn-success download" type="button" name="Descargar" id="Descargar" value="Descargar .XLS" onclick="informeVisitaEscuela()"/>
+				</center>
+
+				</div>
+			</div>
+
+
+		</div>
+	</div>
 <script type="text/javascript">
 
 
@@ -177,7 +202,14 @@ function getAlumnosCurso(){
 		var idNivel = $("#nivel2").val();
         location.href="descargasxlsActividadVirtual.php?nivel="+idNivel;
     }
-
+	function resultadoBitacora(){
+		var idNivel = $("#nivel2").val();
+        location.href="../bitacoraExportar.php";
+    }
+		function informeVisitaEscuela(){
+		var idNivel = $("#nivel2").val();
+        location.href="../informes/informeExcelVisitaEscuela.php";
+    }
 
 
 </script>
