@@ -113,7 +113,7 @@ function validarVisitaEscuela($idVisita, $idUsuario){
     $tipo = getTipoUser($idUsuario);
     if($tipo=="Directivo" || $tipo =="UTP"){
         $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
-                FROM visitaEscuela ve JOIN usuariocolegio uc ON ve.rbdColegio = uc.rbdColegio
+                FROM visitaEscuela ve JOIN usuarioColegio uc ON ve.rbdColegio = uc.rbdColegio
                 WHERE uc.idUsuario=$idUsuario
                 AND ve.idVisitaEscuela = $idVisita
                 AND anoVisitaEscuela=".date("Y");  
@@ -238,7 +238,7 @@ function getInfoVisitaUsuario($idUsuario){
     $tipo = getTipoUser($idUsuario);
     if($tipo=="Directivo" || $tipo =="UTP"){
         $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
-                FROM visitaEscuela ve JOIN usuariocolegio uc ON ve.rbdColegio = uc.rbdColegio
+                FROM visitaEscuela ve JOIN usuarioColegio uc ON ve.rbdColegio = uc.rbdColegio
                 WHERE uc.idUsuario=$idUsuario
                 AND anoVisitaEscuela=".date("Y");  
     }
@@ -265,12 +265,12 @@ function getInfoVisitaUsuario($idUsuario){
 }
 
 function getVisitasUsuario($idUsuario){
-    $tipo = getTipoUser($idUsuario);
-    if($tipo == "Coordinador General" ||$tipo == "Empleado Klein" ){
+    //$tipo = getTipoUser($idUsuario);
+   // if($tipo == "Coordinador General" ||$tipo == "Empleado Klein"    ){
         $sql = "SELECT *
                 FROM visitaEscuela
                 WHERE anoVisitaEscuela=".date("Y");  
-    }
+//    }
     $res = mysql_query($sql);
     while($row = mysql_fetch_array($res)){
         $informes[$i] = $row;
@@ -303,8 +303,8 @@ function informeExcel()
     </tr>
     <tr>
        <th colspan='9'>Datos Generales</th>
-       <th colspan='10'>Observación de clases</th>
-       <th colspan='15'>Factores que afectan la implementación</th>
+       <th colspan='10'>Observaci&oacute;n de clases</th>
+       <th colspan='15'>Factores que afectan la implementaci&oacute;n</th>
        <th colspan='10'>Trabajo con Docente 1</th>
        <th colspan='10'>Trabajo con Docente 2</th>
        <th colspan='10'>Trabajo con Docente 3</th>
@@ -313,11 +313,11 @@ function informeExcel()
     </tr>
     <tr>
         <th rowspan='2'>ID</th>
-        <th rowspan='2'>Año</th>
+        <th rowspan='2'>A&ntilde;o</th>
         <th rowspan='2'>Fecha de ingreso</th>
         <th rowspan='2'>RBD establecimiento</th>
         <th rowspan='2'>Asesor</th>
-        <th rowspan='2'>nº Visita</th>
+        <th rowspan='2'>n&ordm; Visita</th>
         <th rowspan='2'>Fecha de la visita</th>
         <th rowspan='2'>Hora de llegada a la escuela</th>
         <th rowspan='2'>Hora de salida de la escuela</th>
@@ -375,17 +375,17 @@ function informeExcel()
         <th rowspan='1' colspan='2'>Directivo 4</th>
         <th rowspan='1' colspan='2'>Directivo 5</th>
         <th rowspan='2'>Se cumplen compromisos anteriores</th>
-        <th colspan='2'>Temas abordados en la reunión</th>
-        <th colspan='4'>Retroalimentación al establecimiento</th>
+        <th colspan='2'>Temas abordados en la reuni&oacute;n</th>
+        <th colspan='4'>Retroalimentaci&oacute;n al establecimiento</th>
         <th rowspan='2'>Acuerdos y compromisos</th>
     </tr>
     <tr>
-        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
-        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
-        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
-        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
-        <th>Opción 1</th><th>Opción 2</th><th>Opción 3</th><th>Opción 4</th><th>Opción 5</th><th>Opción 6</th><th>Opción 7</th><th>Opción 8</th>
-        <th>Tema 1</th><th>Tema 2</th><th>Tema 3</th><th>Tema 4</th><th>Tema 5</th>
+        <th>Opci&oacute;n 1</th><th>Opci&oacute;n 2</th><th>Opci&oacute;n 3</th><th>Opci&oacute;n 4</th><th>Opci&oacute;n 5</th><th>Opci&oacute;n 6</th><th>Opci&oacute;n 7</th><th>Opci&oacute;n 8</th>
+        <th>Opci&oacute;n 1</th><th>Opci&oacute;n 2</th><th>Opci&oacute;n 3</th><th>Opci&oacute;n 4</th><th>Opci&oacute;n 5</th><th>Opci&oacute;n 6</th><th>Opci&oacute;n 7</th><th>Opci&oacute;n 8</th>
+        <th>Opci&oacute;n 1</th><th>Opci&oacute;n 2</th><th>Opci&oacute;n 3</th><th>Opci&oacute;n 4</th><th>Opci&oacute;n 5</th><th>Opci&oacute;n 6</th><th>Opci&oacute;n 7</th><th>Opci&oacute;n 8</th>
+        <th>Opci&oacute;n 1</th><th>Opci&oacute;n 2</th><th>Opci&oacute;n 3</th><th>Opci&oacute;n 4</th><th>Opci&oacute;n 5</th><th>Opci&oacute;n 6</th><th>Opci&oacute;n 7</th><th>Opci&oacute;n 8</th>
+        <th>Opci&oacute;n 1</th><th>Opci&oacute;n 2</th><th>Opci&oacute;n 3</th><th>Opci&oacute;n 4</th><th>Opci&oacute;n 5</th><th>Opci&oacute;n 6</th><th>Opci&oacute;n 7</th><th>Opci&oacute;n 8</th>
+      	<th>Tema 1</th><th>Tema 2</th><th>Tema 3</th><th>Tema 4</th><th>Tema 5</th>
         <th>Nombre del directivo 1</th>
         <th>Cargo del directivo 1</th>
         <th>Nombre del directivo 2</th>

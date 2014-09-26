@@ -7,8 +7,8 @@ $ip2 = "158.170.119.78"; //juanjo
 
 
 if(
-   		$_SERVER['REMOTE_ADDR']== $ip1
-   ||	$_SERVER['REMOTE_ADDR']== $ip2 
+   		($_SERVER['REMOTE_ADDR']== $ip1
+   ||	$_SERVER['REMOTE_ADDR']== $ip2 )
    
    && $debug_on
    )

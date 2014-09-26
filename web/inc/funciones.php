@@ -2,16 +2,19 @@
 @include "inc/_accesoRecurso.php";
 @include "inc/_bitacoraClase.php";
 @include "inc/_comentario.php";
-@include "inc/_colegio.php"; // Agregada 22.07
+@include "inc/_colegio.php"; // Agregada 22.07/**/
 @include "inc/_cursoCapacitacion.php";
 @include "inc/_detalleColegioProyecto.php";
 @include "inc/_detalleUsuarioProyectoPerfil.php";
 @include "inc/_empleadoKlein.php";
 @include "inc/_evento.php";
 @include "inc/_glosario.php";
+
 @include "inc/_inscripcionCursoCapacitacion.php";
+
 @include "inc/_jornada.php";
 @include "inc/_mensaje.php";
+
 @include "inc/_mensajeTema.php";
 @include "inc/_notificacion.php";
 @include "inc/_palabra.php";
@@ -19,8 +22,10 @@
 @include "inc/_profesor.php";
 @include "inc/_publicacion.php";
 @include "inc/_recurso.php";
+
 @include "inc/_seccionBitacora.php";
 @include "inc/_tema.php";
+
 @include "inc/_usuario.php";
 
 //@include "inc/_conlegio.php"; // modificado 22.07
@@ -434,19 +439,6 @@ function limpiar_caracteres_especiales($s) {
 	//para ampliar los caracteres a reemplazar agregar lineas de este tipo:
 	//$s = str_replace("caracter-que-queremos-cambiar","caracter-por-el-cual-lo-vamos-a-cambiar",$s);
 	return $s;
-}
-
-function reemplaza($texto){
-
-$salida = str_replace("%u22C5","·",$texto);
-$texto = $salida;
-$salida = str_replace("%2B","+",$texto);
-$texto = $salida;
-$salida = str_replace("%25B","+",$texto);
-
-
-return $salida;
-
 }
 
 
