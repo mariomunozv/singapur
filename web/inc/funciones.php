@@ -440,6 +440,26 @@ function limpiar_caracteres_especiales($s) {
 	//$s = str_replace("caracter-que-queremos-cambiar","caracter-por-el-cual-lo-vamos-a-cambiar",$s);
 	return $s;
 }
+function Cambiar_caracteres_especiales($s) {
 
+	$s = utf8_encode($s);
+
+	$s = preg_replace("/á|à|â|ã|ª/","&aacute;",$s);
+	$s = preg_replace("/Á|À|Â|Ã/","&Aacute;",$s);
+	$s = preg_replace("/é|è|ê/","&eacute;",$s);
+	$s = preg_replace("/É|È|Ê/","&Eacute;",$s);
+	$s = preg_replace("/í|ì|î/","&iacute;",$s);
+	$s = preg_replace("/Í|Ì|Î/","&Iacute;",$s);
+	$s = preg_replace("/ó|ò|ô|õ|º/","&oacute;",$s);
+	$s = preg_replace("/Ó|Ò|Ô|Õ/","&Oacute;",$s);
+	$s = preg_replace("/ú|ù|û/","&uacute;",$s);
+	$s = preg_replace("/Ú|Ù|Û/","&Uacute;",$s);
+	//$s = str_replace(" ","_",$s);
+	$s = str_replace("ñ","&ntilde;",$s);
+	$s = str_replace("Ñ","&Ntilde;",$s);
+	//para ampliar los caracteres a reemplazar agregar lineas de este tipo:
+	//$s = str_replace("caracter-que-queremos-cambiar","caracter-por-el-cual-lo-vamos-a-cambiar",$s);
+	return $s;
+}
 
 ?>

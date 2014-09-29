@@ -240,18 +240,21 @@ function getInfoVisitaUsuario($idUsuario){
         $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
                 FROM visitaEscuela ve JOIN usuarioColegio uc ON ve.rbdColegio = uc.rbdColegio
                 WHERE uc.idUsuario=$idUsuario
-                AND anoVisitaEscuela=".date("Y");  
+                AND anoVisitaEscuela=".date("Y")."
+				ORDER BY nombreColegioVisitaEscuela,numeroVisitaEscuela";  
     }
     elseif($tipo == "Asesor"){
         $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
                 FROM visitaEscuela
                 WHERE idAsesorVisitaEscuela=$idUsuario
-                AND anoVisitaEscuela=".date("Y");  
+                AND anoVisitaEscuela=".date("Y")."
+				ORDER BY nombreColegioVisitaEscuela,numeroVisitaEscuela";    
     }
     elseif($tipo == "Coordinador General" ||$tipo == "Empleado Klein" ){
         $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
                 FROM visitaEscuela
-                WHERE anoVisitaEscuela=".date("Y");  
+                WHERE anoVisitaEscuela=".date("Y")."
+				ORDER BY nombreColegioVisitaEscuela,numeroVisitaEscuela";  
     }
     $res = mysql_query($sql);
     while($row = mysql_fetch_array($res)){
@@ -346,19 +349,19 @@ function informeExcel()
         <th rowspan='2'>Indicador 13</th>
         <th rowspan='2'>Indicador 14</th>
         <th rowspan='2'>Refierase a indicadores marcados</th>
-        <th rowspan='2'>Nomnbre docente 1</th>
+        <th rowspan='2'>Nombre docente 1</th>
         <th rowspan='2'>Curso 1</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
-        <th rowspan='2'>Nomnbre docente 2</th>
+        <th rowspan='2'>Nombre docente 2</th>
         <th rowspan='2'>Curso 2</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
-        <th rowspan='2'>Nomnbre docente 3</th>
+        <th rowspan='2'>Nombre docente 3</th>
         <th rowspan='2'>Curso 3</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
-        <th rowspan='2'>Nomnbre docente 4</th>
+        <th rowspan='2'>Nombre docente 4</th>
         <th rowspan='2'>Curso 4</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
-        <th rowspan='2'>Nomnbre docente 5</th>
+        <th rowspan='2'>Nombre docente 5</th>
         <th rowspan='2'>Curso 5</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
         <th rowspan='2'>Nombre docente 1</th>
