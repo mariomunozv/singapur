@@ -348,7 +348,7 @@ require "_navegacion.php";
                 <td>1. El establecimiento cuenta con los materiales didácticos necesario para desarrollar las actividades.</td>
                 <td><input class="factor" type="radio" value="si" name="fac-1"></td>
                 <td><input class="factor" type="radio" value="no" name="fac-1"></td>
-	            <td><input class="factor" type="radio" value="n/o" name="fac-1"></td>-->
+	            <td><input class="factor" type="radio" value="n/o" name="fac-1"></td>
               </tr>
               <tr>
                 <td>2. En el colegio se les  facilita a los profesores el acceso a los materiales didácticos.</td>
