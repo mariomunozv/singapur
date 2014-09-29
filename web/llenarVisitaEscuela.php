@@ -348,7 +348,7 @@ require "_navegacion.php";
                 <td>1. El establecimiento cuenta con los materiales didácticos necesario para desarrollar las actividades.</td>
                 <td><input class="factor" type="radio" value="si" name="fac-1"></td>
                 <td><input class="factor" type="radio" value="no" name="fac-1"></td>
-                <td><input class="factor" type="radio" value="n/o" name="fac-1"></td>
+	            <td><input class="factor" type="radio" value="n/o" name="fac-1"></td>-->
               </tr>
               <tr>
                 <td>2. En el colegio se les  facilita a los profesores el acceso a los materiales didácticos.</td>
@@ -402,7 +402,7 @@ require "_navegacion.php";
                 <td>10. Los recursos que hay en la clase facilita el proceso de enseñanza/ aprendizaje.</td>
                 <td><input class="factor" type="radio" value="si" name="fac-10"></td>
                 <td><input class="factor" type="radio" value="no" name="fac-10"></td>
-                <td><input class="factor" type="radio" value="n/o" name="fac-10"></td>
+                <td><input class="factor" type="radio" value="n/o" name="fac-10" ></td>
               </tr>
               <tr>
                 <td>11. Los docentes se sienten apoyados por el equipo directivo.</td>

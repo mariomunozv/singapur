@@ -68,20 +68,24 @@ require("inc/_visitaEscuela.php");
                                 <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver m&aacute;s" title="Ver más" /> Completo
                             </a>
                             <?php } ?>
-                            <?php if($_SESSION["sesionTipoUsuario"]=="Coordinador General"){ ?>
-                                <br />
-                                <form class="descarga-excel">
+                          
+                        </td>
+                    </tr> 
+                <?php } ?>
+             </tbody> <tr>  <?php if($_SESSION["sesionTipoUsuario"]=="Coordinador General"){ ?>
+                             
+                                 <div class='block-btn'>
+               											 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('/informes/informeExcelVisitaEscuela.php','_self')" value="Descargar informe excel" />
+             					 </div>
+                         <!--       <form class="descarga-excel">
                                     <input type="hidden" name="idVisita" value="<?php echo $inf['idVisitaEscuela']; ?>">
                                     <a href="/informes/informeExcelVisitaEscuela.php" target="blank">
-                                        <img border="0" src="img/excel.png" width="14" height="14" alt="Descargar Excel" title="Descargar Excel" /> Excel
+                                        <img border="0" src="img/excel.png" width="14" height="14" alt="  Excel" title="Descargar Excel" /> Excel
                                     </a>
-                                </form>
+                                </form>-->
                                 
                             <?php } ?>
-                        </td>
-                    </tr>
-                <?php } ?>
-             </tbody> 
+                            </tr>
             </table>
             <br><br>
 
