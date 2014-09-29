@@ -115,6 +115,7 @@ function getCursos($rutProfesor,$rbdColegio){
                 $cursos = getCursos($_POST["rutProfesor"],$_POST["rbd"]);
                 if (count($cursos) > 0){
                   foreach ($cursos as $curso){
+					  var_dump($cursos);
                     echo "<option value='".$curso['nombreCurso']."'>".$curso["nombreCurso"]."</option>";
                   }
                 }

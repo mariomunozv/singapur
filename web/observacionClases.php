@@ -41,7 +41,7 @@ require ("hd.php");
             <br><br>
 
             <div class='block-btn'>
-              <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('observacionClasesDescargaInstrumentos.php','_self')" value="Descargar Instrumentos" />
+              <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('observacionClasesDescargaInstrumentos.php','_self')" value="Descargar Instrumentos" />
             </div>
 
             </div>
@@ -67,7 +67,7 @@ require ("hd.php");
               <br><br>
 
               <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('observacionClasesIngresarPauta.php','_self')" value="Ingresar Pauta" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('observacionClasesIngresarPauta.php','_self')" value="Ingresar Pauta" />
               </div>
 
             </div>
@@ -93,7 +93,7 @@ require ("hd.php");
               <br><br>
 
               <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('observacionClasesInformes.php','_self')" value="Informe Evaluaci&oacute;n" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('observacionClasesInformes.php','_self')" value="informe de observaci&oacute;n" />
               </div>
               <br />
 
