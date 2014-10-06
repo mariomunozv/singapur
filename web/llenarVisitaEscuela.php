@@ -45,7 +45,7 @@ require "_navegacion.php";
   <p class="titulo_curso">Visita Escuela</p>
     <hr /><br />
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec interdum risus, ut aliquet nunc. Sed vitae ullamcorper nisi. Nulla tincidunt, libero sit amet consequat gravida, tortor quam viverra lorem, eu cursus dolor lectus vel libero. Pellentesque ac consequat enim, ac laoreet enim.
+      A continuación podrá completar la información relacionada con su visita escuela, se solicita que sea cuidadoso en la información que ingresa ya que el reporte no permite posteriores modificaciones.
     </p>
       <form id="form-visita-escuela" action="pruebas.php" method="POST">
         <div>
