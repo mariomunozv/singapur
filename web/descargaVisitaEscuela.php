@@ -58,14 +58,13 @@ require("inc/_visitaEscuela.php");
                         <td> Visita n&ordm;<?php echo $inf["numeroVisitaEscuela"] ?></td>
                         <td><?php echo $inf["anoVisitaEscuela"] ?></td>
                         <td><?php echo $inf["nombreAsesorVisitaEscuela"] ?></td>
-                        <td>
+                        <td width="72">
                             <a href="informes/informeVisitaEscuela.php?v=<?php echo $inf['idVisitaEscuela'] ?>&tipo=resumen" target="_blank">
-                                <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver mÃ¡s" title="Ver más" /> Resumen
-                            </a>
+                                <img border="0" src="img/pdf.gif" width="14" height="14" alt="Descargar PDF" title="Descargar PDF" /> Resumen</a>
                             <?php if ($_SESSION["sesionTipoUsuario"]=="Asesor" || $_SESSION["sesionTipoUsuario"]=="Relator/Tutor" || $_SESSION["sesionTipoUsuario"]=="Coordinador General" || $_SESSION["sesionTipoUsuario"]=="Empleado Klein"){ ?>
                             <br />
                             <a href="informes/informeVisitaEscuela.php?v=<?php echo $inf['idVisitaEscuela'] ?>&tipo=completo" target="_blank">
-                                <img border="0" src="img/ver.gif" width="14" height="14" alt="Ver m&aacute;s" title="Ver más" /> Completo
+                                <img border="0" src="img/pdf.gif" width="14" height="14" alt="Descargar PDF" title="Descargar PDF" /> Completo
                             </a>
                             <?php } ?>
                           
