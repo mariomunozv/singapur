@@ -31,9 +31,7 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
         <br />
         <div id="textoBienvenida">
        	  <p class="textoBienvenida">
-            La pauta observacion de clases permitirá tener un registro a las respecto a la 
-            observaciones que realizan los asesores de las clases que los docentes realizan 
-            en la implementación en aula del Método Singapur            
+            Los informes de observación y de visita le permitirán tener un registro de las aproximaciones del asesor con su establecimiento encargado.            
           </p><br />
         </div><!--textoBienvenida-->
         
