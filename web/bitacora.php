@@ -124,11 +124,11 @@ require("_navegacion.php");
 <?php 
 $idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
-	if ($idPerfil==1 ||$idPerfil==3){ 
+	if ($idPerfil==$profesor ||$idPerfil==$utp){ 
 		boton("Ingresar Bitácora","nuevoBitacoraProfe($idPerfil)");
 		echo "&nbsp;";
 		boton("Ver Bitácoras Ingresadas","listaBitacoraProfe($idPerfil)");
-	}elseif ($idPerfil==21) {
+	}elseif ($idPerfil==$directivo) {
 		/*boton("Ingresar Bitácora","nuevoBitacoraDirectivo($idPerfil)");
 		echo "&nbsp;";*/
 		boton("Ver Bitácoras Ingresadas","listaBitacoraDirectivo($idPerfil)");
@@ -148,7 +148,7 @@ if (isset ($_REQUEST["idSeccionBitacora"])){
 ?>
 	<input name="idSeccionBitacora" id="idSeccionBitacora" class="campos" type="hidden" value="<?php echo @$_REQUEST["idSeccionBitacora"]; ?>" />
     <script>
-	<?php if ($idPerfil==1 ||$idPerfil==3){echo $idPerfil;?>
+	<?php if ($idPerfil==$profesor ||$idPerfil==$utp){//echo $idPerfil; ?>
 		nuevoBitacoraProfe(<?php echo $idPerfil?>);
 		<?php }elseif ($idPerfil==21) {?>
 		nuevoBitacoraDirectivo(<?php echo $idPerfil?>);

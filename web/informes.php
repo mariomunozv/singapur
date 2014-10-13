@@ -29,19 +29,20 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
         <p class="titulo_curso">Informes de Actividades: </p>
         <hr />
         <br />
-  	 	<div id="textoBienvenida">
+        <div id="textoBienvenida">
        	  <p class="textoBienvenida">
             La pauta observacion de clases permitirá tener un registro a las respecto a la 
             observaciones que realizan los asesores de las clases que los docentes realizan 
             en la implementación en aula del Método Singapur            
-			</p><br />
+          </p><br />
         </div><!--textoBienvenida-->
-        <div id="cajaCentralFondo" >
+        
+
         
     	<?php
 		$idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
-        if ($idPerfil==9 ||$idPerfil==5 || $idPerfil==23 ||$idPerfil==21 || $idPerfil==3){ ?>
+        if ($idPerfil==$coordinador_general || $idPerfil==$relator_tutor || $idPerfil==$asesor || $idPerfil==$directivo || $idPerfil==$utp){ ?>
         <div id="cajaCentralFondo" >
        
         <div id="cajaCentralTop">

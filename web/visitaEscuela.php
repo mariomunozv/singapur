@@ -34,13 +34,13 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
             en la implementación en aula del Método Singapur            
 			</p><br />
         </div><!--textoBienvenida-->
-        <div id="cajaCentralFondo" >
+        
         <?php 
     	
 		$idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
-		if ($idPerfil==9 ||$idPerfil==5 ||$idPerfil==23 ){ ?>
-        
+		if ($idPerfil == $coordinador_general || $idPerfil == $relator_tutor ||$idPerfil == $asesor ){   ?>
+        <div id="cajaCentralFondo" >
             <div id="cajaCentralTop">
                 <p class="titulo_jornada">
 				Llenar Visitas Escuela
@@ -51,7 +51,7 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
                Se pueden llenar las visitas escuela
               <br><br>
 			 <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Llenar visita escuela" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Ingresar visita escuela" />
               </div>
             </div>
             
@@ -62,9 +62,8 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
         </div> <!--cajaCentralFondo-->
 		<br>
         <div id="cajaCentralFondo" >
-       	<br>
 		<?php } 
-        if ($idPerfil==9 ||$idPerfil==5 || $idPerfil==23 ||$idPerfil==21 || $idPerfil==3){ ?>
+        if ($idPerfil==$coordinador_general ||$idPerfil==$relator_tutor || $idPerfil==$asesor ||$idPerfil==$directivo || $idPerfil==$utp){ ?>
         <div id="cajaCentralTop">
                 <p class="titulo_jornada">
 				Ver Visitas Escuela
