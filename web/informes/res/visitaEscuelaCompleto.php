@@ -191,8 +191,22 @@ td,th{
     </page_header>
     <h4 style="margin-top:80px;margin-bottom:-10;">Trabajo con docentes</h4>
     <?php foreach ($docentes as $key => $doc) { ?>
-    <?php if($key == 4){  ?>
-        <br><br><br><br><br><br><br><br>
+    <?php if( $key == 3){  ?>
+        </page>
+        <page style="font-size: 12px"><!--pagina 2-->
+            <page_footer>
+                <!--<hr style="height: 1px; margin-top:-10px; background: #000; border: solid 1px #555">-->
+                <p style="text-align:right;margin-right:20px;">[[page_cu]]</p>
+            </page_footer>
+            <page_header style="margin-top:-20px;">
+                <p style="text-align:center; font-size: 10pt;font-family: Times">CENTRO FELIX KLEIN</p>
+                <p style="text-align:center; margin-top:-15px; font-size: 10pt;font-family: Times">Investigación y Experimentación en Didáctica de la Matemática y la Ciencia</p>
+                <p style="text-align:center; margin-top:-15px; font-size: 10pt;font-family: Times">Facultad de Ciencia</p>
+                <p style="text-align:center; margin-top:-15px; font-size: 10pt;font-family: Times">Universidad de Santiago de Chile</p>
+                <p style="text-align:center; margin-top:-15px; font-size: 10pt;font-family: Times"><a href="http://www.centrofelixklein.cl">www.centrofelixklein.cl</a></p>
+                <hr style="height: 1px; margin-top:-10px; background: #000; border: solid 1px #555">
+            </page_header>
+            <br /><br /><br /><br /><br /><br /><br />
     <?php } ?>
     <table style="margin-top:10px;">
         <!--<tr><td ></td><td style="width:25%;"></td><td style=""></td></tr>-->
@@ -236,7 +250,10 @@ td,th{
             <td style="width:95%">8. Otro: <?php echo $doc["detalleOpcion8Observacion"]; ?></td>
             <td style="width:5%;text-align:center"><?php if($doc["opcion8Observacion"]){echo "X";} ?></td>
         </tr>
+        <tr><th colspan="2" style="width:100%;">Observación</th></tr>
+        <tr><td colspan="2" style="width:100%; min-height:300px;"><?php echo $doc["observacionTrabajoConDocentes"]; ?></td></tr>
     </table>
+    <br />
     <?php } ?>
 </page><!--pagina 2-->
 

@@ -416,6 +416,19 @@ $datos = getVisitasUsuario($_SESSION["sesionIdUsuario"]);
         $val[8]=substr($val[8], 8,2)."/".substr($val[8],5,2)."/".substr($val[8], 0,4);
         $val[9]=substr($val[9], 0,5);
         $val[10]=substr($val[10], 0,5);
+        $docentes = getDocentesVisita($val[0]);
+        echo "-".count($docentes)."-";
+        for ($i=0; $i < 5 ; $i++) { 
+            if(count($docentes)>$i){
+                $nombres[$i] = $docentes[$i][2];
+                $cursos[$i] = $docentes[$i][3];
+            }else{
+                $nombres[$i] = "";
+                $cursos[$i] = "";
+            }
+            
+        }
+
         $tabla .=<<<HTML
             <tr>
                 <td>$val[0]</td>
@@ -427,7 +440,17 @@ $datos = getVisitasUsuario($_SESSION["sesionIdUsuario"]);
                 <td>$val[8]</td>
                 <td>$val[9]</td>
                 <td>$val[10]</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>$nombres[0]</td>
+                <td>$cursos[0]</td>
+                <td>$nombres[1]</td>
+                <td>$cursos[1]</td>
+                <td>$nombres[2]</td>
+                <td>$cursos[2]</td>
+                <td>$nombres[3]</td>
+                <td>$cursos[3]</td>
+                <td>$nombres[4]</td>
+                <td>$cursos[4]</td>
+
                 <td>$val[21]</td>
                 <td>$val[22]</td>
                 <td>$val[23]</td>

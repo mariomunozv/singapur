@@ -72,7 +72,7 @@ require("inc/_visitaEscuela.php");
                                 <br />
                                 <form class="descarga-excel">
                                     <input type="hidden" name="idVisita" value="<?php echo $inf['idVisitaEscuela']; ?>">
-                                    <a href="" target="blank">
+                                    <a href="informes/informeExcelVisitaEscuela.php" target="blank">
                                         <img border="0" src="img/excel.png" width="14" height="14" alt="Descargar Excel" title="Descargar Excel" /> Excel
                                     </a>
                                 </form>
