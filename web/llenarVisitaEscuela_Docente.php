@@ -32,7 +32,7 @@ function getDocentes($rbdColegio){
 <?php if($_POST["rbd"]!=""){ ?>
 <div id="campo-llenado-docente-<?php echo $_POST['index'] ?>">
   <br />
-  <h5>Docente nº<?php echo $_POST['index']+1 ?></h5>
+  <h5>Docente n&deg; <?php echo $_POST['index']+1 ?></h5>
   <table>
     <tr>
       <td>Docente: </td>
@@ -65,11 +65,11 @@ function getDocentes($rbdColegio){
       </tbody>
       <tbody>
         <tr>
-          <td>Observacion de clases</td>
+          <td>Observaci&oacute;n de clases</td>
           <td><input type="checkbox" name="doc1-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Observación de clases con apoyo</td>
+          <td>Observaci&oacute;n de clases con apoyo</td>
           <td><input type="checkbox" name="doc2-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
@@ -77,19 +77,19 @@ function getDocentes($rbdColegio){
           <td><input type="checkbox" name="doc3-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Preparación y/o estudio de una clase a implementar</td>
+          <td>Preparaci&oacute;n y/o estudio de una clase a implementar</td>
           <td><input type="checkbox" name="doc4-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Retroalimentación de la clase observada.</td>
+          <td>Retroalimentaci&oacute;n de la clase observada.</td>
           <td><input type="checkbox" name="doc5-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Análisis de resultados</td>
+          <td>An&aacute;lisis de resultados</td>
           <td><input type="checkbox" name="doc6-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>
-          <td>Dificultades surgidas durante la implementación y logros</td>
+          <td>Dificultades surgidas durante la implementaci&oacute;n y logros</td>
           <td><input type="checkbox" name="doc7-<?php echo $_POST['index'] ?>"></td>
         </tr>
         <tr>

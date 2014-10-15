@@ -1,20 +1,20 @@
 <?php
-
 @include "inc/_accesoRecurso.php";
 @include "inc/_bitacoraClase.php";
 @include "inc/_comentario.php";
-
+@include "inc/_colegio.php"; // Agregada 22.07/**/
 @include "inc/_cursoCapacitacion.php";
 @include "inc/_detalleColegioProyecto.php";
 @include "inc/_detalleUsuarioProyectoPerfil.php";
-
 @include "inc/_empleadoKlein.php";
-
 @include "inc/_evento.php";
 @include "inc/_glosario.php";
+
 @include "inc/_inscripcionCursoCapacitacion.php";
+
 @include "inc/_jornada.php";
 @include "inc/_mensaje.php";
+
 @include "inc/_mensajeTema.php";
 @include "inc/_notificacion.php";
 @include "inc/_palabra.php";
@@ -22,10 +22,13 @@
 @include "inc/_profesor.php";
 @include "inc/_publicacion.php";
 @include "inc/_recurso.php";
+
 @include "inc/_seccionBitacora.php";
 @include "inc/_tema.php";
+
 @include "inc/_usuario.php";
-@include "inc/_conlegio.php";
+
+//@include "inc/_conlegio.php"; // modificado 22.07
 
 
 // Ej: ordenar($alumnosCurso,array("idPerfil"=>"ASC","nombreCompleto"=>"ASC"));
@@ -419,7 +422,6 @@ if (count ( array_diff_assoc ( $root, $request ) ) > 0) {
 
 }
 
-
 function limpiar_caracteres_especiales($s) {
 	$s = ereg_replace("[áàâãª]","a",$s);
 	$s = ereg_replace("[ÁÀÂÃ]","A",$s);
@@ -438,19 +440,26 @@ function limpiar_caracteres_especiales($s) {
 	//$s = str_replace("caracter-que-queremos-cambiar","caracter-por-el-cual-lo-vamos-a-cambiar",$s);
 	return $s;
 }
+function Cambiar_caracteres_especiales($s) {
 
-function reemplaza($texto){
+	$s = utf8_encode($s);
 
-$salida = str_replace("%u22C5","·",$texto);
-$texto = $salida;
-$salida = str_replace("%2B","+",$texto);
-$texto = $salida;
-$salida = str_replace("%25B","+",$texto);
-
-
-return $salida;
-
+	$s = preg_replace("/á|à|â|ã|ª/","&aacute;",$s);
+	$s = preg_replace("/Á|À|Â|Ã/","&Aacute;",$s);
+	$s = preg_replace("/é|è|ê/","&eacute;",$s);
+	$s = preg_replace("/É|È|Ê/","&Eacute;",$s);
+	$s = preg_replace("/í|ì|î/","&iacute;",$s);
+	$s = preg_replace("/Í|Ì|Î/","&Iacute;",$s);
+	$s = preg_replace("/ó|ò|ô|õ|º/","&oacute;",$s);
+	$s = preg_replace("/Ó|Ò|Ô|Õ/","&Oacute;",$s);
+	$s = preg_replace("/ú|ù|û/","&uacute;",$s);
+	$s = preg_replace("/Ú|Ù|Û/","&Uacute;",$s);
+	//$s = str_replace(" ","_",$s);
+	$s = str_replace("ñ","&ntilde;",$s);
+	$s = str_replace("Ñ","&Ntilde;",$s);
+	//para ampliar los caracteres a reemplazar agregar lineas de este tipo:
+	//$s = str_replace("caracter-que-queremos-cambiar","caracter-por-el-cual-lo-vamos-a-cambiar",$s);
+	return $s;
 }
-
 
 ?>

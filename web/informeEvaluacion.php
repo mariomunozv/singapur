@@ -13,7 +13,15 @@ function DatosUsuario($idUsuario){
 	return($datosUsuario);
 	
 	}
-
+function datosEmpleadoKlein($idUsuario){
+	$sql = "SELECT * from usuario WHERE idUsuario = ".$idUsuario;
+	//echo $sql;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	$datosUsuario = array("rutAlumno" => $row["rutAlumno"],"rutEmpleadoKlein" => $row["rutEmpleadoKlein"],"tipoUsuario" => $row["tipoUsuario"]);
+	return($datosUsuario);
+	
+	}
 function cuentaAlumnosCurso($letraCursoColegio,$anoCursoColegio,$rbdColegio,$idNivel){
 	$sql = "SELECT Count(rutAlumno) AS resultado FROM matricula where rbdColegio = '$rbdColegio' and idNivel = $idNivel and anoCursoColegio = $anoCursoColegio and letraCursoColegio = '$letraCursoColegio'";
 	$res = mysql_query($sql);
@@ -21,14 +29,15 @@ function cuentaAlumnosCurso($letraCursoColegio,$anoCursoColegio,$rbdColegio,$idN
 	echo $row["resultado"];
 	
 }
-function getColegiosProfesor($rutProfesor,$anoCursoColegio ,$tipoUsuario){
-	$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
+function getColegiosProfesor($rutProfesor,$anoCursoColegio ,$tipoUsuario,$idUsuario){
+	//$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
 	$sql = "SELECT DISTINCT cu.rbdColegio , co.nombreColegio
 			FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
-			     join usuariocolegio us on us.rbdColegio=cu.rbdColegio
+			     join usuarioColegio us on us.rbdColegio=cu.rbdColegio
 			     join colegio co on co.rbdColegio=cu.rbdColegio
-			WHERE us.idUsuario = '".$detalleProfesor["idUsuario"]."'
+			WHERE us.idUsuario = $idUsuario
 			AND cu.anoCursoColegio = $anoCursoColegio
+			AND co.estadoColegio=1
 			ORDER BY cu.rbdColegio, nombreNivel, letraCursoColegio";
 	$res = mysql_query($sql);
 	$i = 0;
@@ -41,11 +50,13 @@ function getColegiosProfesor($rutProfesor,$anoCursoColegio ,$tipoUsuario){
 	return($colegios);
 }
 
-function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
+function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario,$idUsuario){
 	$sql = "";
-	if ($tipoUsuario == 4 || $tipoUsuario == 3) {
+	
+	switch ( $tipoUsuario){
+	case 3: 	
+		
 		$datosProfesor = getDatosProfesorByRut($rutProfesor);
-
 		$profesores = getProfesoresColegio($datosProfesor["rbdColegio"]);
 		$conditionProfesor = "(cu.rutProfesor = '$rutProfesor'";
 		foreach ($profesores as $key => $data) {
@@ -57,45 +68,77 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario){
 				on cu.idNivel = ni.idNivel 
 				WHERE $conditionProfesor 
 				AND cu.anoCursoColegio = $anoCursoColegio";
+		break;
+	case 21:
+		$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
+		$sql = "SELECT * 
+				FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
+		  	  	join usuarioColegio us on us.rbdColegio=cu.rbdColegio
+		  	  	join colegio co on co.rbdColegio=cu.rbdColegio
+				WHERE us.idUsuario = $idUsuario
+				AND cu.anoCursoColegio = $anoCursoColegio
+				ORDER BY cu.rbdColegio, nombreNivel, letraCursoColegio";	
+ 		break;
 		
-	} else {
-		if($tipoUsuario == 21){
-			$detalleProfesor = getDatosProfesorPorRut($rutProfesor);
-			$sql = "SELECT * 
-					FROM cursoColegio cu join nivel ni on cu.idNivel = ni.idNivel
-					     join usuariocolegio us on us.rbdColegio=cu.rbdColegio
-					     join colegio co on co.rbdColegio=cu.rbdColegio
-					WHERE us.idUsuario = '".$detalleProfesor["idUsuario"]."'
-					AND cu.anoCursoColegio = $anoCursoColegio
-					ORDER BY cu.rbdColegio, nombreNivel, letraCursoColegio";	
-
-		}else{
-			$sql = "SELECT * 
-					FROM cursoColegio cu join nivel ni 
-					on cu.idNivel = ni.idNivel 
-					WHERE cu.rutProfesor = '$rutProfesor' 
-					AND cu.anoCursoColegio = $anoCursoColegio";	
-		}
+	case 5:
+		$sql = "SELECT DISTINCT cu.rbdColegio, cu.anoCursoColegio, cu.letraCursoColegio, ni.idNivel, cu.rutProfesor, ni.nombreNivel, co.nombreColegio
+				FROM cursoColegio cu
+				JOIN nivel ni ON cu.idNivel = ni.idNivel
+				JOIN usuarioColegio us ON us.rbdColegio = cu.rbdColegio
+				JOIN colegio co ON co.rbdColegio = cu.rbdColegio
+				WHERE us.idUsuario = $idUsuario
+				AND cu.anoCursoColegio =  $anoCursoColegio
+				ORDER BY cu.rbdColegio, ni.nombreNivel, cu.letraCursoColegio";	
+		break;
+	case 23:
+		$sql = "SELECT DISTINCT cu.rbdColegio, cu.anoCursoColegio, cu.letraCursoColegio, ni.idNivel, cu.rutProfesor, ni.nombreNivel, co.nombreColegio
+				FROM cursoColegio cu
+				JOIN nivel ni ON cu.idNivel = ni.idNivel
+				JOIN usuarioColegio us ON us.rbdColegio = cu.rbdColegio
+				JOIN colegio co ON co.rbdColegio = cu.rbdColegio
+				WHERE us.idUsuario = $idUsuario
+				AND cu.anoCursoColegio =  $anoCursoColegio
+				ORDER BY cu.rbdColegio, ni.nombreNivel, cu.letraCursoColegio";	
+		break;
+	case 9:			
+		$sql = "SELECT DISTINCT cu.rbdColegio, cu.anoCursoColegio, cu.letraCursoColegio, ni.idNivel, cu.rutProfesor, ni.nombreNivel, co.nombreColegio
+				FROM cursoColegio cu
+				JOIN nivel ni ON cu.idNivel = ni.idNivel
+				JOIN usuarioColegio us ON us.rbdColegio = cu.rbdColegio
+				JOIN colegio co ON co.rbdColegio = cu.rbdColegio
+				WHERE cu.anoCursoColegio =  $anoCursoColegio
+				ORDER BY cu.rbdColegio, ni.nombreNivel, cu.letraCursoColegio";	
+ 		break;
+	default: 	
+		$sql = "SELECT * 
+				FROM cursoColegio cu join nivel ni 
+				on cu.idNivel = ni.idNivel 
+				WHERE cu.rutProfesor = '$rutProfesor' 
+				AND cu.anoCursoColegio = $anoCursoColegio";	
+		 break;
+		
 	}
+	
 	$res = mysql_query($sql);
 	$i = 0;
 	$cursos = array();
-	while ($row = mysql_fetch_array($res)){
+		while ($row = mysql_fetch_array($res)){
 	
-	$cursos[$i] = array( 
-		"rbdColegio" => $row["rbdColegio"],
-		"anoCursoColegio" => $row["anoCursoColegio"],
-		"letraCursoColegio" => $row["letraCursoColegio"],
-		"idNivel" => $row["idNivel"],
-		"rutProfesor" => $row["rutProfesor"],
-		"nombreNivel" => $row["nombreNivel"],
-		"nombreCurso" => $row["nombreNivel"]." ".$row["letraCursoColegio"]." - ".$row["anoCursoColegio"]
-		);
-	if($tipoUsuario == 21){
-		$cursos[$i]["nombreColegio"]=$row["nombreColegio"];
-	}
-	$i++;
-	}
+			$cursos[$i] = array( 
+			"rbdColegio" => $row["rbdColegio"],
+			"anoCursoColegio" => $row["anoCursoColegio"],
+			"letraCursoColegio" => $row["letraCursoColegio"],
+			"idNivel" => $row["idNivel"],
+			"rutProfesor" => $row["rutProfesor"],
+			"nombreNivel" => $row["nombreNivel"],
+			"nombreCurso" => $row["nombreNivel"]." ".$row["letraCursoColegio"]." - ".$row["anoCursoColegio"]
+			);
+			if($tipoUsuario == 21  || $tipoUsuario == 9 || $tipoUsuario == 5 || $tipoUsuario == 23){
+			$cursos[$i]["nombreColegio"]=$row["nombreColegio"];
+			}
+			$i++;
+		}
+	
 	return($cursos);
 }
 
@@ -127,8 +170,9 @@ if(@$_REQUEST["escala"] != ""){
 	}
 	
 registraAcceso($_SESSION["sesionIdUsuario"], 17, 'NULL'); 
-$datosUsuario = DatosUsuario($_SESSION["sesionIdUsuario"]);
 
+$idUsuario=$_SESSION["sesionIdUsuario"];
+$datosUsuario = DatosUsuario($idUsuario);
 ?>
 <script>
 
@@ -154,7 +198,7 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	$navegacion = "Home*curso.php?idCurso=$idCurso,Evaluación*#";
+	$navegacion = "Evaluacion*evaluacionHome.php,Evaluaciones de proceso*#";
 	require("_navegacion.php");
 
 ?>
@@ -187,10 +231,19 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 			Sistema. Para ingresar al listado de los alumnos y modificar los puntajes seleccione una de las <img src="img/ver.gif" width="14" height="14" alt="Ver más" title="Ver más" /> <strong>Pruebas</strong>.
 			</p>
 			<?php 
-				$perfilUsuario = $_SESSION['sesionPerfilUsuario'];
-				$colegios = getColegiosProfesor($datosUsuario["rutProfesor"],$anoActual,$perfilUsuario);
+				$perfilUsuario = $_SESSION['sesionPerfilUsuario'];				
+				$colegios = getColegiosProfesor($datosUsuario["rutProfesor"],$anoActual,$perfilUsuario,$idUsuario);
 			?>
-			<?php if($perfilUsuario == 21){ ?>
+			<?php if($perfilUsuario == 21 || $perfilUsuario == 9 || $perfilUsuario == 5 || $perfilUsuario == 23){ 
+			   	if ($perfilUsuario  != 21){				  	
+				  	if ($perfilUsuario == 5 || $perfilUsuario == 23){
+						$datosUsuario=datosEmpleadoKlein($idUsuario);	
+						
+						$colegios = getColegiosProfesor($datosUsuario["rutEmpleadoKlein"],$anoActual,$perfilUsuario,$idUsuario);
+					}else{
+						$colegios =getTodosColegios();
+					}
+				}?>
 			<br />
 			<select id="filtro-colegio">
 				<option value="">Seleccione un colegio para filtrar</option>
@@ -205,30 +258,33 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 			  <thead> 
 			          
 			  <tr>
-			  	<?php if($_SESSION["sesionPerfilUsuario"] == 21){ ?> 
-            	<th>Colegio</th>
-            	<?php } ?>
+			  	<?php if($perfilUsuario == 21 || $perfilUsuario == 9 || $perfilUsuario == 5 || $perfilUsuario == 23){ ?> 
+            	<th width="130">Colegio</th>
+                <th width="55">Curso</th>
+			    <th width="20">Año</th>
+			    <th width="90">Profesor Jefe </th>
+			  	<th width="40">N° Alumnos Matricula</th>
+			    <th width="140">Informe de Evaluación</th>
+            	<?php } else{?>
 			    <th>Curso</th>
 			    <th>Año</th>
-			    <th>Profesor Jefe </th>
-			    
+			    <th>Profesor Jefe </th>			    
 				<th>N° Alumnos Matricula</th>
 			    <th>Informe de Evaluación</th>
+                <?php } ?>
 			  </tr>
 			  </thead>
 			  <tbody id="filtrado"> 
 			  <?php 
-			  	$cursos = getCursosProfesor($datosUsuario["rutProfesor"],$anoActual, $perfilUsuario);
-			 
+			  	$cursos = getCursosProfesor($datosUsuario["rutProfesor"],$anoActual, $perfilUsuario,$idUsuario);
+			// var_dump($cursos);	 
 
 			  	if (count($cursos) > 0){
 					foreach ($cursos as $curso){
 						$nombre = getNombreProfesor($curso["rutProfesor"]);
-
-
 				?>
 			            <tr id="-" data-rbd="<?php echo $curso['rbdColegio'];?>" onMouseOver="this.className='normalActive'" onMouseOut="this.className='normal'" class="normal">
-			            	<?php if($_SESSION["sesionPerfilUsuario"] == 21){ ?> 
+			            	<?php if($perfilUsuario == 21 || $perfilUsuario == 9|| $perfilUsuario == 5 || $perfilUsuario == 23){ ?> 
 			            	<td><?php echo $curso["nombreColegio"];?></td>
 			            	<?php } ?>
 			                <td><?php echo $curso["nombreNivel"]." ".$curso["letraCursoColegio"];?></td>
@@ -241,8 +297,7 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 							    	$i=0;
 								    if (isset($pruebasPorCurso[$curso["idNivel"]])) {
 									    $pruebas = $pruebasPorCurso[$curso["idNivel"]];
-								    }
-							  
+								    }					  
 							  
 							  
 							    foreach ($pruebas as $idLista){
@@ -271,7 +326,7 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 			</table>
 
 			<center>
-	            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="window.open('evaluacionHome.php','_self')">
+	            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('evaluacionHome.php','_self')">
 	                <span class="ui-button-text">Volver</span>
 	            </button>
 	        </center>

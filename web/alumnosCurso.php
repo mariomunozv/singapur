@@ -63,7 +63,7 @@ $datosCurso2 = getDatosCurso($_SESSION["sesionIdCurso"]);
 		<?php
 		// Si no existen alumnos
 		if(empty($alumnosCurso[0])){
-			echo '<td colspan="6">No hay alumnos inscritos em el curso</td>';
+			echo '<td colspan="6">No hay alumnos inscritos en el curso</td>';
 		}
 		else{
 			?>

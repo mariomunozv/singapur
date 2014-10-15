@@ -25,8 +25,9 @@ $rbdColegio = getRbdUsuario($idUsuario);
 <div id="principal">
 <?php
 require "topMenu.php";
-$navegacion = "Home*mural.php?idCurso=$idCurso,Evaluacion*#";
+$navegacion = "Evaluacion*#";
 require "_navegacion.php";
+$perfilusuario=$_SESSION["sesionPerfilUsuario"];
 ?>
 
   <div id="lateralIzq">
@@ -65,7 +66,7 @@ require "_navegacion.php";
 
        </div>
 
-       <?php if( $_SESSION["sesionPerfilUsuario"]!=9 && $_SESSION["sesionPerfilUsuario"]!=23 && $_SESSION["sesionPerfilUsuario"]!=5 ){ ?>
+       <?php if( $perfilusuario!=9 && $perfilusuario!=23 && $perfilusuario!=5  ){ ?>
        <div class='cajaCentralFondo'>
         <div id="cajaCentralTop">
           <p class="titulo_jornada">Ingreso Registros de Evaluaci&oacute;n</p>
@@ -88,7 +89,7 @@ require "_navegacion.php";
        </div>
 
       </div><!--cajaCentralFondo-->
-
+     <?php } ?>
       <div class='cajaCentralFondo'>
         <div id="cajaCentralTop">
           <p class="titulo_jornada">Resultados Evaluaciones de Proceso</p>
@@ -111,7 +112,7 @@ require "_navegacion.php";
         </div>
 
       </div>
-      <?php } ?>
+      
 
     </div>
     <br>

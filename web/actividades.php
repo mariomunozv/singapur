@@ -122,7 +122,7 @@ $nombreCurso = getNombreCortoCurso($_SESSION["sesionIdCurso"]);
         
         
     <!-- Si lista no tiene idActividad entonces dejar tal cual-->
-    <?phpif(isActividad($idActividad)){ ?>
+    <?php if(isActividad($idActividad)){ ?>
        <center>
        	<table>
        		<tr>

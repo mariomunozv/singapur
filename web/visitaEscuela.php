@@ -8,7 +8,7 @@ require ("hd.php");
 <div id="principal">
 <?php 
 	require("topMenu.php"); 
-	$navegacion = "Informes*#";
+	$navegacion = "Informes*informes.php,Visita Escuela*#";
 	require("_navegacion.php");
 $idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
@@ -24,25 +24,46 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
     
     
 	<div id="columnaCentro">
-     
-		
         <p class="titulo_curso">Informes de Actividades: </p>
         <hr />
         <br />
-        <div id="textoBienvenida">
+  	 	<div id="textoBienvenida">
        	  <p class="textoBienvenida">
-            Los informes de observación y de visita le permitirán tener un registro de las aproximaciones del asesor con su establecimiento encargado.            
-          </p><br />
+            La pauta observacion de clases permitirá tener un registro a las respecto a la 
+            observaciones que realizan los asesores de las clases que los docentes realizan 
+            en la implementación en aula del Método Singapur            
+			</p><br />
         </div><!--textoBienvenida-->
         
-
-        
-    	<?php
+        <?php 
+    	
 		$idPerfil = $_SESSION["sesionPerfilUsuario"];  
 
-        if ($idPerfil==$coordinador_general || $idPerfil==$relator_tutor || $idPerfil==$asesor || $idPerfil==$directivo || $idPerfil==$utp){ ?>
+		if ($idPerfil == $coordinador_general || $idPerfil == $relator_tutor ||$idPerfil == $asesor ){   ?>
         <div id="cajaCentralFondo" >
-       
+            <div id="cajaCentralTop">
+                <p class="titulo_jornada">
+				Llenar Visitas Escuela
+                </p>
+            </div>
+            
+              <div id="textoJornada">
+               Se pueden llenar las visitas escuela
+              <br><br>
+			 <div class='block-btn'>
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Ingresar visita escuela" />
+              </div>
+            </div>
+            
+            <div id="cajaCentralDown">
+            &nbsp; 
+            </div>
+            
+        </div> <!--cajaCentralFondo-->
+		<br>
+        <div id="cajaCentralFondo" >
+		<?php } 
+        if ($idPerfil==$coordinador_general ||$idPerfil==$relator_tutor || $idPerfil==$asesor ||$idPerfil==$directivo || $idPerfil==$utp){ ?>
         <div id="cajaCentralTop">
                 <p class="titulo_jornada">
 				Ver Visitas Escuela
@@ -50,46 +71,21 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
             </div>
             
               <div id="textoJornada">
-               Lista de Visitas Ingresadas
+               Lista de visitas ingresadas
               <br><br>
 			 <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('visitaEscuela.php','_self')" value="Registro de visita a escuela" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('informes/informeVisitaEscuela.php','_self')" value="Ver visita escuela" />
               </div>
             </div>
             
             <div id="cajaCentralDown">
             &nbsp; 
             </div>
-         <?php } ?>  
-          
+         <?php } ?>   
         </div> <!--cajaCentralFondo-->
         
 		<br>
-        <div id="cajaCentralFondo" >
-      
-            <div id="cajaCentralTop">
-                <p class="titulo_jornada">
-                Pauta de Observaci&#243;n de Clases  
-                </p>
-            </div>
-            
-            <div id="textoJornada">
-                Pauta de Observaci&#243;n de Clases 
-              <br><br>
-
-              <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('observacionClases.php','_self')" value="Ingresar/Ver Pautas" />
-              </div>
-              <br />
-
-            </div>
-            
-            
-            <div id="cajaCentralDown">
-            &nbsp; 
-            </div>
-            
-        </div> <!--cajaCentralFondo-->
+        
         <br />
     </div> <!--columnaCentro-->
 

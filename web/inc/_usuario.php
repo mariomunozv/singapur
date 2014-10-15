@@ -29,6 +29,26 @@ function getRutNombre($idUsuario){
     return $profesor;
 
 }
+function getColegiosDeProfesor($idUsuario){
+    $sql ="SELECT uc.rbdColegio,
+				c.nombreColegio
+	FROM  `usuarioColegio` uc
+	JOIN   `colegio` c
+	ON uc.rbdColegio=c.rbdColegio
+	
+	WHERE  `idUsuario` = ".$idUsuario." ";
+
+    $res = mysql_query($sql);
+    $i=0;
+    while($row = mysql_fetch_array($res)){
+            $colegio[] = array(
+            "rbdColegio"=> $row["rbdColegio"],
+			"nombreColegio"=> $row["nombreColegio"]   );
+    }
+   
+    return $colegio;
+
+}
 
 
 function getDatosUsuarioPorId($idUsuario){ 

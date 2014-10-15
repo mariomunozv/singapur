@@ -47,7 +47,7 @@ function getCountActividades($idProfesor){
     return $num;
 }
 
-$profesores = [];
+$profesores = array();
 $profesores = getProfesoresCurso($idCurso); ?>
 
 

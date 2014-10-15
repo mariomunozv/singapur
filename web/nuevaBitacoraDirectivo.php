@@ -8,6 +8,7 @@ $idJornada = 1;
 $idCurso = 1; 
 $idUsuario = $_SESSION['sesionIdUsuario'];
 $idPerfil = $_REQUEST["perfil"];
+
 ?>
 
 <script> 
@@ -31,6 +32,12 @@ function traeCursos(idUsuario){
 	var division = document.getElementById("cursoColegio");
 	a = "idUsuario="+idUsuario;
 	AJAXPOST("nuevaBitacoraProfeCursos.php",a,division);
+}
+
+function traeProfesores(RBDColegio){
+	var division = document.getElementById("profesor");
+	a = "RBDColegio="+RBDColegio;
+	AJAXPOST("nuevaBitacoraProfesores.php",a,division);
 }
 
 function traePartes(idUsuario,idCurso){
@@ -93,7 +100,7 @@ function guardaBitacora(){
 <?php
 
 $usuario = getDatosUsuarioPorId($idUsuario);
-$profesores = getProfesoresColegio($usuario['rbdColegio']);
+$colegios=getColegiosDeProfesor($idUsuario);
 ?>
 
 
@@ -125,22 +132,30 @@ if (isset ($_REQUEST["idSeccionBitacora"])){
 ?>
 	<tr>
     	<td valign="top">
-			Profesor: 
+			Establecimiento: 
         </td>
  		<td valign="top">
-        	<select id="profesor" name="profesor" style="width:250px" class="campos" onchange="traeCursos(this.value)">
-            	<option value="">Seleccione Profesor</option>
+       		 <select id="Establecimiento" name="Establecimiento" style="width:250px" class="campos" onchange="traeProfesores(this.value)">
+            	<option value="">Seleccione Establecimiento</option>
 			<?php 
-			if($idPerfil == 1){
-				echo "<option value=".$usuario['idUsuario'].">".$usuario['nombre']." ".$usuario['apellidoPaterno']."</option>";
-			}else if($idPerfil == 3 || $idPerfil == 21){
-				foreach($profesores as $profesor){
-					echo "<option value=".$profesor['idUsuario'].">".$profesor['nombreProfesor']." ".$profesor['apellidoPaternoProfesor']."</option>";
+			if($idPerfil == 21){
+				foreach($colegios as $colegio){
+					echo "<option value=".$colegio['rbdColegio'].">".$colegio['nombreColegio']."</option>";
 				}
 			}else{
 				echo "<option>".$idPerfil."</option>";
 			}
 			?>
+            </select>
+            </td>
+      </tr>
+   	  <tr>
+            <td valign="top">
+			Profesor: 
+        </td>
+ 		<td valign="top">
+        	<select id="profesor" name="profesor" style="width:250px" class="campos" onchange="traeCursos(this.value)">
+            	<option value="">Seleccione Profesor</option>
             </select>
         </td>
     </tr>

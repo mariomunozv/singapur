@@ -1,6 +1,5 @@
 <?php
 
-//$anoActual = date ("Y");
 require("_variablesGlobales.php");
 
 function getNombreSeccionBitacora($idSeccion){
@@ -218,7 +217,8 @@ function getHorasImplementadas($capCompletos, $idUsuario,$idCurso){
 			FROM seccionBitacora s
 			WHERE s.idPadreSeccionBitacora = ".$capCompletos.")
 			AND b.idUsuario = ".$idUsuario."
-			AND b.idCursoColegio = '".$idCurso."'";
+			AND b.idCursoColegio = '".$idCurso."'
+			AND YEAR(b.fechaCreacionBitacora) = ".$anoActual;
 	//echo $sql."<BR>";
 	$res = mysql_query($sql);
 	while($row = mysql_fetch_array($res)){
@@ -301,6 +301,7 @@ function getBitacoraUsuarioCurso($idUsuario,$idCursoColegio){
 	$sql = "SELECT * FROM bitacora a join seccionBitacora c on a.idSeccionBitacora = c.idSeccionBitacora WHERE idUsuario = ".$idUsuario;
 	$sql .= " AND idCursoColegio = '".$idCursoColegio."'";
 	$sql .= " AND fechaCreacionBitacora > '$anoActual-01-01'";
+
 	//echo $sql."<BR>";
 	$res = mysql_query($sql);
    	$i = 0;

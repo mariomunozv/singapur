@@ -44,7 +44,7 @@ function getEvaluacionGrupo($idGrupoEvaluacion, $idUsuario){
 	$sql = "SELECT * 
 			FROM evaluacion 
 			WHERE idGrupoEvaluacion=".$idGrupoEvaluacion." AND anoEvaluacion = ".date('Y')." AND tipoEvaluacion = 'Prueba' AND idNivel IN (".$preQuery.") 
-			ORDER BY idGrupoEvaluacion";
+			ORDER BY idGrupoEvaluacion ASC , idNivel ASC";
 	$res = mysql_query($sql);
 	$i = 0;
 	while ($row = mysql_fetch_array($res)){
@@ -58,7 +58,7 @@ function getEvaluacionGrupo($idGrupoEvaluacion, $idUsuario){
 	$sql2 = "SELECT * 
 			FROM evaluacion 
 			WHERE idGrupoEvaluacion=".$idGrupoEvaluacion." AND anoEvaluacion = ".date('Y')." AND tipoEvaluacion = 'Pauta' AND idNivel IN (".$preQuery.") 
-			ORDER BY idGrupoEvaluacion";
+			ORDER BY idGrupoEvaluacion ASC , idNivel ASC";
 	$res2 = mysql_query($sql2);
 	$i = 0;
 	while ($row2 = mysql_fetch_array($res2)){
@@ -71,7 +71,7 @@ function getEvaluacionGrupo($idGrupoEvaluacion, $idUsuario){
 	$sql3 = "SELECT * 
 			FROM evaluacion 
 			WHERE idGrupoEvaluacion=".$idGrupoEvaluacion." AND anoEvaluacion = ".date('Y')." AND tipoEvaluacion = 'Protocolo' AND idNivel IN (".$preQuery.") 
-			ORDER BY idGrupoEvaluacion";
+			ORDER BY idGrupoEvaluacion ASC , idNivel ASC";
 	$res3 = mysql_query($sql3);
 	$i = 0;
 	while ($row3 = mysql_fetch_array($res3)){

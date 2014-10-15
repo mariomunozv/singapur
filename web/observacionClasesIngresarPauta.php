@@ -189,7 +189,7 @@
                 <tr>
                  <th></th>
                  <th>Indicadores</th>
-                 <th>N/A</th>
+                 <th>N/O</th>
                  <th>Si</th>
                  <th>No</th>
                 </tr>
@@ -212,7 +212,7 @@
                 <tr>
                  <th>Nº</th>
                  <th>Indicadores</th>
-                 <th>N/A</th>
+                 <th>N/O</th>
                  <th>1</th>
                  <th>2</th>
                  <th>3</th>

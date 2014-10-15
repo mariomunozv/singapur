@@ -1,4 +1,5 @@
 <?php
+require("../inc/_variablesGlobales.php");
 
 Class PautaItem {
   public $idLista;
@@ -8,11 +9,12 @@ Class PautaItem {
   public $fechaConfirmada;
 
   function updateAsistencia() {
-    $db = new DB();
+    global $anoActual;
+  $db = new DB();
 
     $db->connectDb();
 
-    $query = "UPDATE pautaItem SET fechaRespuestaPautaItem =:fecha, asistio =:asistio, fechaConfirmada =:fechaConfirmada  WHERE idUsuario =:idUsuario and idLista =:idLista";
+    $query = "UPDATE pautaItem SET fechaRespuestaPautaItem =:fecha, asistio =:asistio, fechaConfirmada =:fechaConfirmada  WHERE idUsuario =:idUsuario and idLista =:idLista and fechaRespuestaPautaItem > '".$anoActual."'";
 
     $st = $db->getPDO()->prepare($query);
 

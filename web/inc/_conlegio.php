@@ -1,4 +1,6 @@
 <?php 
+
+/*
 function getDatosColegio($rbdColegio){
 	$sql = "SELECT * FROM colegio a left join comuna  b on a.idComuna = b.idComuna WHERE rbdColegio = ".$rbdColegio;
 	//echo $sql;
@@ -28,5 +30,6 @@ function getRbdUsuario($idUsuario){
 	$row = mysql_fetch_row($res);
 	return $row[0];
 }
+*/
 
 ?>

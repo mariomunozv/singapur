@@ -4,6 +4,7 @@ include "inc/_actividad.php";
 include "inc/_pauta.php";
 include "inc/_bitacora.php";
 require ("hd.php");
+
 if (@$_REQUEST["idCurso"]){
 	$idCurso = $_REQUEST["idCurso"];
 }else{

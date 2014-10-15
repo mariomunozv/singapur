@@ -12,7 +12,7 @@ function getDocentes($rbdColegio){
   if(substr($_POST['tag'],0,9)=="directivo"){
     $sql = "SELECT DISTINCT pr.rutProfesor, pr.apellidoPaternoProfesor, pr.apellidoMaternoProfesor, pr.nombreProfesor
             FROM profesor pr join usuario us on pr.rutProfesor=us.rutProfesor
-                 join usuariocolegio uscol on us.idUsuario = uscol.idUsuario
+                 join usuarioColegio uscol on us.idUsuario = uscol.idUsuario
             WHERE (pr.rbdColegio = $rbdColegio
                     AND us.tipoUsuario ='UTP'
                     ) 
@@ -115,6 +115,7 @@ function getCursos($rutProfesor,$rbdColegio){
                 $cursos = getCursos($_POST["rutProfesor"],$_POST["rbd"]);
                 if (count($cursos) > 0){
                   foreach ($cursos as $curso){
+					 // var_dump($cursos);
                     echo "<option value='".$curso['nombreCurso']."'>".$curso["nombreCurso"]."</option>";
                   }
                 }
