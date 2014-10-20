@@ -13,21 +13,24 @@ function buscaPautaItem($idUsuario, $idLista)
 
 function actualizaPuntaje($idUsuario,$idItem,$puntaje,$idLista) {
 	$execute = true;
-	$sql = "SELECT puntajeRespuestaItem FROM respuestaItem WHERE idUsuario = ".$idUsuario." AND idItem = ".$idItem;
+	$pauta = buscaPautaItem($idUsuario,$idLista); 
+	// Se agregó la pauta, para evitar que traiga una respuesta de un item que podría ser antiguo (los items se reutilizan de un año para otro)
+	$sql = "SELECT puntajeRespuestaItem FROM respuestaItem WHERE idUsuario = ".$idUsuario." AND idItem = ".$idItem." AND idPauta = ".$pauta;
 	$res = mysql_query($sql);
-	if($row = mysql_fetch_row($res)){
+	if($row = mysql_fetch_row($res)){ // Si el item tiene puntaje (ya se ingresó un valor previamente)
 		if ($puntaje == "") {
 			$sql = "UPDATE `respuestaItem` SET `puntajeRespuestaItem` = NULL WHERE `idItem` = '$idItem' AND `idUsuario` = '$idUsuario';";
 		}else {
 			$sql = "UPDATE `respuestaItem` SET `puntajeRespuestaItem` = $puntaje WHERE `idItem` = '$idItem' AND `idUsuario` = '$idUsuario';";			
 		}
-		if ($row[0] == $puntaje) {
+		
+		if ($row[0] == $puntaje) { // no cambiarlo si es el mismo puntaje
 			return false;
 		}
-	} else {
+	} else { // Si el item NO tiene puntaje (nunca se ha ingresado un valor)
 		if ($puntaje != "") {
-			$pauta = buscaPautaItem($idUsuario,$idLista);
-			$sql = "INSERT INTO respuestaItem(idItem, idLista, idUsuario, idPautaItem, 	puntajeRespuestaItem)VALUES($idItem,$idLista,$idUsuario,$pauta,$puntaje) ";
+			//$pauta = buscaPautaItem($idUsuario,$idLista);
+			$sql = "INSERT INTO respuestaItem (idItem, idLista, idUsuario, idPautaItem, puntajeRespuestaItem) VALUES ($idItem,$idLista,$idUsuario,$pauta,$puntaje) ";
 		} else {
 			return false;			
 		}
@@ -112,11 +115,13 @@ for($i=0;$i<count($usuarios);$i++){
 	$cambioPuntaje = false;
 	$puntajeNulo = false;
 	$item = $_REQUEST["sel".$usuarios[$i]];
+	//print_r($item);
 	$puntajeAlumno = 0;
 	foreach($idItems as $idItem){
 		if ($item[$j] == '') {
 			$puntajeNulo = true;
 		}
+		
 		if(actualizaPuntaje($usuarios[$i],$idItem,$item[$j],$idLista)){
 			$cambioPuntaje = true;
 		}
