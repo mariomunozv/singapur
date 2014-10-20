@@ -1,6 +1,7 @@
 <?php
 require("admin/inc/config.php");
 require("inc/_funciones.php");
+require("inc/_visitaEscuela.php");
 //Funciones
 function getDocentes($rbdColegio){
   $sql = "SELECT * 
@@ -43,7 +44,7 @@ function getDocentes($rbdColegio){
                 $docentes = getDocentes($_POST["rbd"]);
                 if (count($docentes) > 0){
                   foreach ($docentes as $docente){
-                    echo "<option value='".$docente['rutProfesor']."'>".$docente["nombreProfesor"]."</option>";
+                    echo "<option value='".$docente['rutProfesor']."'>".utf8($docente["nombreProfesor"])."</option>";
                   }
                 }
             ?>

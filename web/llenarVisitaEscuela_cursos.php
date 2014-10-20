@@ -1,6 +1,7 @@
 <?php
 require("admin/inc/config.php");
 require("inc/_funciones.php");
+require("inc/_visitaEscuela.php");
 //Funciones
 function getDocentes($rbdColegio){
   $sql = "SELECT DISTINCT pr.rutProfesor, pr.apellidoPaternoProfesor, pr.apellidoMaternoProfesor, pr.nombreProfesor
@@ -64,7 +65,7 @@ function getCursos($rutProfesor,$rbdColegio){
                 $docentes = getDocentes($_POST["rbd"]);
                 if (count($docentes) > 0){
                   foreach ($docentes as $docente){
-                    echo "<option value='".$docente['idProfesor']."'>".$docente["nombreProfesor"]."</option>";
+                    echo "<option value='".$docente['idProfesor']."'>".utf8($docente["nombreProfesor"])."</option>";
                   }
                 }
             ?>
@@ -116,7 +117,7 @@ function getCursos($rutProfesor,$rbdColegio){
                 if (count($cursos) > 0){
                   foreach ($cursos as $curso){
 					 // var_dump($cursos);
-                    echo "<option value='".$curso['nombreCurso']."'>".$curso["nombreCurso"]."</option>";
+                    echo "<option value='".utf8($curso['nombreCurso'])."'>".utf8($curso["nombreCurso"])."</option>";
                   }
                 }
             ?>

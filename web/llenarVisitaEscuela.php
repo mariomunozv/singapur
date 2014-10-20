@@ -1,6 +1,7 @@
 <?php
 ini_set("display_errors", "on");
 require "inc/incluidos.php";
+require("inc/_visitaEscuela.php");
 require "hd.php";
 
 $idUsuario = $_SESSION["sesionIdUsuario"];
@@ -66,7 +67,7 @@ require "_navegacion.php";
                           $colegios = getColegiosNuevoUsuario($idUsuario);
                           if (count($colegios) > 0){
                             foreach ($colegios as $colegio){
-                              echo "<option value='".$colegio['idColegio']."'>".$colegio["nombreColegio"]."</option>";
+                              echo "<option value='".$colegio['idColegio']."'>".utf8($colegio["nombreColegio"])."</option>";
                             }
                           }
                       ?>
@@ -79,7 +80,7 @@ require "_navegacion.php";
                   <td>Asesor: </td>
                   <td id="campo_asesor">
                     <?php if($_SESSION["sesionPerfilUsuario"]==23 || $_SESSION["sesionPerfilUsuario"]==5 || $_SESSION["sesionPerfilUsuario"]==9){
-                      echo $_SESSION["sesionNombreUsuario"];} 
+                      echo utf8($_SESSION["sesionNombreUsuario"]);} 
                       echo "<input type='hidden' name='idAsesor' value='".$_SESSION["sesionIdUsuario"]."'>";
                     ?>
                   </td>

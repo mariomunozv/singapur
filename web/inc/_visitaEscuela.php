@@ -1,5 +1,128 @@
 <?php
 
+function utf8($contenido){
+    $str = (string)$contenido;
+    $aux = "";
+    $contador = 0;
+    while($contador < strlen($contenido)){
+        switch (ord($str[$contador])) {
+            case 241:
+                $aux = $aux."&#241;";
+                break;
+            case 209:
+                $aux = $aux."&#209;";
+                break;
+            case 170:
+                $aux = $aux."&#170;";
+                break;
+            case 176:
+                $aux = $aux."&#176;";
+                break;
+            case 186:
+                $aux = $aux."&#186;";
+                break;
+            case 176:
+                $aux = $aux."&#176;";
+                break;
+            case 192:
+                $aux = $aux."&#192;";
+                break;
+            case 193:
+                $aux = $aux."&#193;";
+                break;
+            case 196:
+                $aux = $aux."&#196;";
+                break;
+            case 200:
+                $aux = $aux."&#200;";
+                break;
+            case 201:
+                $aux = $aux."&#201;";
+                break;
+            case 203:
+                $aux = $aux."&#203;";
+                break;
+            case 204:
+                $aux = $aux."&#204;";
+                break;
+            case 205:
+                $aux = $aux."&#205;";
+                break;
+            case 207:
+                $aux = $aux."&#207;";
+                break;
+            case 210:
+                $aux = $aux."&#210;";
+                break;
+            case 211:
+                $aux = $aux."&#211;";
+                break;
+            case 213:
+                $aux = $aux."&#213;";
+                break;
+            case 217:
+                $aux = $aux."&#217;";
+                break;
+            case 218:
+                $aux = $aux."&#218;";
+                break;
+            case 220:
+                $aux = $aux."&#220;";
+                break;
+            case 224:
+                $aux = $aux."&#224;";
+                break;
+            case 225:
+                $aux = $aux."&#225;";
+                break;
+            case 228:
+                $aux = $aux."&#228;";
+                break;
+            case 232:
+                $aux = $aux."&#232;";
+                break;
+            case 233:
+                $aux = $aux."&#233;";
+                break;
+            case 235:
+                $aux = $aux."&#235;";
+                break;
+            case 236:
+                $aux = $aux."&#236;";
+                break;
+            case 237:
+                $aux = $aux."&#237;";
+                break;
+            case 239:
+                $aux = $aux."&#239;";
+                break;
+            case 242:
+                $aux = $aux."&#242;";
+                break;
+            case 243:
+                $aux = $aux."&#243;";
+                break;
+            case 246:
+                $aux = $aux."&#246;";
+                break;
+            case 249:
+                $aux = $aux."&#249;";
+                break;
+            case 250:
+                $aux = $aux."&#250;";
+                break;
+            case 252:
+                $aux = $aux."&#252;";
+                break;
+            default:
+                $aux = $aux.chr(ord($str[$contador]));
+                break;
+        }
+        $contador++;
+    }
+    return $aux;
+}
+
 function existePK($ano, $numero, $rbdColegio ){
     $sql = "SELECT * 
             FROM visitaEscuela
@@ -84,19 +207,19 @@ function getNombreColegio($rbdColegio){
             WHERE rbdColegio = $rbdColegio";
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res); 
-    return($row["nombreColegio"]);
+    return $row["nombreColegio"] ;
 }
 
 function getNombreAsesor($id){
     //echo $rutEmpleadoKlein;
-    $sql = "SELECT * 
+    $sql = "SELECT nombreEmpleadoKlein, apellidoPaternoEmpleadoKlein, apellidoMaternoEmpleadoKlein
             FROM empleadoKlein ek join usuario us ON ek.rutEmpleadoKlein=us.rutEmpleadoKlein
             WHERE us.idUsuario = '$id'";
     //echo $sql;
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res);
-    $nombreEmpleadoKlein = $row["nombreEmpleadoKlein"]." ".$row["apellidoPaternoEmpleadoKlein"]." ".$row["apellidoMaternoEmpleadoKlein"];
-    return ($nombreEmpleadoKlein);
+    $nombreEmpleadoKlein = $row["nombreEmpleadoKlein"]." ".$row["apellidoPaternoEmpleadoKlein"]."".$row["apellidoMaternoEmpleadoKlein"];
+    return $nombreEmpleadoKlein;
 }
 function getNombreProfe($rut){
     $sql = "SELECT * 
@@ -106,7 +229,8 @@ function getNombreProfe($rut){
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res);
     $nombre = $row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"];
-    return ($nombre);
+    return "asesor muñoz ";
+    return (utf8($nombre));
 }
 
 function validarVisitaEscuela($idVisita, $idUsuario){
@@ -144,11 +268,11 @@ function crearObservacionDocente($post, $idVisita){
                 $nombreDocente = "";
                 $cursoDocente  = "";
                 if($post["select-docente-observado-".$i]=="otr"){
-                    $nombreDocente = $post["input-otro-docente-observado-".$i];
-                    $cursoDocente  = $post["input-otro-cursos-observado-".$i];
+                    $nombreDocente = utf8($post["input-otro-docente-observado-".$i]);
+                    $cursoDocente  = utf8($post["input-otro-cursos-observado-".$i]);
                 }else{
-                    $nombreDocente = getNombreProfe($post["select-docente-observado-".$i]);
-                    $cursoDocente  = $post["select-cursos-observado-".$i];
+                    $nombreDocente = utf8(getNombreProfe($post["select-docente-observado-".$i]));
+                    $cursoDocente  = utf8($post["select-cursos-observado-".$i]);
                 }
                 if($nombreDocente != "" && $cursoDocente != ""){
                     $accion1 = $post["doc1-".$i]=="on" ? 1 : 0;
@@ -160,7 +284,7 @@ function crearObservacionDocente($post, $idVisita){
                     $accion7 = $post["doc7-".$i]=="on" ? 1 : 0;
                     $accion8 = $post["doc8-".$i]=="on" ? 1 : 0;
                     $sql_docente = "INSERT INTO `observacionDocentesVisitaEscuela` (`idObservacionDocenteVisitaEscuela`, `idVisitaEscuela`, `nombreDocenteObservacion`, `cursoDocenteObservacion`, `opcion1Observacion`, `opcion2Observacion`, `opcion3Observacion`, `opcion4Observacion`, `opcion5Observacion`, `opcion6Observacion`, `opcion7Observacion`, `opcion8Observacion`, `detalleOpcion8Observacion`,`observacionTrabajoConDocentes`) 
-                                    VALUES (NULL, '$idVisita', '$nombreDocente', '$cursoDocente', '$accion1', '$accion2', '$accion3', '$accion4', '$accion5', '$accion6', '$accion7', '$accion8', '".$post["otroAccionDocente-".$i]."', '".$post["observacionTrabajoDocentes-".$i]."')";
+                                    VALUES (NULL, '$idVisita', '$nombreDocente', '$cursoDocente', '$accion1', '$accion2', '$accion3', '$accion4', '$accion5', '$accion6', '$accion7', '$accion8', '".utf8($post["otroAccionDocente-".$i])."', '".utf8($post["observacionTrabajoDocentes-".$i])."')";
                     $resp = mysql_query($sql_docente);
                 }
             }
@@ -169,44 +293,45 @@ function crearObservacionDocente($post, $idVisita){
 }
 
 function crearVisitaEscuela($post){
-    $nombreColegio = getNombreColegio($post["rbdColegio"]);
-    $nombreAsesor = getNombreAsesor($post["idAsesor"]);
+    $nombreColegio = utf8(getNombreColegio($post["rbdColegio"]));
+    $aux = getNombreAsesor($post["idAsesor"]);
+    $nombreAsesor = utf8("~".(string)$aux);
     $numeroVisitas = $post["numeroVisita"]!="" ? $post["numeroVisita"] : $post["numeroVisitaOtro"];
     $fechaActual = date("Y-m-d h:i:s");
     if($post["select-docente-colectivo-0"]!="" && $post["select-docente-colectivo-0"]!="otr"){
-        $nombreDocenteColectivo1 = getNombreProfe($post["select-docente-colectivo-0"]);
-        $cursoDocenteColectivo1  = $post["select-cursos-colectivo-0"];
+        $nombreDocenteColectivo1 = utf8(getNombreProfe($post["select-docente-colectivo-0"]));
+        $cursoDocenteColectivo1  = utf8($post["select-cursos-colectivo-0"]);
     }else{
-        $nombreDocenteColectivo1 = $post["input-otro-docente-colectivo-0"];
-        $cursoDocenteColectivo1  = $post["input-otro-cursos-colectivo-0"];
+        $nombreDocenteColectivo1 = utf8($post["input-otro-docente-colectivo-0"]);
+        $cursoDocenteColectivo1  = utf8($post["input-otro-cursos-colectivo-0"]);
     }
     if($post["select-docente-colectivo-0"]!="" && $post["select-docente-colectivo-1"]!="otr"){
-        $nombreDocenteColectivo2 = getNombreProfe($post["select-docente-colectivo-1"]);
-        $cursoDocenteColectivo2  = $post["select-cursos-colectivo-1"];
+        $nombreDocenteColectivo2 = utf8(getNombreProfe($post["select-docente-colectivo-1"]));
+        $cursoDocenteColectivo2  = utf8($post["select-cursos-colectivo-1"]);
     }else{
-        $nombreDocenteColectivo2 = $post["input-otro-docente-colectivo-1"];
-        $cursoDocenteColectivo2  = $post["input-otro-cursos-colectivo-1"];
+        $nombreDocenteColectivo2 = utf8($post["input-otro-docente-colectivo-1"]);
+        $cursoDocenteColectivo2  = utf8($post["input-otro-cursos-colectivo-1"]);
     }
     if($post["select-docente-colectivo-0"]!="" && $post["select-docente-colectivo-2"]!="otr"){
-        $nombreDocenteColectivo3 = getNombreProfe($post["select-docente-colectivo-2"]);
-        $cursoDocenteColectivo3  = $post["select-cursos-colectivo-2"];
+        $nombreDocenteColectivo3 = utf8(getNombreProfe($post["select-docente-colectivo-2"]));
+        $cursoDocenteColectivo3  = utf8($post["select-cursos-colectivo-2"]);
     }else{
-        $nombreDocenteColectivo3 = $post["input-otro-docente-colectivo-2"];
-        $cursoDocenteColectivo3  = $post["input-otro-cursos-colectivo-2"];
+        $nombreDocenteColectivo3 = utf8($post["input-otro-docente-colectivo-2"]);
+        $cursoDocenteColectivo3  = utf8($post["input-otro-cursos-colectivo-2"]);
     }
     if($post["select-docente-colectivo-0"]!="" && $post["select-docente-colectivo-3"]!="otr"){
-        $nombreDocenteColectivo4 = getNombreProfe($post["select-docente-colectivo-3"]);
-        $cursoDocenteColectivo4  = $post["select-cursos-colectivo-3"];
+        $nombreDocenteColectivo4 = utf8(getNombreProfe($post["select-docente-colectivo-3"]));
+        $cursoDocenteColectivo4  = utf8($post["select-cursos-colectivo-3"]);
     }else{
-        $nombreDocenteColectivo4 = $post["input-otro-docente-colectivo-3"];
-        $cursoDocenteColectivo4  = $post["input-otro-cursos-colectivo-3"];
+        $nombreDocenteColectivo4 = utf8($post["input-otro-docente-colectivo-3"]);
+        $cursoDocenteColectivo4  = utf8($post["input-otro-cursos-colectivo-3"]);
     }
     if($post["select-docente-colectivo-0"]!="" && $post["select-docente-colectivo-4"]!="otr"){
-        $nombreDocenteColectivo5 = getNombreProfe($post["select-docente-colectivo-4"]);
-        $cursoDocenteColectivo5  = $post["select-cursos-colectivo-4"];
+        $nombreDocenteColectivo5 = utf8(getNombreProfe($post["select-docente-colectivo-4"]));
+        $cursoDocenteColectivo5  = utf8($post["select-cursos-colectivo-4"]);
     }else{
-        $nombreDocenteColectivo5 = $post["input-otro-docente-colectivo-4"];
-        $cursoDocenteColectivo5  = $post["input-otro-cursos-colectivo-4"];
+        $nombreDocenteColectivo5 = utf8($post["input-otro-docente-colectivo-4"]);
+        $cursoDocenteColectivo5  = utf8($post["input-otro-cursos-colectivo-4"]);
     }
     $tema1 = $post["docentes-colectivo-1"]=="on" ? 1 : 0;
     $tema2 = $post["docentes-colectivo-2"]=="on" ? 1 : 0; 
@@ -224,7 +349,7 @@ function crearVisitaEscuela($post){
     $fechaVisita = substr($post["fechaVisita"],6,4)."-".substr($post["fechaVisita"], 3,2)."-".substr($post["fechaVisita"], 0,2);
     
     $sql = "INSERT INTO `visitaEscuela` (`idVisitaEscuela`, `anoVisitaEscuela`, `rbdColegio`, `nombreColegioVisitaEscuela`, `numeroVisitaEscuela`, `idAsesorVisitaEscuela`, `nombreAsesorVisitaEscuela`, `fechaRegistroVisitaEscuela`, `fechaVisitaEscuela`, `horaLlegadaVisitaEscuela`, `horaSalidaVisitaEscuela`, `nombreDocenteColectivo1`, `nombreDocenteColectivo2`, `nombreDocenteColectivo3`, `nombreDocenteColectivo4`, `nombreDocenteColectivo5`, `cursoDocenteColectivo1`, `cursoDocenteColectivo2`, `cursoDocenteColectivo3`, `cursoDocenteColectivo4`, `cursoDocenteColectivo5`, `indicador1VisitaEscuela`, `indicador2VisitaEscuela`, `indicador3VisitaEscuela`, `indicador4VisitaEscuela`, `indicador5VisitaEscuela`, `indicador6VisitaEscuela`, `indicador7VisitaEscuela`, `indicador8VisitaEscuela`, `indicador9VisitaEscuela`, `indicador10VisitaEscuela`, `indicador11VisitaEscuela`, `indicador12VisitaEscuela`, `indicador13VisitaEscuela`, `indicador14VisitaEscuela`, `DetalleIndicador14VisitaEscuela`, `refieraseAIndicadoresVisitaEscuela`, `cumplenDocentesVisitaEscuela`, `tema1VisitaEscuela`, `tema2VisitaEscuela`, `tema3VisitaEscuela`, `tema4VisitaEscuela`, `tema5VisitaEscuela`, `detalleTema5VisitaEscuela`, `acuerdosDocentesVisitaEscuela`, `nombreDirectivo1VisitaEscuela`, `nombreDirectivo2VisitaEscuela`, `nombreDirectivo3VisitaEscuela`, `nombreDirectivo4VisitaEscuela`, `nombreDirectivo5VisitaEscuela`, `cargoDirectivo1VisitaEscuela`, `cargoDirectivo2VisitaEscuela`, `cargoDirectivo3VisitaEscuela`, `cargoDirectivo4VisitaEscuela`, `cargoDirectivo5VisitaEscuela`, `cumplenDirectivosVisitaEscuela`, `detalleCumpleDocenteVisitaEscuela`, `detalleCumpleDirectivoVisitaEscuela`, `temaDirectivo1VisitaEscuela`, `detalleTemaDirectivo1VisitaEscuela`, `temaDirectivo2VisitaEscuela`, `detalleTemaDirectivo2VisitaEscuela`, `retroalimentacion1VisitaEscuela`, `detalleRetroalimentacion1VisitaEscuela`, `retroalimentacion2VisitaEscuela`, `detalleRetroalimentacion2VisitaEscuela`, `retroalimentacion3VisitaEscuela`, `detalleRetroalimentacion3VisitaEscuela`, `retroalimentacion4VisitaEscuela`, `detalleRetroalimentacion4VisitaEscuela`, `acuerdosDirectivoVisitaEscuela`) 
-                                 VALUES (NULL,'".substr($post["fechaVisita"], 6)."', '".$post["rbdColegio"]."', '$nombreColegio', $numeroVisitas, '".$post["idAsesor"]."', '$nombreAsesor', '$fechaActual', '$fechaVisita', '".$post["horaLlegada"].":00', '".$post["horaSalida"].":00','$nombreDocenteColectivo1', '$nombreDocenteColectivo2', '$nombreDocenteColectivo3', '$nombreDocenteColectivo4', '$nombreDocenteColectivo5', '$cursoDocenteColectivo1', '$cursoDocenteColectivo2', '$cursoDocenteColectivo3', '$cursoDocenteColectivo4', '$cursoDocenteColectivo5',                 '".$post["fac-1"]."', '".$post["fac-2"]."', '".$post["fac-3"]."', '".$post["fac-4"]."', '".$post["fac-5"]."', '".$post["fac-6"]."', '".$post["fac-7"]."', '".$post["fac-8"]."', '".$post["fac-9"]."', '".$post["fac-10"]."', '".$post["fac-11"]."', '".$post["fac-12"]."', '".$post["fac-13"]."', '".$post["fac-14"]."', '".$post["fac-otro"]."', '".$post["refieraseMarcadosNo"]."', '".$post["cumplen-compromisos-docentes"]."',                                                                      '$tema1', '$tema2', '$tema3', '$tema4', '$tema5',                                      '".$post["apoyo-docentes-otro"]."', '".$post["acuerdos-docentes-colectivo"]."',      ".nombreCargoDirectivo($post)."                                                                                                                                                                                                                                                                                 '".$post["cumplen-compromisos-directivos"]."', '".$post["detalle-cumplen-docentes"]."', '".$post["detalle-cumplen-directivos"]."', '$tema1Directivo', '".$post["indicar-factores-institucionales"]."', '$tema2Directivo', '".$post["indicar-factores-pedagogicos"]."',       '$retro1Directivo', '".$post["indicar-retroalimentacion-1"]."', '$retro2Directivo', '".$post["indicar-retroalimentacion-2"]."', '$retro3Directivo', '".$post["indicar-retroalimentacion-3"]."', '$retro4Directivo', '".$post["indicar-retroalimentacion-4"]."', '".$post["acuerdos-directivo-visita"]."')";
+                                 VALUES (NULL,'".substr($post["fechaVisita"], 6)."', '".$post["rbdColegio"]."', '$nombreColegio', $numeroVisitas, '".$post["idAsesor"]."', '$nombreAsesor', '$fechaActual', '$fechaVisita', '".$post["horaLlegada"].":00', '".$post["horaSalida"].":00','$nombreDocenteColectivo1', '$nombreDocenteColectivo2', '$nombreDocenteColectivo3', '$nombreDocenteColectivo4', '$nombreDocenteColectivo5', '$cursoDocenteColectivo1', '$cursoDocenteColectivo2', '$cursoDocenteColectivo3', '$cursoDocenteColectivo4', '$cursoDocenteColectivo5',                 '".$post["fac-1"]."', '".$post["fac-2"]."', '".$post["fac-3"]."', '".$post["fac-4"]."', '".$post["fac-5"]."', '".$post["fac-6"]."', '".$post["fac-7"]."', '".$post["fac-8"]."', '".$post["fac-9"]."', '".$post["fac-10"]."', '".$post["fac-11"]."', '".$post["fac-12"]."', '".$post["fac-13"]."', '".$post["fac-14"]."', '".$post["fac-otro"]."', '".utf8($post["refieraseMarcadosNo"])."', '".utf8($post["cumplen-compromisos-docentes"])."',                                                                      '$tema1', '$tema2', '$tema3', '$tema4', '$tema5',                                      '".$post["apoyo-docentes-otro"]."', '".$post["acuerdos-docentes-colectivo"]."',      ".nombreCargoDirectivo($post)."                                                                                                                                                                                                                                                                                 '".$post["cumplen-compromisos-directivos"]."', '".$post["detalle-cumplen-docentes"]."', '".$post["detalle-cumplen-directivos"]."', '$tema1Directivo', '".$post["indicar-factores-institucionales"]."', '$tema2Directivo', '".$post["indicar-factores-pedagogicos"]."',       '$retro1Directivo', '".$post["indicar-retroalimentacion-1"]."', '$retro2Directivo', '".$post["indicar-retroalimentacion-2"]."', '$retro3Directivo', '".$post["indicar-retroalimentacion-3"]."', '$retro4Directivo', '".$post["indicar-retroalimentacion-4"]."', '".$post["acuerdos-directivo-visita"]."')";
     $res = mysql_query($sql);
     if($res){
         crearObservacionDocente($post, mysql_insert_id() );
