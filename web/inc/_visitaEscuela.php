@@ -114,6 +114,9 @@ function utf8($contenido){
             case 252:
                 $aux = $aux."&#252;";
                 break;
+            case 39:
+                $aux = $aux."&#39;";
+                break;
             default:
                 $aux = $aux.chr(ord($str[$contador]));
                 break;
@@ -149,6 +152,7 @@ function getDocentesVisita($idVisita){
     $sql = "SELECT * FROM observacionDocentesVisitaEscuela
             WHERE idVisitaEscuela = $idVisita";
     $res = mysql_query($sql);
+    $i=0;
     while($row = mysql_fetch_array($res)){
         $docentes[$i] = $row;
         $i++;
@@ -229,7 +233,6 @@ function getNombreProfe($rut){
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res);
     $nombre = $row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]." ".$row["apellidoMaternoProfesor"];
-    return "asesor muñoz ";
     return (utf8($nombre));
 }
 
@@ -355,7 +358,7 @@ function crearVisitaEscuela($post){
         crearObservacionDocente($post, mysql_insert_id() );
         echo 8;
     }else{
-        echo 7;
+        echo $sql;
     }
 }
 
@@ -425,7 +428,7 @@ function informeExcel()
     <table>
     <tr>
         <th colspan='34'></th>
-        <th colspan='50'>Trabajo con docentes de forma individual</th>
+        <th colspan='55'>Trabajo con docentes de forma individual</th>
         <th colspan='12' rowspan='2'>Trabajo colectivo con docentes</th>
         <th rowspan ='2' colspan='18'>Reunion con directivos</th>
     </tr>
@@ -433,11 +436,11 @@ function informeExcel()
        <th colspan='9'>Datos Generales</th>
        <th colspan='10'>Observaci&oacute;n de clases</th>
        <th colspan='15'>Factores que afectan la implementaci&oacute;n</th>
-       <th colspan='10'>Trabajo con Docente 1</th>
-       <th colspan='10'>Trabajo con Docente 2</th>
-       <th colspan='10'>Trabajo con Docente 3</th>
-       <th colspan='10'>Trabajo con Docente 4</th>
-       <th colspan='10'>Trabajo con Docente 5</th>
+       <th colspan='11'>Trabajo con Docente 1</th>
+       <th colspan='11'>Trabajo con Docente 2</th>
+       <th colspan='11'>Trabajo con Docente 3</th>
+       <th colspan='11'>Trabajo con Docente 4</th>
+       <th colspan='11'>Trabajo con Docente 5</th>
     </tr>
     <tr>
         <th rowspan='2'>ID</th>
@@ -477,18 +480,23 @@ function informeExcel()
         <th rowspan='2'>Nombre docente 1</th>
         <th rowspan='2'>Curso 1</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan="2">Observaci&oacute;n 1</th>
         <th rowspan='2'>Nombre docente 2</th>
         <th rowspan='2'>Curso 2</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan="2">Observaci&oacute;n 2</th>
         <th rowspan='2'>Nombre docente 3</th>
         <th rowspan='2'>Curso 3</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan="2">Observaci&oacute;n 3</th>
         <th rowspan='2'>Nombre docente 4</th>
         <th rowspan='2'>Curso 4</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan="2">Observaci&oacute;n 4</th>
         <th rowspan='2'>Nombre docente 5</th>
         <th rowspan='2'>Curso 5</th>
         <th rowspan='1' colspan='8'>Tipo de trabajo realizado</th>
+        <th rowspan="2">Observaci&oacute;n 5</th>
         <th rowspan='2'>Nombre docente 1</th>
         <th rowspan='2'>Nombre docente 2</th>
         <th rowspan='2'>Nombre docente 3</th>
@@ -545,16 +553,33 @@ $datos = getVisitasUsuario($_SESSION["sesionIdUsuario"]);
         $val[9]=substr($val[9], 0,5);
         $val[10]=substr($val[10], 0,5);
         $docentes = getDocentesVisita($val[0]);
-        echo "-".count($docentes)."-";
-        for ($i=0; $i < 5 ; $i++) { 
-            if(count($docentes)>$i){
+        $tope = count($docentes);
+        for ($i=0; $i < 5 ; $i++) {
+            if($tope>$i){
                 $nombres[$i] = $docentes[$i][2];
                 $cursos[$i] = $docentes[$i][3];
+                $opcion1[$i] = $docentes[$i][4] ? "Si" : "No";
+                $opcion2[$i] = $docentes[$i][5] ? "Si" : "No";
+                $opcion3[$i] = $docentes[$i][6] ? "Si" : "No";
+                $opcion4[$i] = $docentes[$i][7] ? "Si" : "No";
+                $opcion5[$i] = $docentes[$i][8] ? "Si" : "No";
+                $opcion6[$i] = $docentes[$i][9] ? "Si" : "No";
+                $opcion7[$i] = $docentes[$i][10] ? "Si" : "No";
+                $opcion8[$i] = $docentes[$i][11] ? "Si: ".$docentes[$i][12] : "No";
+                $observacion[$i] = $docentes[$i][13];
             }else{
                 $nombres[$i] = "";
                 $cursos[$i] = "";
+                $opcion1[$i]="";
+                $opcion2[$i]="";
+                $opcion3[$i]="";
+                $opcion4[$i]="";
+                $opcion5[$i]="";
+                $opcion6[$i]="";
+                $opcion7[$i]="";
+                $opcion8[$i]="";
+                $observacion[$i]="";
             }
-            
         }
 
         $tabla .=<<<HTML
@@ -594,7 +619,61 @@ $datos = getVisitasUsuario($_SESSION["sesionIdUsuario"]);
                 <td>$val[33]</td>
                 <td>$val[34]: $val[35]</td>
                 <td>$val[36]</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td>$nombres[0]</td><!--aqui empiezan docente 1-->
+                <td>$cursos[0]</td>
+                <td>$opcion1[0]</td>
+                <td>$opcion2[0]</td>
+                <td>$opcion3[0]</td>
+                <td>$opcion4[0]</td>
+                <td>$opcion5[0]</td>
+                <td>$opcion6[0]</td>
+                <td>$opcion7[0]</td>
+                <td>$opcion8[0]</td>
+                <td>$observacion[0]</td><!--aqui termina docente 1-->
+                <td>$nombres[1]</td><!--aqui empiezan docente 2-->
+                <td>$cursos[1]</td>
+                <td>$opcion1[1]</td>
+                <td>$opcion2[1]</td>
+                <td>$opcion3[1]</td>
+                <td>$opcion4[1]</td>
+                <td>$opcion5[1]</td>
+                <td>$opcion6[1]</td>
+                <td>$opcion7[1]</td>
+                <td>$opcion8[1]</td>
+                <td>$observacion[1]</td><!--aqui termina docente 2-->
+                <td>$nombres[2]</td><!--aqui empiezan docente 3-->
+                <td>$cursos[2]</td>
+                <td>$opcion1[2]</td>
+                <td>$opcion2[2]</td>
+                <td>$opcion3[2]</td>
+                <td>$opcion4[2]</td>
+                <td>$opcion5[2]</td>
+                <td>$opcion6[2]</td>
+                <td>$opcion7[2]</td>
+                <td>$opcion8[2]</td>
+                <td>$observacion[2]</td><!--aqui termina docente 3-->
+                <td>$nombres[3]</td><!--aqui empiezan docente 4-->
+                <td>$cursos[3]</td>
+                <td>$opcion1[3]</td>
+                <td>$opcion2[3]</td>
+                <td>$opcion3[3]</td>
+                <td>$opcion4[3]</td>
+                <td>$opcion5[3]</td>
+                <td>$opcion6[3]</td>
+                <td>$opcion7[3]</td>
+                <td>$opcion8[3]</td>
+                <td>$observacion[3]</td><!--aqui termina docente 4-->
+                <td>$nombres[4]</td><!--aqui empiezan docente 5-->
+                <td>$cursos[4]</td>
+                <td>$opcion1[4]</td>
+                <td>$opcion2[4]</td>
+                <td>$opcion3[4]</td>
+                <td>$opcion4[4]</td>
+                <td>$opcion5[4]</td>
+                <td>$opcion6[4]</td>
+                <td>$opcion7[4]</td>
+                <td>$opcion8[4]</td>
+                <td>$observacion[4]</td><!--aqui termina docente 5-->
                 <td>$val[11]</td>
                 <td>$val[12]</td>
                 <td>$val[13]</td>
@@ -640,10 +719,10 @@ HTML;
     </table>
 HTML;
 
-  header('Content-type: application/vnd.ms-excel');
+  /*header('Content-type: application/vnd.ms-excel');
   header("Content-Disposition: attachment; filename=visitaEscuela[".date("d-m-Y")."].xls");
   header("Pragma: no-cache");
-  header("Expires: 0");
+  header("Expires: 0");*/
   echo $titulos;
   echo $tabla;
 }

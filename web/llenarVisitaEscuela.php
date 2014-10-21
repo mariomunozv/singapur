@@ -760,6 +760,9 @@ $(function() {
       $("#carga-participantes-docentes-colectivo").html("");
       $("#agregar-docente-colectivo").show();
     }
+    function replaceAll(find, replace, str) {
+      return str.replace(new RegExp(find, 'g'), replace);
+    }
 
     $("#boton-submit").click(function(e){
       e.preventDefault();
@@ -770,6 +773,8 @@ $(function() {
             seguir = false;
             $(this).focus();
             error="Este campo es obligatorio";
+          }else{
+            $(this).val( replaceAll("\"","", replaceAll("'","",$(this).val()) ));
           }
         }
       });
@@ -779,6 +784,8 @@ $(function() {
             seguir = false;
             $(this).focus();
             error="Este campo es obligatorio";
+          }else{
+            $(this).val( replaceAll("\"","", replaceAll("'","",$(this).val()) ));
           }
         }
       });
@@ -799,6 +806,10 @@ $(function() {
           }, 500);
           error="Conteste acerca de los compromisos anteriores para cada reunión.";
         }
+      }
+      if(seguir){
+        seguir = confirm("El registro de visita no permite modificaciones posteriores ¿Está de seguro de guardar su registro devisita?");
+        error = "";
       }
       if(seguir){
         $.ajax({
@@ -836,6 +847,10 @@ $(function() {
                 break;
               case 8:
                 alert("Registro de visita a escuela registrado correctamente.");
+                //location.reload();
+                $(document).ready(function(){
+                //    $(this).scrollTop(0);
+                });
                 break;
               case 9:
                 alert("Se registro la visita pero ocurrió un error al registrar la observación a docentes.");
@@ -849,8 +864,10 @@ $(function() {
             alert("Error: "+resp);
           }
         });
-      }else{ 
-        alert(error) 
+      }else{
+        if(error !=""){
+          alert(error);
+        }
       }
     });
 

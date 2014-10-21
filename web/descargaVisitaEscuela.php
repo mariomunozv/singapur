@@ -73,20 +73,14 @@ require("inc/_visitaEscuela.php");
                 <?php } ?>
              </tbody> <tr>  <?php if($_SESSION["sesionTipoUsuario"]=="Coordinador General"){ ?>
                              
-                                 <div class='block-btn'>
-               											 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('/informes/informeExcelVisitaEscuela.php','_self')" value="Descargar informe excel" />
-             					 </div>
-                         <!--       <form class="descarga-excel">
-                                    <input type="hidden" name="idVisita" value="<?php echo $inf['idVisitaEscuela']; ?>">
-<<<<<<< HEAD
-                                    <a href="informes/informeExcelVisitaEscuela.php" target="blank">
-                                        <img border="0" src="img/excel.png" width="14" height="14" alt="Descargar Excel" title="Descargar Excel" /> Excel
-=======
-                                    <a href="/informes/informeExcelVisitaEscuela.php" target="blank">
-                                        <img border="0" src="img/excel.png" width="14" height="14" alt="  Excel" title="Descargar Excel" /> Excel
->>>>>>> FETCH_HEAD
-                                    </a>
-                                </form>-->
+                        <form class="descarga-excel">
+                            <input type="hidden" name="idVisita" value="<?php echo $inf['idVisitaEscuela']; ?>">
+                            <div class='block-btn'>
+                                <a type="button" style="padding: .4em 1em;color: #2e6e9e;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" href="informes/informeExcelVisitaEscuela.php" target="blank">Descargar informe excel</a>
+                                <!--<input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('/informes/informeExcelVisitaEscuela.php','_self')" value="Descargar informe excel" />-->
+                            </div>
+                            
+                        </form>
                                 
                             <?php } ?>
                             </tr>
