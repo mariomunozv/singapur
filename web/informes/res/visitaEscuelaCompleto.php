@@ -21,7 +21,6 @@ td,th{
 </style>
 <page style="font-size: 12px"><!--Pagina 1-->
     <page_footer>
-        <!--<hr style="height: 1px; margin-top:-10px; background: #000; border: solid 1px #555">-->
         <p style="text-align:right;margin-right:20px;">[[page_cu]]</p>
     </page_footer>
     <page_header>
