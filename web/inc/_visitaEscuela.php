@@ -114,9 +114,6 @@ function utf8($contenido){
             case 252:
                 $aux = $aux."&#252;";
                 break;
-            case 39:
-                $aux = $aux."&#39;";
-                break;
             default:
                 $aux = $aux.chr(ord($str[$contador]));
                 break;
@@ -358,7 +355,7 @@ function crearVisitaEscuela($post){
         crearObservacionDocente($post, mysql_insert_id() );
         echo 8;
     }else{
-        echo $sql;
+        echo 7;
     }
 }
 
@@ -396,12 +393,18 @@ function getInfoVisitaUsuario($idUsuario){
 }
 
 function getVisitasUsuario($idUsuario){
-    //$tipo = getTipoUser($idUsuario);
-   // if($tipo == "Coordinador General" ||$tipo == "Empleado Klein"    ){
+    $tipo = getTipoUser($idUsuario);
+    if($tipo == "Coordinador General" ||$tipo == "Empleado Klein"    ){
         $sql = "SELECT *
                 FROM visitaEscuela
                 WHERE anoVisitaEscuela=".date("Y");  
-//    }
+    }
+    if($tipoUsuario ="Asesor"){
+        $sql = "SELECT *
+                FROM visitaEscuela
+                WHERE idAsesorVisitaEscuela = $idUsuario
+                AND anoVisitaEscuela=".date("Y");  
+    }
     $res = mysql_query($sql);
     while($row = mysql_fetch_array($res)){
         $informes[$i] = $row;
@@ -719,10 +722,10 @@ HTML;
     </table>
 HTML;
 
-  /*header('Content-type: application/vnd.ms-excel');
+  header('Content-type: application/vnd.ms-excel');
   header("Content-Disposition: attachment; filename=visitaEscuela[".date("d-m-Y")."].xls");
   header("Pragma: no-cache");
-  header("Expires: 0");*/
+  header("Expires: 0");
   echo $titulos;
   echo $tabla;
 }

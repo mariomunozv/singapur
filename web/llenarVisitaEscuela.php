@@ -847,9 +847,9 @@ $(function() {
                 break;
               case 8:
                 alert("Registro de visita a escuela registrado correctamente.");
-                //location.reload();
+                location.reload();
                 $(document).ready(function(){
-                //    $(this).scrollTop(0);
+                    $(this).scrollTop(0);
                 });
                 break;
               case 9:
