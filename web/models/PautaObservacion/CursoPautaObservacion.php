@@ -12,11 +12,11 @@ class CursoPautaObservacion
 
       $db = new DB();
       $db->connectDb();
-      $query = "SELECT CONCAT(c.letraCursoColegio,'-',c.anoCursoColegio) as curso, n.nombreNivel as nivel 
+      $query = "SELECT CONCAT( c.idNivel,'-',c.letraCursoColegio,'-',c.anoCursoColegio) as curso, CONCAT(n.nombreNivel,' ',c.letraCursoColegio,' ',c.anoCursoColegio) as nivel 
         FROM cursoColegio as c
         JOIN nivel as n
         ON n.idNivel = c.idNivel 
-        WHERE c.rutProfesor = '{$id}'";
+        WHERE c.rutProfesor = '{$id}' AND c.anoCursoColegio = YEAR(NOW())";
       $sth = $db->query($query);
       return $sth->fetchAll(PDO::FETCH_ASSOC);
   

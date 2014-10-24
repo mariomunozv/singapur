@@ -7,13 +7,13 @@ require_once (dirname(__FILE__) .'/../../db/pdo.php');
  */
 class Libro
 {
-    public function getLibros()
+    public function getLibros($nivel)
     {
       $db = new DB();
 
       $db->connectDb();
 
-      $query = "SELECT parteLibro FROM seccionBitacora GROUP BY parteLibro HAVING parteLibro IS NOT NULL";
+      $query = "SELECT parteLibro FROM seccionBitacora WHERE idNivelCursoSeccionBitacora = {$nivel} GROUP BY parteLibro HAVING parteLibro IS NOT NULL";
 
       $sth = $db->query($query);
 

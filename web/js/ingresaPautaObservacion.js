@@ -8,6 +8,7 @@ var Pauta = function (tipoUsuario, rut) {
   capitulos = $('#capitulos').select2(),
   apartados = $('#apartados').select2(),
   paginasTexto = $('#paginasTexto'),
+  paginasTextoEjercitacion = $('#paginasTextoEjercitacion'),
   indicadorGestion = $('#gestion-table tbody'),
   indicadorCondiciones = $('#condicion-table tbody'),
   modal = $('#href-modal'),
@@ -15,8 +16,7 @@ var Pauta = function (tipoUsuario, rut) {
 
   $('select.async').change(function(e, f) {
     var sel = $(this).attr('id');
-    var id = $(this).find('option:selected').val() ||
-      $(this).find('option:last').val();
+    var id = $(this).find('option:selected').val(); //|| $(this).find('option:last').val();
     funciones[sel](id);
   });
 
@@ -24,6 +24,7 @@ var Pauta = function (tipoUsuario, rut) {
     "congregaciones" : loadEstablecimientos,
     "establecimientos" : loadProfesores,
     "profesores" : loadCursosNiveles,
+	  "cursosNiveles" : loadLibros, // agregado 21/10
     "libros" : loadCapitulos,
     "capitulos" : loadApartados
   };
@@ -86,59 +87,84 @@ var Pauta = function (tipoUsuario, rut) {
         .append(
           $('<option>' ),
           $.map(data, function(v, i) {
-            return $('<option>', {val: v.curso, text: v.curso + ' ' + v.nivel});
+            return $('<option>', {val: v.curso, text: v.nivel});
           })
         ).change();
       }
     });
   }
 
-  function loadLibros() {
-    $.ajax({
-      url: "./api/PautaObservacion.php/libros",
-      dataType: "json",
-      success: function (data, textStatus, jqXHR) {
-        libros.append(
-          $.map(data, function(v, i) {
-          return $('<option>', {val: v.parteLibro, text: v.parteLibro});
-        })
-        ).change();
-      }
-    });
+  function loadLibros(id) {
+    if ($("#cursosNiveles").find('option:selected').text().search("NT") != "-1" ){ // el curso si es NT1 o NT2
+      setOptionByEl(libros, "NA", "N/A");
+      libros.change();
+    }else{
+      var curso = id.split('-');
+      nivel = curso[0];
+      $.ajax({
+        url: "./api/PautaObservacion.php/libros/" + nivel,
+        dataType: "json",
+        success: function (data, textStatus, jqXHR) {
+          
+            libros
+            .empty()
+            .append(
+              $.map(data, function(v, i) {
+              return $('<option>', {val: v.parteLibro, text: v.parteLibro});
+            })
+            ).change();
+        }
+      });
+  	
+  	}
+	
   }
 
   function loadCapitulos(id) {
-    $.ajax({
-      url: './api/PautaObservacion.php/libros/' + id + '/capitulos',
-      dataType: 'json',
-      success: function (data, textStatus, jqXHR) {
-        capitulos
-        .empty()
-        .append(
-          $('<option>' ),
-          $.map(data, function(v, i) {
-            return $('<option>', {val: v.id, text: v.nombre});
-          })
-        ).change();
-      }
-    });
+    if ($("#cursosNiveles").find('option:selected').text().search("NT") != "-1" ){ // el curso si es NT1 o NT2
+      setOptionByEl(capitulos, "NA", "N/A");
+      capitulos.change();
+    }else{  
+      $.ajax({
+        url: './api/PautaObservacion.php/libros/' + id + '/capitulos',
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            capitulos
+            .empty()
+            .append(
+              $('<option>' ),
+              $.map(data, function(v, i) {
+                return $('<option>', {val: v.id, text: v.nombre});
+              })
+            ).change();
+        }
+      });
+    }
   }
 
   function loadApartados(id) {
-    $.ajax({
-      url: './api/PautaObservacion.php/capitulos/' + id + '/apartados',
-      dataType: 'json',
-      success: function (data, textStatus, jqXHR) {
-        apartados
-        .empty()
-        .append(
-          $('<option>'),
-          $.map(data, function(v, i) {
-            return $('<option>', {val: v.id, text: v.nombre});
-          })
-        ).change();
-      }
-    });
+
+    if ($("#cursosNiveles").find('option:selected').text().search("NT") != "-1" ){ // el curso si es NT1 o NT2
+      setOptionByEl(apartados, "NA", "N/A");
+      paginasTexto.val("-");
+      paginasTextoEjercitacion.val("-");
+      apartados.change();
+    }else{
+      $.ajax({
+        url: './api/PautaObservacion.php/capitulos/' + id + '/apartados',
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            apartados
+            .empty()
+            .append(
+              $('<option>'),
+              $.map(data, function(v, i) {
+                return $('<option>', {val: v.id, text: v.nombre});
+              })
+            ).change();
+          }
+      });
+    }
   }
 
   function loadIndicadorGestion() {
@@ -275,26 +301,30 @@ var Pauta = function (tipoUsuario, rut) {
       errors.push('Seleccione Curso');
       valid = false;
     }
+	
 
-    if (! libros.val() ) {
-      errors.push('Seleccione Libro');
-      valid = false;
-    }
-
-    if (! capitulos.val() ) {
-      errors.push('Seleccione Capitulo');
-      valid = false;
-    }
-
-    if (! apartados.val() ) {
-      errors.push('Seleccione Apartado');
-      valid = false;
-    }
-
-    if (! paginasTexto.val() ) {
-      errors.push('Seleccione Paginas Texto');
-      valid = false;
-    }
+	if (cursosNiveles.text().search("NT") == "-1" ){ // el curso no es NT1 o NT2 // agregado 21/10
+		if (! libros.val()) {
+		  errors.push('Seleccione Libro');
+		  valid = false;
+		}
+	
+		if (! capitulos.val() ) {
+		  errors.push('Seleccione Capitulo');
+		  valid = false;
+		}
+	
+		if (! apartados.val() ) {
+		  errors.push('Seleccione Apartado');
+		  valid = false;
+		}
+	
+		if (! paginasTexto.val() ) {
+		  errors.push('Seleccione Paginas Texto');
+		  valid = false;
+		}
+	}
+	
 
     if ( $("input[name=grabacion-clases]:checked").val()==undefined ) {
       errors.push('Señale si se realizó la grabacion de la clase');
@@ -396,7 +426,7 @@ var Pauta = function (tipoUsuario, rut) {
   } else {
     loadCongregaciones();
   }
-  loadLibros();
+  //loadLibros();
   loadIndicadorGestion();
   loadIndicadorCondiciones();
 

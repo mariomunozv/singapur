@@ -20,6 +20,8 @@ class PautaObservacion
   public $horaTermino;
   public $preguntaGestion;
   public $preguntaCondiciones;
+  public $nombreNivel;
+  public $idNivel;
   public $anoCurso;
   public $letraCurso;
   public $indicadoresGestion;
@@ -33,7 +35,7 @@ class PautaObservacion
 
     $db->connectDb();
 
-    $query = "INSERT INTO pautaObservacion (paginasTexto, paginasTextoEjercitacion, fecha, idCongregacion, rbdColegio, rutProfesor, rutResponsable, idLibro, idCapitulo, idApartado, horaInicio, horaTermino, preguntaGestion, preguntaCondiciones, anoCurso, letraCurso, indicadoresGestion, indicadoresCondiciones, visibilidadUTP,grabaClase) VALUES(:paginasTexto, :paginasTextoEjercitacion, :fecha, :idCongregacion, :rbdColegio, :rutProfesor, :rutResponsable, :idLibro, :idCapitulo, :idApartado, :horaInicio, :horaTermino, :preguntaGestion, :preguntaCondiciones, :anoCurso, :letraCurso, :indicadoresGestion, :indicadoresCondiciones, :visibilidadUTP,:grabaClase)";
+    $query = "INSERT INTO pautaObservacion (paginasTexto, paginasTextoEjercitacion, fecha, idCongregacion, rbdColegio, rutProfesor, rutResponsable, idLibro, idCapitulo, idApartado, horaInicio, horaTermino, preguntaGestion, preguntaCondiciones, idNivel, anoCurso, letraCurso, indicadoresGestion, indicadoresCondiciones, visibilidadUTP,grabaClase) VALUES(:paginasTexto, :paginasTextoEjercitacion, :fecha, :idCongregacion, :rbdColegio, :rutProfesor, :rutResponsable, :idLibro, :idCapitulo, :idApartado, :horaInicio, :horaTermino, :preguntaGestion, :preguntaCondiciones, :idNivel, :anoCurso, :letraCurso, :indicadoresGestion, :indicadoresCondiciones, :visibilidadUTP,:grabaClase)";
 
     $st = $db->getPDO()->prepare($query);
 
@@ -51,6 +53,7 @@ class PautaObservacion
     $st->bindParam('horaTermino', $this->horaTermino);
     $st->bindParam('preguntaGestion', $this->preguntaGestion);
     $st->bindParam('preguntaCondiciones', $this->preguntaCondiciones);
+    $st->bindParam('idNivel', $this->idNivel);
     $st->bindParam('anoCurso', $this->anoCurso);
     $st->bindParam('letraCurso', $this->letraCurso);
     $st->bindParam('indicadoresGestion', $this->indicadoresGestion);
@@ -87,9 +90,15 @@ class PautaObservacion
 
     $db->connectDb();
 
-    $query = "SELECT p.*, (SELECT CONCAT(pr.nombreProfesor,' ', pr.apellidoPaternoProfesor,' ', pr.apellidoMaternoProfesor)) as nombreResponsable, (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idCapitulo) as capitulo,(SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idApartado) as apartado  FROM pautaObservacion as p
+    $query = "SELECT p.*, n.nombreNivel, 
+      (SELECT CONCAT(pr.nombreProfesor,' ', pr.apellidoPaternoProfesor,' ', pr.apellidoMaternoProfesor)) as nombreProfesor, 
+      (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idCapitulo) as capitulo,
+      (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idApartado) as apartado  
+      FROM pautaObservacion as p
       JOIN profesor as pr 
       ON pr.rutProfesor = p.rutProfesor
+      JOIN nivel as n
+      ON p.idNivel = n.idNivel
       WHERE p.rutProfesor = '$rutProfesor'
       AND p.estado = 1";
 

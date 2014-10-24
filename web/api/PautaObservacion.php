@@ -37,7 +37,7 @@ dispatch('/congregaciones', 'congregaciones');
 dispatch('/establecimientos/:id', 'establecimientos');
 dispatch('/profesores/:id', 'profesores');
 dispatch('/cursos/niveles/:id', 'cursosAndNiveles');
-dispatch('/libros', 'libros');
+dispatch('/libros/:id', 'libros');
 dispatch('/libros/:libro/capitulos', 'capitulos');
 dispatch('/capitulos/:capituloId/apartados', 'apartados');
 dispatch('/indicadorGestion', 'indicadorGestion');
@@ -75,10 +75,11 @@ function cursosAndNiveles($id = null)
   return json_encode1($c->getByRutProfesor($id));
 }
 
-function libros()
+function libros($id = null)
 {
+  $id =  params('id');
   $l = new Libro();
-  return json_encode1( $l->getLibros() );
+  return json_encode1( $l->getLibros($id) );
 }
 
 function capitulos($libro = null)
@@ -135,8 +136,9 @@ function save($args)
   $pauta->indicadoresGestion = json_encode1( filter($_POST, 'g_') );
   $pauta->indicadoresCondiciones = json_encode1( filter($_POST, 'c_') );
   $curso = explode('-', $_POST['cursosNiveles']);
-  $pauta->letraCurso = $curso[0];
-  $pauta->anoCurso = $curso[1];
+  $pauta->idNivel = $curso[0];
+  $pauta->letraCurso = $curso[1];
+  $pauta->anoCurso = $curso[2];
   $pauta->visibilidadUTP = $_POST['tipoUsuario'] == 'UTP' ? 1 : 0;
   $pauta->grabaClase = $_POST["grabacion-clases"];
   $result = $pauta->save();
@@ -158,8 +160,10 @@ function informe($rut = null, $tipoUsuario = null)
   <th>RBDEscuela</th>
   <th>Rut Responsable</th>
   <th>Rut Observado</th>
+  <th>Profesor Observado</th>
   <th>Nivel</th>
-  <th>Curso</th>
+  <th>Letra</th>
+  <th>A&ntilde;o</th>
   <th>Fecha</th>
   <th>Fecha Ingreso</th>
   <th>Hora Inicio</th>
@@ -169,7 +173,7 @@ function informe($rut = null, $tipoUsuario = null)
   <th>Apartado</th>
   <th>Paginas Texto</th>
   <th>Paginas Texto Ejercitacion</th>
-  <th>Grabación de Clases</th>
+  <th>Grabaci&oacute;n de Clases</th>
   <th>a</th>
   <th>b</th>
   <th>c</th>
@@ -200,6 +204,8 @@ HTML;
     $objectIndGestion = json_decode1($pauta->indicadoresGestion);
     $indGestion = get_object_vars($objectIndGestion);
 
+    $nombreProfesor = utf8_decode($pauta->nombreProfesor);
+    $nombreNivel = utf8_decode($pauta->nombreNivel);
     $capitulo = utf8_decode($pauta->capitulo);
     $apartado = utf8_decode($pauta->apartado);
     $preguntaGestion = utf8_decode($pauta->preguntaGestion);
@@ -210,8 +216,10 @@ HTML;
       <td>$pauta->rbdColegio</td>
       <td>$pauta->rutResponsable</td>
       <td>$pauta->rutProfesor</td>
-      <td>$pauta->anoCurso</td>
+      <td>$nombreProfesor</td>
+      <td>$nombreNivel</td>
       <td>$pauta->letraCurso</td>
+      <td>$pauta->anoCurso</td>
       <td>$pauta->fecha</td>
       <td>$pauta->fechaIngreso</td>
       <td>$pauta->horaInicio</td>
