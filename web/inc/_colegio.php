@@ -28,10 +28,30 @@
 	}
 	return($colegios);
 }
-  
+ function getColegiosConCursos(){
+ 	$anoActual = date("Y");
+	$sql = "SELECT DISTINCT col.rbdColegio, nombreColegio, emailColegio 
+			FROM colegio col join cursocolegio cc on col.rbdColegio = cc.rbdColegio
+			WHERE col.estadoColegio = 1
+			AND cc.anoCursoColegio = $anoActual
+			ORDER BY nombreColegio";
+	$res = mysql_query($sql);
+	$i = 0;
+	while ($row = mysql_fetch_array($res)){
+	$colegios[$i] = array( "rbdColegio" => $row["rbdColegio"],
+					  "nombreColegio" => $row["nombreColegio"]
+					  );	
+	$i++;
+	
+	}
+	if ($i==0){
+		return(NULL);
+	}
+	return($colegios);
+}
  function getTodosColegios(){
-	$sql = "SELECT * FROM 
-	colegio col 
+	$sql = "SELECT * FROM
+	colegio col
 	WHERE col.estadoColegio=1
 	ORDER BY nombreColegio
 	";

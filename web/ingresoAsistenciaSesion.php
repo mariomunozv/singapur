@@ -86,10 +86,10 @@ require("inc/_asistenciaSesion.php");
             </tbody>
         </table>
         
-        <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="enviarAsistencia()" value="Enviar Asistencia" />
+        <input type="button" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="enviarAsistencia()" value="Enviar Asistencia" />
         
-		<br>
-        
+		<br />
+        <br />
         <br />
     </div> <!--columnaCentro-->
 

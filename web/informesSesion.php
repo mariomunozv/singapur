@@ -64,7 +64,7 @@ require ("hd.php");
                 Como relator del curso presencial podr&aacute; reportar los contenidos y desarrollo de cada sesi&oacute;n a continuaci&oacute;n:
             <br>
              <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Ingresar informe de la sesi&oacute;n" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('ingresoInformeSesion.php','_self')" value="Ingresar informe de la sesi&oacute;n" />
             </div>
 
             </div>
@@ -87,7 +87,7 @@ require ("hd.php");
                 Aqu&iacute; podr&aacute; informarse del desarrollo del curso a trav&eacute;s de todas las sesiones, adem&aacute;s de un resumen general: 
             <br>
              <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Ingresar asistencia de sesi&oacute;n" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Ver informe de sesiones" />
             </div>
 
             </div>

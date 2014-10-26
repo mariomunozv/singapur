@@ -104,7 +104,6 @@ function getCursosProfesor($rutProfesor, $anoCursoColegio, $tipoUsuario,$idUsuar
 		$sql = "SELECT DISTINCT cu.rbdColegio, cu.anoCursoColegio, cu.letraCursoColegio, ni.idNivel, cu.rutProfesor, ni.nombreNivel, co.nombreColegio
 				FROM cursoColegio cu
 				JOIN nivel ni ON cu.idNivel = ni.idNivel
-				JOIN usuarioColegio us ON us.rbdColegio = cu.rbdColegio
 				JOIN colegio co ON co.rbdColegio = cu.rbdColegio
 				WHERE cu.anoCursoColegio =  $anoCursoColegio
 				ORDER BY cu.rbdColegio, ni.nombreNivel, cu.letraCursoColegio";	
@@ -235,13 +234,13 @@ var muestraCurso = function (rbdColegio,idNivel,anoCursoColegio,letraCursoColegi
 				$colegios = getColegiosProfesor($datosUsuario["rutProfesor"],$anoActual,$perfilUsuario,$idUsuario);
 			?>
 			<?php if($perfilUsuario == 21 || $perfilUsuario == 9 || $perfilUsuario == 5 || $perfilUsuario == 23){ 
-			   	if ($perfilUsuario  != 21){				  	
+			   	if ($perfilUsuario  != 21){
 				  	if ($perfilUsuario == 5 || $perfilUsuario == 23){
 						$datosUsuario=datosEmpleadoKlein($idUsuario);	
 						
 						$colegios = getColegiosProfesor($datosUsuario["rutEmpleadoKlein"],$anoActual,$perfilUsuario,$idUsuario);
 					}else{
-						$colegios =getTodosColegios();
+						$colegios =getColegiosConCursos();
 					}
 				}?>
 			<br />
