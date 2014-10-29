@@ -1,14 +1,14 @@
 <?php require ("inc/configErrores.php");?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-
+<meta charset="ISO-8859-1">
 <link href="css/custom-theme/jquery-ui-1.9.2.custom.css" type="text/css" rel="stylesheet" />	
 <link href="css/botones.css" rel="stylesheet" type="text/css" />
 <link href="css/tabla.css" rel="stylesheet" type="text/css" />
 <link href="css/ui.stepper.css" rel="stylesheet" type="text/css" />
 <link href="css/estilos.css" rel="stylesheet" type="text/css" />
+<link href="css/seccion-cajas.css" rel="stylesheet" type="text/css" />
 <!--<link rel="stylesheet" type="text/css" href="inc/shadowbox303/shadowbox.css" />
 
 <script type="text/javascript" src="inc/shadowbox303/shadowbox.js"></script>-->
