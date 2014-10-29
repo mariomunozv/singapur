@@ -1,8 +1,9 @@
 <?php 
-  require("inc/incluidos.php");
-  require ("hdOld.php");
-  $idCurso = $_SESSION["sesionIdCurso"];
-  $_SESSION["sesionIdCurso"] = $idCurso; 
+require("inc/incluidos.php");
+//require ("hdOld.php");
+require ("hd.php");
+$idCurso = $_SESSION["sesionIdCurso"];
+$_SESSION["sesionIdCurso"] = $idCurso; 
 
 ?>
 
@@ -72,7 +73,7 @@ function revisaBitacoras(){
 <div id="principal">
 <?php 
 require("topMenu.php"); 
-$navegacion = "Home*curso.php?idCurso=$idCurso,Resultados Bit&#225;cora*#";
+$navegacion = "Home*curso.php?idCurso=$idCurso,Resultados Bitácora*#";
 require("_navegacion.php");
 ?>
   
@@ -86,18 +87,18 @@ require("_navegacion.php");
  
     
   <div id="columnaCentro">
-    <p class="titulo_curso">Bit&#225;cora del Docente</p>
+    <p class="titulo_curso">Bitácora del Docente</p>
       <hr />
       <br />
   
     <div id="textoBienvenida">
           <p class="textoBienvenida">
-            La Bit&#225;cora permitir&#225; tener un registro respecto a la cobertura curricular de la 
-            implementaciÃ³n en aula del MÃ©todo Singapur, de acuerdo a los capÃ­tulos y apartados 
-            del texto Pensar Sin LÃ­mites. En la Bit&#225;cora podr&#225; registrar periÃ³dicamente las 
+            La Bitácora permitirá tener un registro respecto a la cobertura curricular de la 
+            implementación en aula del Método Singapur, de acuerdo a los capítulos y apartados 
+            del texto Pensar Sin Límites. En la Bitácora podrá registrar periódicamente las 
             actividades realizadas en cada clase con los cursos que atiende en su establecimiento. 
-            Esta informaciÃ³n permitir&#225; medir oportunamente el ritmo de trabajo alcanzado por sus 
-            estudiantes y detectar quÃ© acciones de apoyo ser&#225;n necesarias realizar.
+            Esta información permitirá medir oportunamente el ritmo de trabajo alcanzado por sus 
+            estudiantes y detectar qué acciones de apoyo serán necesarias realizar.
       </p><br />
         </div><!--textoBienvenida-->
   
@@ -111,13 +112,13 @@ switch($idPerfil){
   case 4:
   case 7:
   case 5:
-    boton("Bit&#225;cora Profesores","revisaBitacoras()");
+    boton("Bitácora Profesores","revisaBitacoras()");
     break;
   case 9:
-    boton("Bit&#225;cora Profesores","revisaBitacoras()");
+    boton("Bitácora Profesores","revisaBitacoras()");
     break;
   case 23:
-    boton("Bit&#225;cora Profesores","revisaBitacoras()");
+    boton("Bitácora Profesores","revisaBitacoras()");
     break;
 }
 ?>
@@ -130,7 +131,7 @@ switch($idPerfil){
 
   
 <?php
-// LlegÃ³ desde el curso profes
+// Llegó desde el curso profes
 if (isset ($_REQUEST["idSeccionBitacora"])){
 ?>
   <input name="idSeccionBitacora" id="idSeccionBitacora" class="campos" type="hidden" value="<?php echo @$_REQUEST["idSeccionBitacora"]; ?>" />
