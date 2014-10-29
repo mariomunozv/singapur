@@ -1,3 +1,4 @@
+<br>
 <div id="navegacion">
 <table width="100%"  border="0" cellspacing="0" cellpadding="0" style="border-bottom:1px solid #ccc; margin-bottom:10px;">
   <tr>
