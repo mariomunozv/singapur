@@ -89,8 +89,7 @@ class PautaObservacion
     $db = new DB();
 
     $db->connectDb();
-
-    $query = "SELECT p.*, n.nombreNivel, 
+    /*$query = "SELECT p.*, n.nombreNivel,
       (SELECT CONCAT(pr.nombreProfesor,' ', pr.apellidoPaternoProfesor,' ', pr.apellidoMaternoProfesor)) as nombreProfesor, 
       (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idCapitulo) as capitulo,
       (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idApartado) as apartado  
@@ -99,6 +98,15 @@ class PautaObservacion
       ON pr.rutProfesor = p.rutProfesor
       JOIN nivel as n
       ON p.idNivel = n.idNivel
+      WHERE p.rutProfesor = '$rutProfesor'
+      AND p.estado = 1";*/
+    $query = "SELECT p.*,
+      (SELECT CONCAT(pr.nombreProfesor,' ', pr.apellidoPaternoProfesor,' ', pr.apellidoMaternoProfesor)) as nombreProfesor, 
+      (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idCapitulo) as capitulo,
+      (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idApartado) as apartado  
+      FROM pautaObservacion as p
+      JOIN profesor as pr 
+      ON pr.rutProfesor = p.rutProfesor
       WHERE p.rutProfesor = '$rutProfesor'
       AND p.estado = 1";
 

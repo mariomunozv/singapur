@@ -195,7 +195,8 @@ $(document).ready(function() {
 
     $("#form").submit(function(e) {
       var form = $(this);
-      form.prop( "action", "./api/PautaObservacion.php/informe/" + profesores.val() + "/" + tipoUsuario );
+      form.attr("target", "_blank");
+      form.prop( "action", "./api/PautaObservacion.php/inf/" + profesores.val() + "/" + tipoUsuario );
      });
 
   });

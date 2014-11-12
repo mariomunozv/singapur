@@ -23,5 +23,20 @@ class Establecimiento
 
       return $sth->fetchAll(PDO::FETCH_ASSOC);
   }
+  public function getByRbdColegio($id) {
+
+      $db = new DB();
+
+      $db->connectDb();
+
+      $query = "SELECT nombreColegio 
+        FROM colegio 
+        WHERE estadoColegio = 1
+        AND rbdColegio = '{$id}'";
+
+      $sth = $db->query($query);
+
+      return $sth->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 }

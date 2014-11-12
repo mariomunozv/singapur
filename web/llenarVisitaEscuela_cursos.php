@@ -65,7 +65,7 @@ function getCursos($rutProfesor,$rbdColegio){
                 $docentes = getDocentes($_POST["rbd"]);
                 if (count($docentes) > 0){
                   foreach ($docentes as $docente){
-                    echo "<option value='".$docente['idProfesor']."'>".utf8($docente["nombreProfesor"])."</option>";
+                    echo "<option value='".$docente['idProfesor']."'>".utf8_encode($docente["nombreProfesor"])."</option>";
                   }
                 }
             ?>
@@ -117,7 +117,7 @@ function getCursos($rutProfesor,$rbdColegio){
                 if (count($cursos) > 0){
                   foreach ($cursos as $curso){
 					 // var_dump($cursos);
-                    echo "<option value='".utf8($curso['nombreCurso'])."'>".utf8($curso["nombreCurso"])."</option>";
+                    echo "<option value='".utf8_encode($curso['nombreCurso'])."'>".utf8_encode($curso["nombreCurso"])."</option>";
                   }
                 }
             ?>

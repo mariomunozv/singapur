@@ -184,14 +184,43 @@ function getAlumnosCurso(){
 						<input class="btn btn-large btn-success download" type="button" name="Descargar" id="Descargar" value="Descargar .XLS" onclick="informeVisitaEscuela()"/>
 				</center>
 
-				</div>
 			</div>
+		</div>
 
 
+	</div>
+
+	<div class="well" style="background-color: #dceaf4;">
+		<div class="row">
+			<div span="span4">
+				<form id="form">
+				<center>
+					<h3>Informe de Evaluaciones</h3>					
+					<div class="control-group">
+						<label class="control-label" for="inputProfesor">Profesor</label>
+						<div class="controls">
+							<select class="input-xlarge async" name="profesores" id="profesores" data-placeholder="Seleccione Rut">
+								<?php foreach ($rutProfesores as $key => $data) {?>
+								<option value="<?php echo $data["rutProfesor"]?>" ><?php echo utf8_decode( $data["nombreProfesor"]) ?></option>
+								<?php }?>
+							</select>
+						</div>
+					</div>
+					<input class="btn btn-large btn-success download" type="button" name="" id="" value="Descargar .XLS" onclick="descargarPautaObs()"/>
+				</center>
+				</form>
+			</div>
 		</div>
 	</div>
-<script type="text/javascript">
+</div>
 
+<script type="text/javascript">
+	function descargarPautaObs(){
+		var form = $("#form");
+		var profesores = $("#profesores").val();
+		form.attr( "action", "./../api/PautaObservacion.php/informe/"+profesores);	
+		form.submit();
+	}
 
     function xls(){
         var idNivel = $("#nivel").val();

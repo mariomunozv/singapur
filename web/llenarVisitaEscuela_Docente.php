@@ -44,7 +44,7 @@ function getDocentes($rbdColegio){
                 $docentes = getDocentes($_POST["rbd"]);
                 if (count($docentes) > 0){
                   foreach ($docentes as $docente){
-                    echo "<option value='".$docente['rutProfesor']."'>".utf8($docente["nombreProfesor"])."</option>";
+                    echo "<option value='".$docente['rutProfesor']."'>".utf8_encode($docente["nombreProfesor"])."</option>";
                   }
                 }
             ?>
