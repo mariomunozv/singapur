@@ -74,10 +74,16 @@
     <script type="text/javascript" src="js/jquery.numeric.js"></script>
 
 <body>
-    <button class="btn btn-large btn-primary" onClick="window.location.href = './evaluacionProfesor.php?rbdColegio=<? echo $rbdColegio; ?>&idNivel=<? echo $idNivel; ?>&anoCursoColegio=<? echo $anoCursoColegio; ?>&letraCursoColegio=<? echo $letraCursoColegio; ?>&escala=5&nombreNivel=null&idLista=<? echo $idLista; ?>&idPrueba=<? echo $idPrueba; ?>';">Modificar registro de asistencia  </button>
-    <button class="btn btn-large btn-primary" onClick="xls();">Exportar a XLS</button>
-    <button class="btn btn-large btn-primary" onClick="window.location.href = './evaluacionProfesor.php';">Volver a selección de los cursos</button>
-    
+    <div  style="float:left">
+        <button class="btn btn-large btn-primary" onClick="window.location.href = './evaluacionProfesor.php?rbdColegio=<? echo $rbdColegio; ?>&idNivel=<? echo $idNivel; ?>&anoCursoColegio=<? echo $anoCursoColegio; ?>&letraCursoColegio=<? echo $letraCursoColegio; ?>&escala=5&nombreNivel=null&idLista=<? echo $idLista; ?>&idPrueba=<? echo $idPrueba; ?>';">Modificar registro de asistencia  </button>
+        <button class="btn btn-large btn-primary" onClick="xls();">Exportar a XLS</button>
+        <button class="btn btn-large btn-primary" onClick="window.location.href = './evaluacionProfesor.php';">Volver a selección de los cursos</button>
+    </div>
+    <div  align="right">
+        <button class="btn btn-large btn-primary" onClick="guarda();">Actualizar Puntaje</button>
+        <button class="btn btn-large btn-primary" onClick="finalizarRegistro();">Finalizar registro de puntaje</button>
+    </div>
+
     <div id="actualiza"></div>
         <p>
             Ingresa los puntajes de cada alumno y presiona Actualizar
@@ -172,10 +178,10 @@
         </h5>
     </div>
 
-    <div  align="right">
+    <!-- <div  align="right">
         <button class="btn btn-large btn-primary" onClick="guarda();">Actualizar Puntaje</button>
         <button class="btn btn-large btn-primary" onClick="finalizarRegistro();">Finalizar registro de puntaje</button>
-    </div>
+    </div> -->
 
     <script>
         function activaDesactiva(rutAlumno,modo){

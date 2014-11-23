@@ -59,12 +59,9 @@ require("inc/_asistenciaSesion.php");
         <table id="capitulos-programados" style="font-size:14px;">
             <tr class="cap" data-index="0">
                 <td><h4>Cap&iacute;tulos Programados:</h4></td>
-            
-            
                 <td>
                     Cap&iacute;tulo <input onChange='resetTalleres()' style="width:32px;font-size:14px;" name="numeroCapitulo-0" type="number" min=1>
                 </td>
-            
                 <td>
                     <input type="button" class="mas" style="height:30px;" onClick="masCapitulo()" value="+" />
                     <!--<input type="button" class="menos" style="float:right;height:30px;" onClick="menosCapitulo()" value="-" />-->
@@ -115,7 +112,72 @@ require("inc/_asistenciaSesion.php");
             <h4>Did&aacute;ctico:</h4>
             <textarea style="width:100%;height:50px;resize:none;"></textarea>
         </div>
-        <div id="dificultades-no" style="display:none;">
+        <br />
+        <br />
+        <table id="docentesDestacados" style="font-size:14px;">
+            <tr class="docente-destacado" data-index2="0">
+                <td style="font-size:12px;">Docentes con participaci&oacute;n destacada:</td>
+                <td>
+                    <select style="font-size:14px;" name="destacado-0">
+                        <option value="">---</option>
+                        <option>Ronald McDonalds</option>
+                        <option>Mario Mu&ntilde;oz Villegas</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" class="masDestacado" style="height:30px;float:right;" onClick="masDestacado()" value="+" />
+                    <input type="button" class="menosDestacado" style="height:30px;" onClick="menosDestacado(0)" value="-" />
+                </td>
+            </tr>
+        </table>
+        <br />
+        <table id="docentesDebiles" style="font-size:14px;">
+            <tr class="docente-debil" data-index3="0">
+                <td style="font-size:12px;">Docentes que presentan debilidades:</td>
+                <td>
+                    <select style="font-size:14px;" name="debil-0">
+                        <option value="">---</option>
+                        <option>Ronald McDonalds</option>
+                        <option>Mario Mu&ntilde;oz Villegas</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" class="masDebil" style="height:30px;float:right;" onClick="masDebil()" value="+" />
+                    <input type="button" class="menosDebil" style="height:30px;" onClick="menosDebil(0)" value="-" />
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <h3 style="font-size:14px;">Implementaci&oacute;n del M&eacute;todo</h3>
+        <br>
+        <p style="font-size:12px; width:60%;float:left;">&iquest;Los docentes mencionan situaciones o problem&aacute;ticas en relaci&oacute;n a aspectos did&aacute;cticos o pedag&oacute;gicos surgidos durante la implementaci&oacute;n?</p>
+        <table>
+            <tr>
+                <td>Si <input onChange="sitChange()" name="situaciones" value="1" type="radio"></td>
+                <td style="width:10px;"> </td>
+                <td>No <input onChange="sitChange()" name="situaciones" value="0" type="radio"></td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <div id="situacion-si" style="display:none;">
+            <textarea placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"></textarea>
+        </div>
+        <br>
+        <br>
+        <p style="font-size:12px; width:60%;float:left;">&iquest;Los docentes mencionan situaciones o problem&aacute;ticas en relaci&oacute;n a aspectos institucionales que afectan la implementaci&oacute;n?</p>
+        <table>
+            <tr>
+                <td>Si <input onChange="instChange()" name="institucionales" value="1" type="radio"></td>
+                <td style="width:10px;"> </td>
+                <td>No <input onChange="instChange()" name="institucionales" value="0" type="radio"></td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <div id="institucionales-si" style="display:none;">
+            <textarea placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"></textarea>
         </div>
         <br>
         <br>
@@ -134,6 +196,8 @@ require("inc/_asistenciaSesion.php");
     ?> 
     <script type="text/javascript">
         var indiceCapitulo = 0;
+        var indiceDestacado = 0;
+        var indiceDebil = 0;
         var indiceTaller = 0;
 
         function verificaJustificacion(){
@@ -142,10 +206,22 @@ require("inc/_asistenciaSesion.php");
         function difChange(){
             if( $("input[name=dificultades]:checked").val()=="1" ){
                 $("#dificultades-si").show();
-                $("#dificultades-no").hide();
             }else{
                 $("#dificultades-si").hide();
-                $("#dificultades-no").show();
+            }
+        }
+        function sitChange(){
+            if($("input[name=situaciones]:checked").val()=="1"){
+                $("#situacion-si").show();
+            }else{
+                $("#situacion-si").hide();
+            }
+        }
+        function instChange(){
+            if($("input[name=institucionales]:checked").val()=="1"){
+                $("#institucionales-si").show();
+            }else{
+                $("#institucionales-si").hide();
             }
         }
 
@@ -175,6 +251,66 @@ require("inc/_asistenciaSesion.php");
             $('.mas').hide();
             $("#capitulos-programados").append("<tr class='cap' onChange='resetTalleres()' data-index='"+indiceCapitulo+"'><td></td><td>Cap&iacute;tulo <input style='width:32px;font-size:14px;' class='numero-capitulo' name='numeroCapitulo-"+indiceCapitulo+"' type='number' min=1></td><td><input type='button' class='mas' style='float:right;height:30px;' onClick='masCapitulo()' value='+' /><input type='button' class='menos' style='height:30px;' onClick='menosCapitulo("+indiceCapitulo+")' value='-' /></td></tr>");
         }
+        function masDestacado(){
+            indiceDestacado++;
+            $('.masDestacado').hide();
+            $("#docentesDestacados").append("<tr class='docente-destacado' data-index2='"+indiceDestacado+"'><td></td><td><select style='font-size:14px;' name='destacado-"+indiceDestacado+"'><option>---</option><option>Ronald McDonalds</option><option>Mario Mu&ntilde;oz Villegas</option></select></td><td><input type='button' class='masDestacado' style='height:30px;float:right;' onClick='masDestacado()' value='+' /><input type='button' class='menosDestacado' style='height:30px;' onClick='menosDestacado("+indiceDestacado+")' value='-' /></td></tr>");
+        }
+        function menosDestacado(num){
+            if( $("tr.docente-destacado").length > 1 ){
+
+
+                $("tr[data-index2="+num+"]").remove();
+                for (var i = num+1; i <= indiceDestacado; i++) {
+
+                    $("tr[data-index2="+i+"] input.menosDestacado").attr("onClick","menosDestacado("+(i-1)+")");
+                    $("tr[data-index2="+i+"] select").attr("name","destacado-"+(i-1));
+                    $("tr[data-index2="+i+"]").attr("data-index2",(i-1));
+
+                };
+                indiceDestacado--;
+                if(num == indiceDestacado+1){
+                    $("tr[data-index2="+(num-1)+"] input.masDestacado").show();
+                }
+                if(num == 0){
+                    $("tr[data-index2=0] td").first().html("<h4>Docentes con participaci&oacute;n destacada:</h4>");
+                }
+            }else{
+                $("tr[data-index2=0] option").first().prop("selected","selected");  
+            }
+        }
+
+
+        function masDebil(){
+            indiceDebil++;
+            $('.masDebil').hide();
+            $("#docentesDebiles").append("<tr class='docente-debil' data-index3='"+indiceDebil+"'><td></td><td><select style='font-size:14px;' name='debil-"+indiceDebil+"'><option>---</option><option>Ronald McDonalds</option><option>Mario Mu&ntilde;oz Villegas</option></select></td><td><input type='button' class='masDebil' style='height:30px;float:right;' onClick='masDebil()' value='+' /><input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil("+indiceDebil+")' value='-' /></td></tr>");
+        }
+        function menosDebil(num){
+            if( $("tr.docente-debil").length > 1 ){
+
+
+                $("tr[data-index3="+num+"]").remove();
+                for (var i = num+1; i <= indiceDebil; i++) {
+
+                    $("tr[data-index3="+i+"] input.menosDebil").attr("onClick","menosDebil("+(i-1)+")");
+                    $("tr[data-index3="+i+"] select").attr("name","debil-"+(i-1));
+                    $("tr[data-index3="+i+"]").attr("data-index3",(i-1));
+
+                };
+                indiceDebil--;
+                if(num == indiceDebil+1){
+                    $("tr[data-index3="+(num-1)+"] input.masDebil").show();
+                }
+                if(num == 0){
+                    $("tr[data-index3=0] td").first().html("<h4>Docentes con participaci&oacute;n destacada:</h4>");
+                }
+            }else{
+                $("tr[data-index3=0] option").first().prop("selected","selected");
+            }
+        }
+
+
         function resetTalleres(){
             indiceTaller = 0;
             $("#espacio-talleres").html("");
