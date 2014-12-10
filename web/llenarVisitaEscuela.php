@@ -808,7 +808,7 @@ $(function() {
         }
       }
       if(seguir){
-        seguir = confirm("El registro de visita no permite modificaciones posteriores ¿Está de seguro de guardar su registro devisita?");
+        seguir = confirm("El registro de visita no permite modificaciones posteriores ¿Está de seguro de guardar su registro de visita?");
         error = "";
       }
       if(seguir){

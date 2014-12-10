@@ -45,7 +45,7 @@ dispatch('/indicadorCondiciones', 'indicadorCondiciones');
 dispatch('/establecimientoByUTPUser/:rut', 'establecimientoByUTPUser');
 dispatch_post('/save/*', 'save');
 dispatch('/informe/:rut', 'informe');
-dispatch('/inf/:rut/:tipoUsuario', 'inf');
+dispatch('/inf/:id', 'inf');
 dispatch('/detallePauta/:rut', 'detallePauta');
 dispatch_post('/visibilidad/*', 'updateVisibilidad');
 
@@ -153,7 +153,7 @@ function save($args)
   header('Content-Type: application/json');
   return json_encode1($response);
 }
-function inf($rut = null, $tipoUsuario = null ){
+function inf($id = null){
     ob_start();
     include(dirname(__FILE__).'/../informes/res/pautaObservacion.php');
     

@@ -104,6 +104,18 @@ if ( empty($rutProfesores) ) {
                           </tr>
                         </tfoot>
                       </table>
+
+                      <table class="table table-bordered" id="detalleInformes" style="display:none">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Fecha Ingreso</th>
+                          <th>Establecimiento</th>
+                          <th></th>
+                        </tr>
+                       </thead>
+                       <tbody></tbody>
+                      </table>
                     </div>
                     </form>
                   </div>
@@ -140,9 +152,12 @@ require("pie.php");
 $(document).ready(function() {
   var profesores = $("#profesores").select2();
   var table = $("#detallePauta");
+  var table2 = $("#detalleInformes");
+  
   var tipoUsuario = '<?php echo $tipoUsuario ?>';
 
   $("#cambiaVisibilidad").click(function() {
+    event.preventDefault();
     $.ajax({
       url: './api/PautaObservacion.php/detallePauta/' + profesores.val(),
         dataType: 'json',
@@ -164,6 +179,7 @@ $(document).ready(function() {
         }
       });
 
+      table2.fadeOut();
       table.fadeOut();
       table.fadeIn(400);
     });
@@ -194,9 +210,34 @@ $(document).ready(function() {
     });
 
     $("#form").submit(function(e) {
-      var form = $(this);
+      event.preventDefault();
+      /*var form = $(this);
+
       form.attr("target", "_blank");
-      form.prop( "action", "./api/PautaObservacion.php/inf/" + profesores.val() + "/" + tipoUsuario );
+      form.prop( "action", "./api/PautaObservacion.php/inf/" + profesores.val() + "/" + tipoUsuario );*/
+      $.ajax({
+        url: './api/PautaObservacion.php/detallePauta/' + profesores.val(),
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+          table2.find('tbody').html(
+            $.map(data, function(v, i) {
+              var html = [];
+              html.push('<tr>');
+              html.push('<td>' + v['id'] + '</td>');
+              html.push('<td>' + v['fechaIngreso'] + '</td>');
+              html.push('<td>' + (v['nombreColegio']) + '</td>');
+              html.push("<td><form target='_blank' action='./api/PautaObservacion.php/inf/"+v["id"]+"'>");
+              html.push('<button class="btn-success btn btn-min" type="submit">Descargar</button></td>');
+              html.push('</form></tr>');
+              return html.join('');
+            })
+           );
+        }
+      });
+
+      table.fadeOut();
+      table2.fadeOut();
+      table2.fadeIn(400);
      });
 
   });

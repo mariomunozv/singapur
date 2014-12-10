@@ -180,10 +180,11 @@ td.blank{
     <h3 style="margin-top:-10px;text-align:center;">SINGAPUR 2014</h3>
     <br><br>
     <?php
-        $rut =  params('rut');
+        $id =  params('id');
+
         $p = new PautaObservacion();
-        $pautas = $p->getInforme($rut, $tipoUsuario);
-        $pauta = $pautas[0];
+        $pauta = $p->getInforme2($id)[0];
+
         $indCondicion = json_decode1($pauta->indicadoresCondiciones);
         $objectIndGestion = json_decode1($pauta->indicadoresGestion);
         $indGestion = get_object_vars($objectIndGestion);
@@ -215,7 +216,7 @@ td.blank{
         <table>
             <tr>
                 <td class="name">Curso - Niveles:</td>
-                <td class="cont"><?php echo ""; ?></td>
+                <td class="cont"><?php echo ($pauta->nombreNivel); ?></td>
             </tr>
         </table><br><br>
         <table>
@@ -485,7 +486,7 @@ td.blank{
     <br>
     <table>
         <tr>
-            <td style="width:100%;"><?php echo utf8_decode($pauta->preguntaGestion); ?></td>
+            <td style="width:100%;"><?php echo ($pauta->preguntaGestion); ?></td>
         </tr>
     </table>
     

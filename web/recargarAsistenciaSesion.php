@@ -47,9 +47,9 @@ require("inc/_asistenciaSesion.php");
             <td>
                 <?php 
 
-                if($_POST["perfil"]==5){
+                if($_SESSION["sesionPerfilUsuario"]==5){
                      echo $_SESSION["sesionNombreUsuario"];
-                     echo "<input name='idRelator' type='hidden' value='".$_POST["usuario"]."'>"; 
+                     echo "<input name='idRelator' type='hidden' value='".$_SESSION["sesionIdUsuario"]."'>"; 
                 }else{
                     echo "<select name='idRelator'> <option value=''>---</option>";
                     $relatores= getRelatoresSesion();

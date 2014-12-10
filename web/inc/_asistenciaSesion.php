@@ -80,22 +80,25 @@ function getAsistenciaSesion($idCurso, $numSesion){
     }
     return $asistencias;
 }
-function getDetalleSesion(){
-
+function getDetalleSesion($idInformeSesion){
+    $sql = "SELECT *
+            FROM detalleSesion
+            WHERE idInformeSesion = $idInformeSesion";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res);
+    return $row;
 }
 function newInformeSesion($post){
     $fecha = substr($post["fechaSesion"],-4,4)."-".substr($post["fechaSesion"],-7,2)."-".substr($post["fechaSesion"],0,2);
     $sql = "INSERT INTO `informeSesion` (`idInformeSesion`, `idRelator`, `idCursoCapacitacion`, `numeroSesion`, `fechaSesion`) 
                                  VALUES (NULL,".$post["idRelator"].",".$post["idCurso"].",".$post["numeroSesion"].",'$fecha')";
     $res = mysql_query($sql);
-    echo $sql;
 }
 
 function updateInformeSesion($post){
     $fecha = substr($post["fechaSesion"],-4,4)."-".substr($post["fechaSesion"],-7,2)."-".substr($post["fechaSesion"],0,2);
     $sql ="UPDATE `informeSesion` SET `fechaSesion` = '$fecha',`idRelator` = '".$post["idRelator"]."', `idCursoCapacitacion` = '".$post["idCurso"]."'  WHERE `informesesion`.`numeroSesion` = ".$post["numeroSesion"]." AND `informesesion`.`idCursoCapacitacion` = ".$post["idCurso"];
     $res = mysql_query($sql);
-    echo $sql;
 }
 function newAsistenciaSesion($idInformeSesion, $usuario, $valor){
     if(mysql_fetch_array(mysql_query("SELECT * FROM asistenciaSesion WHERE idInformeSesion=$idInformeSesion AND idUsuario=$usuario"))){
@@ -106,6 +109,16 @@ function newAsistenciaSesion($idInformeSesion, $usuario, $valor){
     }
     $res = mysql_query($sql);
 
+}
+
+function newDetalleSesion($post){
+    $sql = "INSERT INTO `detalleSesion` (`idDetalleSesion`,`idInformeSesion`, `capitulosProgramadosSesion`, `trabajoRealizadoSesion`, `justificacionNoRealizadoSesion`, `dificultadesMatDidSesion`, `matematicoSesion`, `didacticoSesion`, `participacionDestacadaSesion`, `participacionDebilSesion`, `situacionPedagogicaSesion`, `cualSituacionPedagogicaSesion`, `situacionInstitucionalSesion`, `cualSituacionInstitucionalSesion`) 
+                                 VALUES (NULL,".$post["idInformeSesion"].",'".$post["programados"]."','".$post["trabajados"]."','".$post["justificaNoRealizado"]."',".$post["dificultades"].",'".$post["difMatematicas"]."','".$post["difDidactico"]."','".$post["destacados"]."','".$post["debiles"]."',".$post["situaciones"].",'".$post["situacionPedagogica"]."',".$post["institucionales"].",'".$post["situacionInstitucional"]."')";
+    $res = mysql_query($sql);
+}
+function updateDetalleSesion($post){
+    $sql = "UPDATE `detalleSesion` SET `capitulosProgramadosSesion` = '".$post["programados"]."', `trabajoRealizadoSesion`='".$post["trabajados"]."', `justificacionNoRealizadoSesion`='".$post["justificaNoRealizado"]."', `dificultadesMatDidSesion`=".$post["dificultades"].", `matematicoSesion`='".$post["difMatematicas"]."', `didacticoSesion`='".$post["difDidactico"]."', `participacionDestacadaSesion`='".$post["destacados"]."', `participacionDebilSesion`='".$post["debiles"]."', `situacionPedagogicaSesion`=".$post["situaciones"].", `cualSituacionPedagogicaSesion`='".$post["situacionPedagogica"]."', `situacionInstitucionalSesion`=".$post["institucionales"].", `cualSituacionInstitucionalSesion`='".$post["situacionInstitucional"]."' WHERE `idInformeSesion`=".$post["idInformeSesion"]." ";
+    $res = mysql_query($sql);
 }
 
 

@@ -98,16 +98,18 @@ require("inc/_asistenciaSesion.php");
                         if(empty($profesores[0])){
                             echo '<td colspan="6">No hay participantes en el curso.</td>';
                         }else{
+                            $nombreP = getNombrePerfil($prof["idPerfil"]);
+                            if($nombreP != "Administrador Sitio" && $nombreP!="Coordinador general"){
                 ?>
                 <tr>
                     <td><?php echo $key+1;$key++; ?></td>
                     <td><?php echo $prof["nombreCompleto"]; ?></td>
-                    <td><?php echo getNombrePerfil($prof["idPerfil"]); ?></td>
+                    <td><?php echo $nombreP; ?></td>
                     <td><?php echo getDatosColegio($prof["rbdColegio"])["nombreColegio"]; ?></td>
                     <td><input type="radio" class="radio-asist" value="1" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
                     <td><input type="radio" class="radio-asist" value="0" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
                 </tr>
-                <?php }} ?>
+                <?php }}} ?>
             </tbody>
         </table>
         
@@ -133,7 +135,7 @@ require("inc/_asistenciaSesion.php");
 
         $("#numeroSesion").change(function(){
             var sel = document.getElementById("columnaCentro");
-            var a = "numero="+ $(this).val()+"&curso=<?php echo $_SESSION['sesionIdCurso']; ?>&perfil=<?php echo $_SESSION['sesionPerfilUsuario']; ?>&nombre=<?php echo $_SESSION['sesionNombreUsuario']; ?>&usuario=<?php echo $_SESSION['sesionIdUsuario']; ?>";
+            var a = "numero="+ $(this).val();
             //alert(a);
             AJAXPOST("recargarAsistenciaSesion.php",a ,sel);
         });

@@ -1,58 +1,80 @@
 <?php 
-require("inc/incluidos.php");
-require ("hd.php");
-require("inc/_asistenciaSesion.php");
+    if($_SERVER["REQUEST_METHOD"]=="POST"){
+        require("inc/incluidos.php");
+        require ("hd.php");
+        require("inc/_asistenciaSesion.php");
+    }
 ?>
 <meta charset="iso-8859-1">
-<link rel="stylesheet" href="./css/seccion-cajas.css" />
-<body>
-<div id="principal">
-<?php 
-	require("topMenu.php"); 
-	$navegacion = "Home*curso.php?idCurso=$idCurso,Informes de Sesi&#243;n*informesSesion.php,Ingreso Informe*#";
-	require("_navegacion.php");
-
-
-?>
-	
-	<div id="lateralIzq">
-	    <?php require("menuleft.php");	?>
-    </div> <!--lateralIzq-->
-    
-    <div id="lateralDer">
-		<?php require("menuright.php"); ?>
-    </div><!--lateralDer-->
-    
-    
-	<div id="columnaCentro">
-     
-		
+	<form method="POST" action="guardarinformesesion.php">
         <p class="titulo_curso">Ingresar informe de sesi&oacute;n</p>
         <hr />
         <br />
         <h3>Datos generales</h3>
         <table style="font-size:14px;" class="tablesorter">
-                <tr>
-                    <th style="font-size:14px;">Curso:</th>
-                    <td id="cursoSelected"></td>
-                </tr>
-                <tr>
-                    <th style="font-size:14px;">N&deg; Sesi&oacute;n:</th>
-                    <td id="numeroSesion"></td>
-                </tr>
-                <tr>
-                    <th style="font-size:14px;width:120px;">Relator:</th>
-                    <td>
-                        <select>
-                            <?php 
-                                $relatores= getRelatoresSesion();
-                                foreach ($relatores as $rel) {
-                                    echo "<option>".$rel["nombreEmpleadoKlein"]." ".$rel["apellidoPaternoEmpleadoKlein"]." ".$rel["apellidoMaternoEmpleadoKlein"]."</option>";
-                                } 
-                            ?>
-                        </select>
-                    </td>
-                </tr>
+            <tr>
+                <th style="font-size:14px;">Curso:</th>
+                <td id="cursoSelected"></td>
+                <input type="hidden" value="<?php echo $_SESSION['sesionIdCurso']; ?>" name="idCurso">
+            </tr>
+            <tr>
+                <th style="font-size:14px;">N&deg; Sesi&oacute;n:</th>
+                <td>
+                    <select name="numeroSesion" id="numeroSesion">
+                        <?php 
+                            $numSesiones = getNumerosSesionesCurso($_SESSION["sesionIdCurso"],$_SESSION["sesionIdUsuario"]);
+                            $siguienteNumero = getSiguienteSesionesCurso($_SESSION["sesionIdCurso"]);
+                            foreach ($numSesiones as $i) {
+                                if($i==$_POST["numero"]){
+                                    echo "<option selected value='".$i."'>".$i."</option>";
+                                }else{
+                                    echo "<option value='".$i."'>".$i."</option>";
+                                }
+                            }
+                            if($siguienteNumero==$_POST["numero"] || $_SERVER['REQUEST_METHOD']=="GET"){
+                               echo "<option selected value='".$siguienteNumero."'>".$siguienteNumero." (nuevo)</option>";
+                            }else{
+                               echo "<option value='".$siguienteNumero."'>".$siguienteNumero." (nuevo)</option>";
+                            }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <?php 
+                $datos = getDatosSesion($_SESSION["sesionIdCurso"], $_POST["numero"]);
+                $detalle = getDetalleSesion($datos["idInformeSesion"]); 
+            ?>
+
+            <tr>
+                <th style="font-size:14px;">Fecha de Sesi&oacute;n:</th>
+                <td><?php echo ($datos['fechaSesion']?$datos['fechaSesion']."<input type='hidden' value='".$datos['fechaSesion']."' name='fechaSesion'>":"<input name='fechaSesion' placeholder='dd/mm/aaaa' type='text' id='datepicker'>" ); ?></td>
+            </tr>
+            <tr>
+                <th style="font-size:14px;width:120px;">Relator:</th>
+                <td>
+                    <?php 
+                    if($_SERVER["REQUEST_METHOD"]=="GET" || $_POST["numero"]==$siguienteNumero){
+                        if($_SESSION["sesionPerfilUsuario"]==5){
+                             echo $_SESSION["sesionNombreUsuario"];
+                             echo "<input name='idRelator' type='hidden' value='".$_SESSION["idUsuario"]."'>"; 
+                        }else{
+                            echo "<select name='idRelator'> <option value=''>---</option>";
+                            $relatores= getRelatoresSesion();
+                            foreach ($relatores as $rel) {
+                                if($rel["idUsuario"]==$datos["idRelator"]){
+                                    echo "<option selected value='".$rel["idUsuario"]."'>".$rel["nombreEmpleadoKlein"]." ".$rel["apellidoPaternoEmpleadoKlein"]." ".$rel["apellidoMaternoEmpleadoKlein"]."</option>";
+                                }else{
+                                    echo "<option value='".$rel["idUsuario"]."'>".$rel["nombreEmpleadoKlein"]." ".$rel["apellidoPaternoEmpleadoKlein"]." ".$rel["apellidoMaternoEmpleadoKlein"]."</option>";
+                                }
+                            }
+                            echo "</select>";    
+                        }
+                    }else{
+                        echo getDatosEmpleadoKlein($datos["idRelator"])["nombreParaMostrar"];
+                    }
+                    ?>
+                </td>
+            </tr>
         </table>
         <br>
 
@@ -93,24 +115,27 @@ require("inc/_asistenciaSesion.php");
         <br>
         <br>
         <h3 style="font-size:14px;">Justificaci&oacute;n del trabajo no realizado:</h3>
-        <textarea style="width:100%;height:50px;resize:none;"></textarea>
+        <textarea name="justificaNoRealizado" style="width:100%;height:50px;resize:none;"><?php echo $detalle["justificacionNoRealizadoSesion"]; ?></textarea>
         <br>
+        <?php 
+            print_r($detalle);
+        ?> 
         <br>
         <h3 style="font-size:14px;">Datos esenciales de la Relator&iacute;a</h3>
         <p style="font-size:12px; width:60%;float:left;">&iquest;Los docentes presentan dificultades respecto de temas matem&aacute;ticos y/o did&aacute;cticos en estudio?</p>
         <table>
             <tr>
-                <td>Si <input onChange="difChange()" name="dificultades" value="1" type="radio"></td>
+                <td>Si <input onChange="difChange()" <?php if($detalle["dificultadesMatDidSesion"]){echo "checked";} ?> name="dificultades" value="1" type="radio"></td>
                 <td style="width:10px;"> </td>
-                <td>No <input onChange="difChange()" name="dificultades" value="0" type="radio"></td>
+                <td>No <input onChange="difChange()" <?php if(array_key_exists("dificultadesMatDidSesion", $detalle) && !$detalle["dificultadesMatDidSesion"]){echo "checked";} ?> name="dificultades" value="0" type="radio"></td>
             </tr>
         </table>
         <br>
         <div id="dificultades-si" style="display:none;">
             <h4>Matem&aacute;tico:</h4>
-            <textarea style="width:100%;height:50px;resize:none;"></textarea>
+            <textarea name="difMatematicas" style="width:100%;height:50px;resize:none;"></textarea>
             <h4>Did&aacute;ctico:</h4>
-            <textarea style="width:100%;height:50px;resize:none;"></textarea>
+            <textarea name="difDidactico" style="width:100%;height:50px;resize:none;"></textarea>
         </div>
         <br />
         <br />
@@ -120,8 +145,17 @@ require("inc/_asistenciaSesion.php");
                 <td>
                     <select style="font-size:14px;" name="destacado-0">
                         <option value="">---</option>
-                        <option>Ronald McDonalds</option>
-                        <option>Mario Mu&ntilde;oz Villegas</option>
+                        <?php 
+                            $profesores = getAlumnosCurso($_SESSION["sesionIdCurso"]);
+                            $strProfesores = "";
+                            foreach ($profesores as $prof){
+
+                                $strProfesores.="<option value='".$prof["idUsuario"]."'>".$prof["nombreCompleto"]."</option>";
+                            }
+                            echo $strProfesores;
+
+                        ?>
+                        
                     </select>
                 </td>
                 <td>
@@ -137,8 +171,7 @@ require("inc/_asistenciaSesion.php");
                 <td>
                     <select style="font-size:14px;" name="debil-0">
                         <option value="">---</option>
-                        <option>Ronald McDonalds</option>
-                        <option>Mario Mu&ntilde;oz Villegas</option>
+                        <?php echo $strProfesores; ?>
                     </select>
                 </td>
                 <td>
@@ -162,7 +195,7 @@ require("inc/_asistenciaSesion.php");
         <br>
         <br>
         <div id="situacion-si" style="display:none;">
-            <textarea placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"></textarea>
+            <textarea name="situacionPedagogica" placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"></textarea>
         </div>
         <br>
         <br>
@@ -177,28 +210,30 @@ require("inc/_asistenciaSesion.php");
         <br>
         <br>
         <div id="institucionales-si" style="display:none;">
-            <textarea placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"></textarea>
+            <textarea name="situacionInstitucional" placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"></textarea>
         </div>
         <br>
         <br>
         
-        <input type="button" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="enviarInforme()" value="Enviar" />
+        <input type="submit" style="float:right;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="enviarInforme()" value="Enviar" />
         
 		<br />
         <br />
         <br />
-    </div> <!--columnaCentro-->
+    </form>
 
-	<?php 
-    	
-		require("pie.php");
-		
-    ?> 
+	
     <script type="text/javascript">
         var indiceCapitulo = 0;
         var indiceDestacado = 0;
         var indiceDebil = 0;
         var indiceTaller = 0;
+
+        $( document ).ready(function(){
+            $(function() {
+                $( "#datepicker" ).datepicker();
+            });
+        });
 
         function verificaJustificacion(){
 
@@ -228,7 +263,7 @@ require("inc/_asistenciaSesion.php");
         function masTaller(){
             indiceTaller++;
             flag = true;
-            strSelect = "<td><select>";
+            strSelect = "<td><select name='taller-"+indiceTaller+"'>";
             $(".cap").each(function(){
                 num = $(this).find("input[type=number]").val();
                 if(num!=""){
@@ -254,7 +289,7 @@ require("inc/_asistenciaSesion.php");
         function masDestacado(){
             indiceDestacado++;
             $('.masDestacado').hide();
-            $("#docentesDestacados").append("<tr class='docente-destacado' data-index2='"+indiceDestacado+"'><td></td><td><select style='font-size:14px;' name='destacado-"+indiceDestacado+"'><option>---</option><option>Ronald McDonalds</option><option>Mario Mu&ntilde;oz Villegas</option></select></td><td><input type='button' class='masDestacado' style='height:30px;float:right;' onClick='masDestacado()' value='+' /><input type='button' class='menosDestacado' style='height:30px;' onClick='menosDestacado("+indiceDestacado+")' value='-' /></td></tr>");
+            $("#docentesDestacados").append("<tr class='docente-destacado' data-index2='"+indiceDestacado+"'><td></td><td><select style='font-size:14px;' name='destacado-"+indiceDestacado+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDestacado' style='height:30px;float:right;' onClick='masDestacado()' value='+' /><input type='button' class='menosDestacado' style='height:30px;' onClick='menosDestacado("+indiceDestacado+")' value='-' /></td></tr>");
         }
         function menosDestacado(num){
             if( $("tr.docente-destacado").length > 1 ){
@@ -284,7 +319,7 @@ require("inc/_asistenciaSesion.php");
         function masDebil(){
             indiceDebil++;
             $('.masDebil').hide();
-            $("#docentesDebiles").append("<tr class='docente-debil' data-index3='"+indiceDebil+"'><td></td><td><select style='font-size:14px;' name='debil-"+indiceDebil+"'><option>---</option><option>Ronald McDonalds</option><option>Mario Mu&ntilde;oz Villegas</option></select></td><td><input type='button' class='masDebil' style='height:30px;float:right;' onClick='masDebil()' value='+' /><input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil("+indiceDebil+")' value='-' /></td></tr>");
+            $("#docentesDebiles").append("<tr class='docente-debil' data-index3='"+indiceDebil+"'><td></td><td><select style='font-size:14px;' name='debil-"+indiceDebil+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDebil' style='height:30px;float:right;' onClick='masDebil()' value='+' /><input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil("+indiceDebil+")' value='-' /></td></tr>");
         }
         function menosDebil(num){
             if( $("tr.docente-debil").length > 1 ){
@@ -334,19 +369,19 @@ require("inc/_asistenciaSesion.php");
     
         $( document ).ready(function(){
             $("#cursoSelected").html( $("#cambiaCurso > option[value="+$("#cambiaCurso").val()+"]").html() );
-            $("#numeroSesion").html("1");
-
+        });
+        $("#numeroSesion").change(function(){
+            var sel = document.getElementById("columnaCentro");
+            var a = "numero="+ $(this).val();
+            AJAXPOST("recargarInformeSesion.php",a ,sel);
         });
 
         function enviarAsistencia(){
             var num = <?php echo count($profesores) ?>;
             if( $(".radio-asist:checked").length == num ){
-                confirm("Se enviará la asistencia. Desea continuar?")
+                confirm("Se enviará la asistencia. Desea continuar?");
             }else{
                 alert("Debe completar la asistencia de todos los profesores listados.");
             }
         }
     </script>
-</div><!--principal--> 
-</body>
-</html>
