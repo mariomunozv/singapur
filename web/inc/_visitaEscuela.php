@@ -143,7 +143,7 @@ function getInfoVisita($idVisita){
             WHERE idVisitaEscuela = $idVisita";
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res);
-    $array = [];
+    $array = array();
     foreach ($row as $key => $val) {
         $array[$key]=utf8($val);
     }
@@ -155,7 +155,7 @@ function getDocentesVisita($idVisita){
     $res = mysql_query($sql);
     $i=0;
     while($row = mysql_fetch_array($res)){
-        $array = [];
+        $array = array();
         foreach ($row as $key => $val) {
             $array[$key]=utf8($val);
         }
