@@ -376,7 +376,7 @@ function getInfoVisitaUsuario($idUsuario){
                 AND anoVisitaEscuela=".date("Y")."
 				ORDER BY nombreColegioVisitaEscuela,numeroVisitaEscuela";  
     }
-    elseif($tipo == "Asesor"){
+    elseif($tipo == "Asesor" || $tipo =="Relator/Tutor"){
         $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
                 FROM visitaEscuela
                 WHERE idAsesorVisitaEscuela=$idUsuario
@@ -402,17 +402,18 @@ function getInfoVisitaUsuario($idUsuario){
 
 function getVisitasUsuario($idUsuario){
     $tipo = getTipoUser($idUsuario);
-    if($tipo == "Coordinador General" ||$tipo == "Empleado Klein"    ){
+    if ($tipo == "Coordinador General" || $tipo == "Empleado Klein"){
         $sql = "SELECT *
                 FROM visitaEscuela
                 WHERE anoVisitaEscuela=".date("Y");  
     }
-    if($tipoUsuario ="Asesor"){
+    if ($tipoUsuario == "Asesor"){ // Corregido el operador de asignación "="" por comparación "=="
         $sql = "SELECT *
                 FROM visitaEscuela
                 WHERE idAsesorVisitaEscuela = $idUsuario
                 AND anoVisitaEscuela=".date("Y");  
     }
+    $sql;
     $res = mysql_query($sql);
     while($row = mysql_fetch_array($res)){
         $informes[$i] = $row;
@@ -729,6 +730,7 @@ HTML;
     </tbody>
     </table>
 HTML;
+
 
   header('Content-type: application/vnd.ms-excel');
   header("Content-Disposition: attachment; filename=visitaEscuela[".date("d-m-Y")."].xls");
