@@ -1,4 +1,4 @@
-<div class="titulo_div">Eventos próximos</div>
+<div class="titulo_div">Eventos prÃ³ximos</div>
 <div class="info_div">
 <?php 
 require("cal/calendario2.php");

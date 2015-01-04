@@ -5,6 +5,7 @@ require("inc/incluidos.php");
 include_once("inc/_actividad.php");
 include_once("inc/_pauta.php");
 include_once("inc/_formulario.php");
+include_once("inc/_item.php");
 
 
 function getCapitulo($idSeccionBitacora){
@@ -145,8 +146,8 @@ function closer() {
 <div id="principal">
 <?php require("topMenu.php"); 
 $nombreCurso = getNombreCortoCurso($_SESSION["sesionIdCurso"]);
-//$navegacion = "Home*home.php,".$nombreCurso."*curso.php?idCurso=".$_SESSION["sesionIdCurso"].",".$datosActividad["tituloActividad"]."*#";
-//require("_navegacion.php");
+$navegacion = "Home*home.php,".$nombreCurso."*curso.php?idCurso=".$_SESSION["sesionIdCurso"].",".$datosActividad["tituloActividad"]."*#";
+require("_navegacion.php");
 
 ?>
 <style type="text/css">
@@ -184,7 +185,15 @@ $nombreCurso = getNombreCortoCurso($_SESSION["sesionIdCurso"]);
 	<center>
 		<?php 
 		$respuestas = getRespuestaItem($idPautaItem,$idUsuario);
-		echo '<table class="tablesorter"><thead><tr><th><center>Numero Item</center></th><th colspan="2"><center>Puntos Obtenidos</center></th><th><center>Puntaje Total </center></th><th><center>Opcion</center></th></tr></thead>';
+		echo '<table class="tablesorter">
+				<thead>
+					<tr>
+						<th><center>Numero Item</center></th>
+						<th colspan="2"><center>Puntos Obtenidos</center></th>
+						<th><center>Puntaje Total </center></th>
+						<th><center>Opcion</center></th>
+					</tr>
+				</thead>';
 		$i = 0;
 
 		foreach($respuestas as $row){
@@ -194,6 +203,8 @@ $nombreCurso = getNombreCortoCurso($_SESSION["sesionIdCurso"]);
 			$opcionSeleccionadaItem = $row["opcionSeleccionadaItem"];
 			$opcionCorrectaItem = $row["opcionCorrectaItem"];
 			$puntajeRespuestaItem = $row["puntajeRespuestaItem"];	
+
+			$item = getItem($idItem);
 
 			$isCorrecta = false;
 
@@ -220,7 +231,7 @@ $nombreCurso = getNombreCortoCurso($_SESSION["sesionIdCurso"]);
 			echo "<tr>";
 			echo "<td><center>".($i+1)."</center></td>";
 			//echo $lista["idItem"]."--ID";
-			$totalPuntosItem = 1;
+			$totalPuntosItem = $item["puntajeItem"];
 			echo "<td><center>"." (".$puntajeRespuestaItem.") </center></td><td><center>".$imagen."</center></td>";
 			echo "<td><center>".$totalPuntosItem." </center></td><td><center><a href='series/verItem.php?idItem=".$idItem."' rel='shadowbox;height=550;width=1000'>Ver Item</a></center></td>";
 			@$totalObtenidos = $totalObtenidos + $puntajeRespuestaItem;

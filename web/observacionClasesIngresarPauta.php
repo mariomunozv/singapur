@@ -87,7 +87,7 @@
               <div class="control-group">
                 <label class="control-label" for="inputCurso">Curso - Niveles</label>
                 <div class="controls">
-                  <select class="input-xlarge" name="cursosNiveles" id="cursosNiveles" data-placeholder=" ">
+                  <select class="input-xlarge async" name="cursosNiveles" id="cursosNiveles" data-placeholder=" ">
                     <option></option>
                   </select>
                 </div>

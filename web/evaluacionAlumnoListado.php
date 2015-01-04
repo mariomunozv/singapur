@@ -51,6 +51,8 @@
         
     }
 
+    registraAcceso($_SESSION["sesionIdUsuario"], 17, 'NULL');
+
     $idNivel = $_SESSION["sesionIdNivel"];
     $rbdColegio= $_SESSION["sesionRbdColegio"];
     $anoCursoColegio = $_SESSION["sesionAnoCursoColegio"];

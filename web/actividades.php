@@ -94,8 +94,8 @@ require ("hd.php");?>
 <div id="principal">
 <?php require("topMenu.php"); 
 $nombreCurso = getNombreCortoCurso($_SESSION["sesionIdCurso"]);
-//$navegacion = "Home*home.php,".$nombreCurso."*curso.php?idCurso=".$_SESSION["sesionIdCurso"].",".$datosActividad["tituloActividad"]."*#";
-//require("_navegacion.php");
+$navegacion = "Home*home.php,".$nombreCurso."*curso.php?idCurso=".$_SESSION["sesionIdCurso"].",".$datosActividad["tituloActividad"]."*#";
+require("_navegacion.php");
 
 ?>
 

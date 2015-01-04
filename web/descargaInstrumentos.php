@@ -6,6 +6,9 @@ require("inc/_evaluacion.php");
 $idUsuario = $_SESSION["sesionIdUsuario"];
 $idPerfil = $_SESSION["sesionPerfilUsuario"];
 $rbdColegio = getRbdUsuario($idUsuario);
+
+registraAcceso($_SESSION["sesionIdUsuario"], 16, 'NULL'); 
+
 ?>
 <meta charset="iso-8859-1">
 <body>

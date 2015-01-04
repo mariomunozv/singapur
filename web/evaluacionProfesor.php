@@ -85,7 +85,7 @@ if(@$_REQUEST["escala"] != ""){
 	$escala = 0.5;
 	}
 	
-registraAcceso($_SESSION["sesionIdUsuario"], 17, 'NULL'); 
+
 $datosUsuario = DatosUsuario($_SESSION["sesionIdUsuario"]);
 
 ?>

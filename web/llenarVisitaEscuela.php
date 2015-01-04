@@ -60,11 +60,10 @@ require "_navegacion.php";
                 <tr>
                   <td>Establecimiento: </td>
                   <td>
-                    <?php getColegiosNuevoUsuario($idUsuario); ?>
+                    <?php $colegios = getColegiosNuevoUsuario($idUsuario); ?>
                     <select style="width:90%;" onChange="reset_docentes();resetReunionDirectivos();resetDocentesColectivo();" name="rbdColegio" class="campos" id="select-RBD">
                       <option value="">----</option>
                       <?php 
-                          $colegios = getColegiosNuevoUsuario($idUsuario);
                           if (count($colegios) > 0){
                             foreach ($colegios as $colegio){
                               echo "<option value='".$colegio['idColegio']."'>".$colegio["nombreColegio"]."</option>";

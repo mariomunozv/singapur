@@ -25,6 +25,8 @@ function calculaNotaPorEscala($escala, $puntajeMaximo, $puntajeObtenido) {
 	return $nota;
 }
 
+registraAcceso($_SESSION["sesionIdUsuario"], 15, 'NULL');
+
 if(!isset($_SESSION["sesionRbdColegio"])){
 		$_SESSION["sesionRbdColegio"] = $_REQUEST["rbdColegio"];
 		$_SESSION["sesionIdNivel"] = $_REQUEST["idNivel"];

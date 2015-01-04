@@ -1,5 +1,3 @@
-
-
 <?php
 $tipoCurso = getTipoCurso($_SESSION['sesionIdCurso']);
 //echo "tipo:".$tipoCurso;
@@ -61,16 +59,16 @@ $idCurso = $_SESSION["sesionIdCurso"];
                 <li><a href="foro.php?idCurso=<?php echo @$_SESSION["sesionIdCurso"]; ?>">Foros</a></li>
 
 		        <?php } if (in_array($idPerfil, $bitacora) && $tipoCurso!= "curso" && $tipoCurso !="") { ?>
-                <li><a href="bitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Bitácora</a></li>
+                <li><a href="bitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">BitÃ¡cora</a></li>
 
                 <?php } if (in_array($idPerfil, $resultados_bitacora) && $tipoCurso!= "directivos") { ?>
-                <li><a href="resultadosBitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Resultados Bitácora</a></li>
+                <li><a href="resultadosBitacora.php<?php if ($_SESSION['sesionIdCurso']!="") echo  "?idCurso=".@$_SESSION["sesionIdCurso"]; ?>">Resultados BitÃ¡cora</a></li>
 
                 <?php } if (in_array($idPerfil, $evaluacion) && $tipoCurso!="curso" && $tipoCurso != "") { ?>
-                <li><a href="evaluacionHome.php">Evaluación</a></li>
+                <li><a href="evaluacionHome.php">EvaluaciÃ³n</a></li>
 
                 <?php } if (in_array($idPerfil, $evaluacion_sin_directivos) && $tipoCurso=="nivel" && $tipoCurso != "") { ?>
-                <li><a href="evaluacionHome.php">Evaluación</a></li>
+                <li><a href="evaluacionHome.php">EvaluaciÃ³n</a></li>
 
                 <?php } if (in_array($idPerfil, $resultados_evaluaciones) && $tipoCurso=="curso" && $tipoCurso != "") { ?>
                 <li><a href="resultadosEvaluaciones.php">Resultados Evaluaciones</a></li>
@@ -79,7 +77,7 @@ $idCurso = $_SESSION["sesionIdCurso"];
                 <li><a href="actividadescoordinacion.php">Resultados Actividades</a></li>
 
                 <?php } if (in_array($idPerfil, $observacion)) { ?>
-                <!--<li><a href="observacionClases.php">Observación de clases</a></li>-->
+                <!--<li><a href="observacionClases.php">ObservaciÃ³n de clases</a></li>-->
 
                 <?php } if (in_array($idPerfil, $informesSesion) && $tipoCurso == "curso") { ?>
                 <li><a href="informesSesion.php">Informe de Sesi&#243;n</a></li>

@@ -2,8 +2,7 @@
 require("inc/incluidos.php");
 require ("hd.php");
 ?>
-<meta charset="iso-8859-1">
-<link rel="stylesheet" href="./css/seccion-cajas.css" />
+
 <body>
 <div id="principal">
 <?php 
@@ -28,11 +27,7 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
         <hr />
         <br />
   	 	<div id="textoBienvenida">
-       	  <p class="textoBienvenida">
-            La pauta observacion de clases permitirá tener un registro a las respecto a la 
-            observaciones que realizan los asesores de las clases que los docentes realizan 
-            en la implementación en aula del Método Singapur            
-			</p><br />
+       	  <p class="textoBienvenida"></p>
         </div><!--textoBienvenida-->
         
         <?php 
@@ -48,9 +43,9 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
             </div>
             
               <div id="textoJornada">
-               Se pueden llenar las visitas escuela
+               En la siguiente opción podrá ingresar un registro de visita del establecimiento del cual asesora, posteriormente podrá ver los registros ingresados en la opción ver visita escuela.
               <br><br>
-			 <div class='block-btn'>
+			         <div class='block-btn'>
                 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Ingresar visita escuela" />
               </div>
             </div>
@@ -71,7 +66,7 @@ $idPerfil = $_SESSION["sesionPerfilUsuario"];
             </div>
             
               <div id="textoJornada">
-               Lista de visitas ingresadas
+               En esta opción podrá ver o descargar los registros ingresados previamente por los asesores de los establecimiento.
               <br><br>
 			 <div class='block-btn'>
                 <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('informes/informeVisitaEscuela.php','_self')" value="Ver visita escuela" />

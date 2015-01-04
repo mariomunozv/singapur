@@ -29,11 +29,11 @@ $(function() {
         <p class="titulo_div" style="width: 180px;">Noticias</p>
         <p class="info_div" style="width: 180px;" align="justify">
         	
-            <a href="http://asiapacifico.bcn.cl/noticias/cultura-y-sociedad/dinko-mitrovich-centro-klein-balance-metodo-singapur-en-chile" target="_blank">AsesorÌa Singapur en la Prensa:  "El mÈtodo Singapur se est· haciendo muy popular en Chile"</a>
+            <a href="http://asiapacifico.bcn.cl/noticias/cultura-y-sociedad/dinko-mitrovich-centro-klein-balance-metodo-singapur-en-chile" target="_blank">Asesor√≠a Singapur en la Prensa:  "El m√©todo Singapur se est√° haciendo muy popular en Chile"</a>
             <br /><br />
-            Desde el aÒo 2009 el Centro FÈlix Klein de la Universidad de Santiago de Chile adapta los textos escolares 
-            "Pensar sin LÌmites: Matem·tica MÈtodo de Singapur" de la editorial Marshall Cavendish para Chile y LatinoamÈrica, 
-            y actualmente se encuentran realizando el sexto libro, que completa la serie y que saldr· al sistema educacional 
+            Desde el a√±o 2009 el Centro F√©lix Klein de la Universidad de Santiago de Chile adapta los textos escolares 
+            "Pensar sin L√≠mites: Matem√°tica M√©todo de Singapur" de la editorial Marshall Cavendish para Chile y Latinoam√©rica, 
+            y actualmente se encuentran realizando el sexto libro, que completa la serie y que saldr√° al sistema educacional 
             chileno el 2014
         </p>
     
@@ -66,11 +66,11 @@ $(function() {
      <div id="columnaCentro" style="padding: 14px; width: 540px;"><p align="justify">     
        <p align="justify">       
        <p align="justify"><br />
-		Bienvenidas y bienvenidos a la Plataforma Virtual de los cursos de capacitaciÛn y asesorÌa en la propuesta did·ctica para la† EnseÒanza de las Matem·ticas de Singapur. <br />
+		Bienvenidas y bienvenidos a la Plataforma Virtual de los cursos de capacitaci√≥n y asesor√≠a en la propuesta did√°ctica para la¬† Ense√±anza de las Matem√°ticas de Singapur. <br />
         <br />
-        El Centro Felix Klein, de InvestigaciÛn, ExperimentaciÛn y transferencia en Did·ctica de las Matem·ticas y las Ciencias perteneciente a la Facultad de Ciencia de la Universidad de Santiago de Chile, ha sido el encargado de adaptar los textos ìMy Pals Are Hereî de Singapur al sistema educativo nacional, con lo que hemos podido concretar la versiÛn en espaÒol titulada "Pensar sin LÌmites: Matem·tica MÈtodo Singapur". <br />
+        El Centro Felix Klein, de Investigaci√≥n, Experimentaci√≥n y transferencia en Did√°ctica de las Matem√°ticas y las Ciencias perteneciente a la Facultad de Ciencia de la Universidad de Santiago de Chile, ha sido el encargado de adaptar los textos ‚ÄúMy Pals Are Here‚Äù de Singapur al sistema educativo nacional, con lo que hemos podido concretar la versi√≥n en espa√±ol titulada "Pensar sin L√≠mites: Matem√°tica M√©todo Singapur". <br />
         <br />
-        Este aÒo 2014 se llevar·n a cabo cursos de formaciÛn docente para los niveles de 1∫ a 5∫ b·sico y para los directivos tÈcnicos de los establecimientos educacionales que han optado por este programa. Estos cursos contemplan una actualizaciÛn de conocimientos matem·ticos y did·cticos coherentes con la propuesta plasmada en los textos de la serie ìPensar sin LÌmitesî, centr·ndose en la gestiÛn de aula, a travÈs de la preparaciÛn, an·lisis y reflexiÛn de procesos de enseÒanza aprendizaje matem·ticos. 
+        Este a√±o 2014 se llevar√°n a cabo cursos de formaci√≥n docente para los niveles de 1¬∫ a 5¬∫ b√°sico y para los directivos t√©cnicos de los establecimientos educacionales que han optado por este programa. Estos cursos contemplan una actualizaci√≥n de conocimientos matem√°ticos y did√°cticos coherentes con la propuesta plasmada en los textos de la serie ‚ÄúPensar sin L√≠mites‚Äù, centr√°ndose en la gesti√≥n de aula, a trav√©s de la preparaci√≥n, an√°lisis y reflexi√≥n de procesos de ense√±anza aprendizaje matem√°ticos. 
                
      	
      
