@@ -17,13 +17,41 @@ function getRelatoresSesion(){
     }
     return($relatores);
 }
+function cantidadSesionesCurso($idCurso){
+    $sql = "SELECT idInformeSesion 
+            FROM `informeSesion`
+            WHERE idCursoCapacitacion = $idCurso 
+            AND idInformeSesion in (SELECT DISTINCT asi.idInformeSesion 
+                                    FROM `asistenciaSesion` as asi join `informeSesion` as inf on asi.idInformeSesion = inf.idInformeSesion
+                                    AND idCursoCapacitacion=$idCurso)";
+    $res = mysql_query($sql);
+    $i=0;
+    while($row = mysql_fetch_array($res)){
+        $i++;
+    }
+    return $i;
+}
+function asistenciaProfesor($idUsuario, $idCurso,$cantidadSesiones){
+    $sql_prof = "SELECT idAsistenciaSesion  
+                 FROM `asistenciaSesion` as asi join `informeSesion` as inf on asi.idInformeSesion = inf.idInformeSesion
+                 WHERE `presenteAsistenciaSesion` = 1
+                 AND idUsuario = $idUsuario
+                 AND idCursoCapacitacion=$idCurso";
+    $res = mysql_query($sql_prof);
+    $i=0;
+    while($row = mysql_fetch_array($res)){
+        $i++;
+    }
+    return $i/$cantidadSesiones*100;
+}
 
 function getIdPerfil($idUsuario){
     $sql = "SELECT idPerfil
             FROM detalleUsuarioProyectoPerfil
             WHERE idUsuario = $idUsuario ";
     $res = mysql_query($sql);
-    return mysql_fetch_array($res)["idPerfil"];
+    $aux = mysql_fetch_array($res);
+    return $aux["idPerfil"];
 }
 
 function getNumerosSesionesCurso($idCurso,$idUsuario){

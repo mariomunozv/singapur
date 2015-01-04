@@ -1,7 +1,7 @@
 <?php
 ini_set("display_errors", "on");
 require "inc/incluidos.php";
-require("inc/_visitaEscuela.php");
+require("inc/_asistenciaSesion.php");
 require "hd.php";
 
 $idUsuario = $_SESSION["sesionIdUsuario"];
@@ -85,12 +85,29 @@ require "_navegacion.php";
               </tr>
             </table>
           </div>
-
-          <div id="informe-asistencia" style="display:none;">
+          <?php
+            $asistenciaGral = 0;
+            $profesores = getAlumnosCurso($_SESSION["sesionIdCurso"]);
+            ordenar($profesores,array("idPerfil"=>"ASC","apellidoPaterno"=>"ASC"));
+            $key = 0;
+            $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"]);
+            $contProf = 0;
+            foreach ($profesores as $i => $prof) {
+              if($profesores[$i]["nombrePerfil"] == "Profesor" || $profesores[$i]["nombrePerfil"]=="UTP"){
+                $contProf++;
+                $profesores[$i]["nombrePerfil"] = getNombrePerfil($prof["idPerfil"]);
+                $profesores[$i]["porcentajeAsistencia"]=asistenciaProfesor($prof["idUsuario"],$_SESSION["sesionIdCurso"],$cantidadSesiones);
+                $asistenciaGral += $profesores[$i]["porcentajeAsistencia"];
+              }
+            }
+            $asistenciaGral /= $contProf;
+            $asistenciaGral = round($asistenciaGral);
+          ?>
+          <div id="informe-asistencia" style="display:n_one;">
             <table class="tablesorter">
               <tr>
                 <th colspan=4>Porcentaje de asistencia general:</th>
-                <th>80%</th>
+                <th><?php echo $asistenciaGral; ?>%</th>
               </tr>
               <tr>
                 <th>Nº</th>
@@ -100,48 +117,23 @@ require "_navegacion.php";
                 <th>Porcentaje<br>general del<br>participante:</th>
               </tr>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Álvarez Omar Zaida</td>
-                  <td>Profesor</td>
-                  <td>Colegio Champagnat</td>
-                  <td>80%</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Contreras Pulgar Karen Andrea</td>
-                  <td>Profesor</td>
-                  <td>Fundación Educacional Instituto O`Higgins</td>
-                  <td>90%</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Donoso Alvarado Cruz Valentina</td>
-                  <td>Profesor</td>
-                  <td>Fundación Educacional Instituto O`Higgins</td>
-                  <td>75%</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Morales Figueroa Janett Patricia</td>
-                  <td>Profesor</td>
-                  <td>Instituto Rafael Ariztía</td>
-                  <td>100%</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Cordero Álvarez Cecilia</td>
-                  <td>Profesor</td>
-                  <td>Centro Educacional Asunción</td>
-                  <td>75%</td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>Rojas Undurraga Judith</td>
-                  <td>UTP</td>
-                  <td>Colegio Notre Dame</td>
-                  <td>90%</td>
-                </tr>
+                <?php
+              
+                  foreach ($profesores as $prof) {
+                    if(empty($profesores[0])){
+                        echo '<td colspan="6">No hay participantes en el curso.</td>';
+                    }else{
+                        $nombreP = $prof["nombrePerfil"];
+                        if($nombreP == "Profesor" || $nombreP=="UTP"){
+                  ?>
+                  <tr>
+                      <td><?php $key++;echo $key; ?></td>
+                      <td><?php echo $prof["nombreCompleto"]; ?></td>
+                      <td><?php echo $nombreP; ?></td>
+                      <td><?php echo ($prof["rbdColegio"]? getDatosColegio($prof["rbdColegio"])["nombreColegio"] :''); ?></td>
+                      <td><?php echo round($prof["porcentajeAsistencia"]); ?>%</td>
+                  </tr>
+                <?php }}} ?>
               </tbody>
             </table>
             <div class='block-btn'>

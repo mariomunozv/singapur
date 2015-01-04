@@ -128,11 +128,11 @@ Conectarse_seg();
 											                      case "21":
                                                  dirigirse_a("../bitacora.php?idCurso=".$idCurso);
                                             break;
-                                            case "9":
+                                            case "9":                                                
                                                  dirigirse_a("../mural.php?idCurso=".$idCurso);
                                             break;
 
-											                 default:
+											                      default:
                                                  dirigirse_a("../curso.php?idCurso=".$idCurso);
                                             break;	 
                                      }										

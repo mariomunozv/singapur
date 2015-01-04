@@ -503,7 +503,9 @@
             talleres_previos = talleres_previos.substr(1,talleres_previos.length-2).split(",");
 
              for (var i = 0; i < talleres_previos.length; i++) {
-                 masTaller(talleres_previos[i].split(":")[0],talleres_previos[i].split(":")[1]);
+                if(talleres_previos[i].split(":").length ==2){
+                    masTaller(talleres_previos[i].split(":")[0],talleres_previos[i].split(":")[1]);
+                }
              };
             
                 //masTaller(talleres_previos[val].split(":")[0],talleres_previos[val].split(":")[1]);

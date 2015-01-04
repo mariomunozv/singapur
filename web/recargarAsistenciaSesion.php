@@ -89,6 +89,8 @@ require("inc/_asistenciaSesion.php");
                 if(empty($profesores[0])){
                     echo '<td colspan="6">No hay participantes en el curso.</td>';
                 }else{
+                    $nombreP = getNombrePerfil($prof["idPerfil"]);
+                    if($nombreP != "Administrador Sitio" && $nombreP!="Coordinador general"){
         ?>
         <tr>
             <td><?php $key++;echo $key; ?></td>
@@ -98,7 +100,7 @@ require("inc/_asistenciaSesion.php");
             <td><input <?php echo ($asistencia[$prof["idUsuario"]]? "checked":""); ?> type="radio" class="radio-asist" value="1" name="asistencia-<?php echo $prof["idUsuario"]; ?>"></td>
             <td><input <?php echo (array_key_exists($prof["idUsuario"],$asistencia) && !$asistencia[$prof["idUsuario"]]? "checked":""); ?> type="radio" class="radio-asist" value="0" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
         </tr>
-        <?php }} ?>
+        <?php }}} ?>
     </tbody>
 </table>
 
