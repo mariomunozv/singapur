@@ -256,7 +256,7 @@ function getNombreFotoUsuarioEmpleadoKlein($idUsuario){
 
 function getIdUsuarios(){
 
-	$sql = "SELECT * FROM usuario where tipoUsuario != 'Alumno' ORDER BY idUsuario DESC ";
+	$sql = "SELECT * FROM usuario where tipoUsuario != 'Alumno' ORDER BY tipoUsuario DESC, idUsuario DESC ";
 	//echo $sql;
 	$res = mysql_query($sql);
 	$i = 0;
@@ -349,11 +349,13 @@ function getDatosGenerico($idUsuario){
 	$tipo = getTipoUsuario($idUsuario);
 	switch ($tipo){
 		case "Profesor":
+		case "UTP":
 		$datos = getDatosProfesor($idUsuario);
 		return $datos;
 		break;
 		
 		case "Empleado Klein":
+		case "Relator/Tutor":
 		$datos = getDatosEmpleadoKlein($idUsuario);
 		return $datos;
 		break;

@@ -72,9 +72,12 @@ class PautaObservacion
 
     $db->connectDb();
     if (is_null($utp) ) {
-      $query = "SELECT DISTINCT(po.rutProfesor), CONCAT(p.nombreProfesor,' ', p.apellidoPaternoProfesor,' ', p.apellidoMaternoProfesor) as nombreProfesor FROM pautaObservacion as po JOIN profesor as p ON po.rutProfesor = p.rutProfesor WHERE po.estado = 1";
+      $query = "SELECT DISTINCT(po.rutProfesor), CONCAT(p.nombreProfesor,' ', p.apellidoPaternoProfesor,' ', p.apellidoMaternoProfesor) as nombreProfesor FROM pautaObservacion as po JOIN profesor as p ON po.rutProfesor = p.rutProfesor WHERE po.estado = 1 AND anoCurso = YEAR( NOW( ) )";
     } else {
-      $query = "SELECT DISTINCT(po.rutProfesor), CONCAT(p.nombreProfesor,' ', p.apellidoPaternoProfesor,' ', p.apellidoMaternoProfesor) as nombreProfesor FROM pautaObservacion as po JOIN profesor as p ON po.rutProfesor = p.rutProfesor WHERE po.estado = 1 and po.visibilidadUTP = 1 and p.rbdColegio in ( SELECT rbdColegio FROM profesor WHERE rutProfesor = '$utp' )";
+      $query = "SELECT DISTINCT(po.rutProfesor), CONCAT(p.nombreProfesor,' ', p.apellidoPaternoProfesor,' ', p.apellidoMaternoProfesor) as nombreProfesor 
+      FROM pautaObservacion as po JOIN profesor as p ON po.rutProfesor = p.rutProfesor 
+      WHERE po.estado = 1 and po.visibilidadUTP = 1 and anoCurso = YEAR( NOW( ) ) 
+      and p.rbdColegio in ( SELECT rbdColegio FROM profesor WHERE rutProfesor = '$utp' )";
 
       
     }
@@ -96,7 +99,7 @@ class PautaObservacion
       FROM pautaObservacion as p
       JOIN profesor as pr 
       ON pr.rutProfesor = p.rutProfesor
-      JOIN nivel as n
+      LEFT JOIN nivel as n
       ON p.idNivel = n.idNivel
       JOIN colegio as col ON col.rbdColegio = p.rbdColegio
       WHERE p.rutProfesor = '$rutProfesor'
@@ -106,6 +109,7 @@ class PautaObservacion
     {
       $query .= ' AND p.visibilidadUTP = 1';
     }
+
     //echo $query;
 
     $sth = $db->getPDO()->prepare($query);

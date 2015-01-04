@@ -218,8 +218,8 @@ HTML;
 
   $rut =  params('rut');
   $p = new PautaObservacion();
-  //echo $_SESSION["sesionTipoUsuario"];
-  $pautas = $p->getInforme($rut, $_SESSION["sesionTipoUsuario"]);
+  $pautas = $p->getInforme($rut, $tipoUsuario);
+
   foreach ($pautas as $pauta) {
 
     $indCondicion = json_decode1($pauta->indicadoresCondiciones);
@@ -227,11 +227,17 @@ HTML;
     $indGestion = get_object_vars($objectIndGestion);
 
     $nombreProfesor = utf8_decode($pauta->nombreProfesor);
-    $nombreNivel = utf8_decode($pauta->nombreNivel);
+    
+    // Si no hay nada en nivel se asigna el caractar vacío para que se pueda imprimir en el excel, si no se asigna el valor que existe (nombre del nivel) 
+    // No se estaba llenando el nivel antes, se corrigió el 24/10/2014
+    ($pauta->nombreNivel == null) ? $nombreNivel = "" : $nombreNivel = utf8_decode($pauta->nombreNivel);
     $capitulo = utf8_decode($pauta->capitulo);
     $apartado = utf8_decode($pauta->apartado);
     $preguntaGestion = utf8_decode($pauta->preguntaGestion);
     $preguntaCondicion = utf8_decode($pauta->preguntaCondiciones);
+
+    ($pauta->grabaClase == null) ? $grabaClase = "" : $grabaClase = $pauta->grabaClase;
+
 
     $tabla .=<<<HTML
     <tr>
@@ -251,7 +257,7 @@ HTML;
       <td>$apartado</td>
       <td>$pauta->paginasTexto</td>
       <td>$pauta->paginasTextoEjercitacion</td>
-      <td>$pauta->grabaClase</td>
+      <td>$grabaClase</td>
       <td>$indCondicion->a</td>
       <td>$indCondicion->b</td>
       <td>$indCondicion->c</td>
@@ -287,10 +293,12 @@ HTML;
 </table>
 HTML;
 
+
   header('Content-type: application/vnd.ms-excel');
-  header("Content-Disposition: attachment; filename=".nombreProfesor($rut)."_".date("d-m-Y").".xls");
+  header("Content-Disposition: attachment; filename=".$rut."_".date("d-m-Y").".xls");
   header("Pragma: no-cache");
   header("Expires: 0");
+
   echo $titulos;
   echo $tabla;
 }

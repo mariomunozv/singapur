@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "conecta.php";
-include "inc/funciones.php";
+include "funciones.php";
 
 Conectarse_seg(); 
 

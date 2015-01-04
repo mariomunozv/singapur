@@ -64,6 +64,28 @@ function upload_alumnos(){
   AJAXPOST("uploadAlumnosCurso.php","",division);
 } 
 
+/*
+$(function() {
+  $("#tabla").tablesorter({ 
+    headers: {  
+      0: { sorter: false }
+       // Esto es para inabilitar el filtro en una columna
+    },
+    sortList: [[5,0], [3,0], [2,0]],
+    widthFixed: true,
+    widgets: ['zebra']}).tablesorterPager({
+      container: $("#pager"),
+      positionFixed: false,
+      size:1000//Numero de registros tb
+      });  
+});
+*/
+
+$(document).ready(function() 
+    { 
+        $("#tabla").tablesorter(); 
+    } 
+); 
 
 </script>
 <span class="titulo_form">Usuarios</span>
@@ -108,12 +130,11 @@ boton("Cargar Alumnos", "upload_alumnos();");
 
 
 <div class="caja">
-  <p>Usuarios activos</p>
+  
   <table class="tablesorter" id="tabla">
 
    <thead>         
   <tr>
-    <th>Seleccionar </th>
     <th>ID</th>
     <th>Nombre </th>
   <th>Apellido Paterno </th>
@@ -129,7 +150,7 @@ boton("Cargar Alumnos", "upload_alumnos();");
   
     $idUsuarios = getIdUsuarios();
     
-    
+    $cuantos = 0;
   
     
   if (count($idUsuarios) > 0){
@@ -137,36 +158,39 @@ boton("Cargar Alumnos", "upload_alumnos();");
       $usuariosObtenidos = getDatosUsuarioPorId($idUsuario['idUsuario']);
       if($usuariosObtenidos['estadoUsuario'] == 1){
 
+        $cuantos++;
  ?>
               <tr>
                 <td>
-                  <input type="checkbox" name="sel[]" id="sel<?php echo $idUsuario['idUsuario'];?>"  class="campos" value="<?php echo $idUsuario['idUsuario'];?>">
-                </td>
-                <td onclick="check=document.getElementById('sel<?php echo $idUsuario['idUsuario'];?>');check.checked=(check.checked==false)?true:false;">
                   <?php echo $idUsuario['idUsuario'];?>
                 </td>
-                <td onclick="check=document.getElementById('sel<?php echo $idUsuario['idUsuario'];?>');check.checked=(check.checked==false)?true:false;">
+                <td>
                   <?php echo $usuariosObtenidos["nombre"];?>
                 </td>
-                <td onclick="check=document.getElementById('sel<?php echo $idUsuario['idUsuario'];?>');check.checked=(check.checked==false)?true:false;">
+                <td>
                   <?php echo $usuariosObtenidos["apellidoPaterno"];?>
                 </td>
-                <td onclick="check=document.getElementById('sel<?php echo $idUsuario['idUsuario'];?>');check.checked=(check.checked==false)?true:false;">
+                <td>
                   <?php echo $usuariosObtenidos["rbdColegio"];?>
                 </td>
-                <td onclick="check=document.getElementById('sel<?php echo $idUsuario['idUsuario'];?>');check.checked=(check.checked==false)?true:false;">
+                <td>
                   <?php echo $usuariosObtenidos["tipoUsuario"];?>
                 </td>
               </tr>
               
-<?php     }}
+<?php     }
+}
  }else{ 
    echo "<tr><td colspan='12'>No existen Usuarios registrados</td></tr>"; 
   
   }
   
   ?>
-  <div id="listaCurso"></div>
+ </tbody> 
+</table> 
+
+<p><?php echo $cuantos; ?> Usuarios activos</p>
+
 </div>
 
 <?php require("_pie.php"); ?>

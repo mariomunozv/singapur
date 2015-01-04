@@ -10,9 +10,9 @@ Conectarse_seg();
 <?php
 
 function getPuntajeByItem ($idItem) {
-	print_r($idItem);
+	//print_r($idItem);
 	$sql = "select puntajeItem from item WHERE idItem = ".$idItem["idItem"];
-	echo $sql;
+	//echo $sql;
 	$res = mysql_query($sql);
 	$puntaje = 1; // Predeterminado
 	while ($row = mysql_fetch_array($res)) {
@@ -470,10 +470,14 @@ echo "<br><br><br>";
 		//$porcentaje = $_SESSION["puntajeTotal"]/(($j)*2);
 		//actualizaPauta($idPauta,$tiempo,@$resultado,$porcentaje);
         dirigirse_a("finNew.php");
+	}else{
+
+		dirigirse_a("itemNew.php");
+
 	}
 
- 	dirigirse_a("itemNew.php");
-	echo '<a href="item.php">Siguiente</a>';
+ 	
+	//echo '<a href="item.php">Siguiente</a>';
 
 
 

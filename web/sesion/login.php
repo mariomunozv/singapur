@@ -74,13 +74,13 @@ Conectarse_seg();
                     <tr>
                       <td height="240" align="center"><table>
                         <tr>
-                          <td height="23" class="etiqueta">Login Sistema </td>
+                          <td height="23" class="textoBienvenida">Acceso al Sistema </td>
                           </tr>
                         <tr>
                           <td bgcolor="#BECCD7"><img src="../images/t.gif" width="1" height="1" /></td>
                           </tr>
                         <tr>
-                          <td height="100" class="txtnegro10">
+                          <td height="100" class="textoBienvenida">
                           
 						<?php  $usuario = $_POST["usuario"];	
                             $password = $_POST["password"];	
@@ -141,10 +141,10 @@ Conectarse_seg();
                                       <a href="../index.php">&lt;&lt; Volver</a>
                <?php            }
                            }else{
-							   echo " El usuario ingresado no existe"; ?>
-							  <br />
- <a href="../index.php">&lt;&lt; Volver</a> 
-                           <?php }
+							   echo " El usuario ingresado no existe o ha sido deshabilitado."; ?>
+							  <br /><br />
+ 
+                           <?php boton("Volver","history.back();"); }
                                 
                                 
                                 ?>
@@ -168,7 +168,7 @@ Conectarse_seg();
 </div>
 
 
-	<div id="pie">Avda. Schatchtebeck Nº 4 (Zócalo Biblioteca Central) • Estación Central • Santiago • Chile • Teléfono (562) 718 20 84 • www.grupoklein.cl</div>
+	<div id="pie">Avda. Enrique Kirberg Nº 4 (Zócalo Biblioteca Central) • Estación Central • Santiago • Chile • Teléfono (562) 718 20 84 • www.centrofelixklein.cl </div>
 </div>
 </body>
 </html>
