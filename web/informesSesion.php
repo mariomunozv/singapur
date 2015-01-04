@@ -87,7 +87,7 @@ require ("hd.php");
                 Aqu&iacute; podr&aacute; informarse del desarrollo del curso a trav&eacute;s de todas las sesiones, adem&aacute;s de un resumen general: 
             <br>
              <div class='block-btn'>
-                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('llenarVisitaEscuela.php','_self')" value="Ver informe de sesiones" />
+                <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('verInformeSesion.php','_self')" value="Ver informe de sesiones" />
             </div>
 
             </div>

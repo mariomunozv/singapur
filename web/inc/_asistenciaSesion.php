@@ -59,6 +59,26 @@ function getSiguienteSesionesCurso($idCurso){
     return (count($informes)+1);
 }
 
+function getCapitulos($nivel){
+    $sql = "SELECT parteLibro 
+            FROM seccionBitacora 
+            WHERE idNivelCursoSeccionBitacora = $nivel GROUP BY parteLibro HAVING parteLibro IS NOT NULL";
+    $res = mysql_query($sql);
+    $i=0;
+    while($row = mysql_fetch_array($res)){
+        $query = "SELECT idSeccionBitacora as id, nombreSeccionBitacora as nombre 
+                  FROM seccionBitacora 
+                  WHERE idPadreSeccionBitacora IS NULL and parteLibro='".$row["parteLibro"]."'";//falta filtrar segun nivel
+        $res2 = mysql_query($query);
+        while($row2 = mysql_fetch_array($res2)){
+            $caps[$i] = $row2;
+            $i++;
+        }    
+    }
+    return $caps;
+
+}
+
 function getDatosSesion($idCurso, $numSesion){
     $sql = "SELECT *
             FROM informeSesion

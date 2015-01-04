@@ -250,7 +250,7 @@ function validarVisitaEscuela($idVisita, $idUsuario){
                 AND ve.idVisitaEscuela = $idVisita
                 AND anoVisitaEscuela=".date("Y");  
     }
-    elseif($tipo == "Asesor"){
+    elseif($tipo == "Asesor" || $tipo=="Relator/Tutor"){
         $sql = "SELECT nombreColegioVisitaEscuela,numeroVisitaEscuela,anoVisitaEscuela,nombreAsesorVisitaEscuela,idVisitaEscuela
                 FROM visitaEscuela
                 WHERE idAsesorVisitaEscuela=$idUsuario

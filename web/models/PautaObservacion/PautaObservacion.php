@@ -106,6 +106,7 @@ class PautaObservacion
     {
       $query .= ' AND p.visibilidadUTP = 1';
     }
+    //echo $query;
 
     $sth = $db->getPDO()->prepare($query);
     $sth->setFetchMode(PDO::FETCH_CLASS, 'PautaObservacion');

@@ -218,7 +218,8 @@ HTML;
 
   $rut =  params('rut');
   $p = new PautaObservacion();
-  $pautas = $p->getInforme($rut, $tipoUsuario);
+  //echo $_SESSION["sesionTipoUsuario"];
+  $pautas = $p->getInforme($rut, $_SESSION["sesionTipoUsuario"]);
   foreach ($pautas as $pauta) {
 
     $indCondicion = json_decode1($pauta->indicadoresCondiciones);
@@ -287,7 +288,7 @@ HTML;
 HTML;
 
   header('Content-type: application/vnd.ms-excel');
-  header("Content-Disposition: attachment; filename=".nombreProfesor($pauta->rutProfesor)."_".date("d-m-Y").".xls");
+  header("Content-Disposition: attachment; filename=".nombreProfesor($rut)."_".date("d-m-Y").".xls");
   header("Pragma: no-cache");
   header("Expires: 0");
   echo $titulos;

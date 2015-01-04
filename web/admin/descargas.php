@@ -3,6 +3,7 @@ ini_set("display_errors","on");
 header('Content-Type: text/html; charset=UTF-8');
 require("inc/config.php");
 //require("inc/sesionAdmin.php");
+require_once '../models/PautaObservacion/PautaObservacion.php';
 require("_head.php");
 $menu = "ite";
 require("_menu.php");
@@ -195,13 +196,22 @@ function getAlumnosCurso(){
 			<div span="span4">
 				<form id="form">
 				<center>
-					<h3>Informe de Evaluaciones</h3>					
+					<h3>Informe de Observación</h3>					
 					<div class="control-group">
 						<label class="control-label" for="inputProfesor">Profesor</label>
 						<div class="controls">
+							<?php
+								$rut = null;
+								if ($tipoUsuario == 'UTP') {
+								  $rut = $_SESSION['sesionRutUsuario'];
+								}
+								echo $rut;
+								$p = new PautaObservacion();
+								$rutProfesores = $p->getProfesores($rut);
+							?>
 							<select class="input-xlarge async" name="profesores" id="profesores" data-placeholder="Seleccione Rut">
 								<?php foreach ($rutProfesores as $key => $data) {?>
-								<option value="<?php echo $data["rutProfesor"]?>" ><?php echo utf8_decode( $data["nombreProfesor"]) ?></option>
+								<option value="<?php echo $data["rutProfesor"]?>" ><?php echo ( $data["nombreProfesor"]) ?></option>
 								<?php }?>
 							</select>
 						</div>
