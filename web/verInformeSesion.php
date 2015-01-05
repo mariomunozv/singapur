@@ -50,6 +50,9 @@ require "_navegacion.php";
           <p class="titulo_jornada">Informes por sesión</p>
         </div>
         <div id="textoJornada">
+          <?php
+            $sesiones = getSesiones($_SESSION["sesionIdCurso"]);
+          ?>
           <table class="tablesorter" style="font-size:14px;">
             <tr>
               <th style="font-size:14px; text-align:center" colspan="3">Informe de sesión</th>
@@ -59,10 +62,11 @@ require "_navegacion.php";
               <td style="width:5%;">
                 <select id="select-numero-sesion">
                   <option>---</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
+                  <?php
+                    foreach ($sesiones as $ses) {
+                      echo "<option>".$ses["numeroSesion"]."</option>";
+                    }
+                  ?>
                 </select>
               </td>
               <td style="width:30%;">
@@ -103,7 +107,7 @@ require "_navegacion.php";
             $asistenciaGral /= $contProf;
             $asistenciaGral = round($asistenciaGral);
           ?>
-          <div id="informe-asistencia" style="display:n_one;">
+          <div id="informe-asistencia" style="display:none;">
             <table class="tablesorter">
               <tr>
                 <th colspan=4>Porcentaje de asistencia general:</th>
@@ -140,7 +144,7 @@ require "_navegacion.php";
               <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('#','_self')" value="Descargar" />
             </div>
           </div>
-          <div id="informe-sesion" style="display:none;">
+          <div id="informe-sesion" style="display:no_ne;">
             <table style="text-align:left" class="tablesorter">
               <tr>
                 <th colspan=3>Curso de capacitación</th>
@@ -155,38 +159,41 @@ require "_navegacion.php";
                 <th>Relator</th>
               </tr>
               <tbody>
+                <?php
+                  foreach ($sesiones as $ses) {
+                    $fecha = substr($ses["fechaSesion"],8)."/".substr($ses["fechaSesion"],5,2)."/".substr($ses["fechaSesion"],0,4);
+                    $detalle = getDetalleSesion($ses["idInformeSesion"]);
+                    $capitulos = split(",",substr($detalle["capitulosProgramadosSesion"],1,count($detalle["capitulosProgramadosSesion"])-2));
+                    if($capitulos[0]==""){$capitulos=1;}
+                    foreach ($capitulos as $dat) {
+                      $talleres = split(",",substr($detalle["trabajoRealizadoSesion"],1,count($detalle["trabajoRealizadoSesion"])-2));
+                      $strTaller = "";
+                      foreach ($talleres as $tall) {
+                        if($tall!=""){
+                          $aux = split(":",$tall);
+                          if($aux[1]==$dat){
+                            $strTaller.="Taller ".$aux[0]."<br>";
+                          }
+                        }
+                      }
+                      if (strlen($strTaller)==0 ) {
+                        $estado = "Omitido";
+                        $strTaller = "-----";
+                      }else{
+                        $estado = "Implementado";
+                      }
+                ?>
                 <tr>
-                  <td>1</td>
-                  <td>25/04/2014</td>
-                  <td>Taller 1</td>
-                  <td>Capítulo 1: Tiempo</td>
-                  <td>Implementado</td>
-                  <td>Amaya Hidalgo </td>
+                  <td><?php echo $ses["numeroSesion"]; ?></td>
+                  <td><?php echo $fecha; ?></td>
+                  <td><?php echo $strTaller; ?></td>
+                  <td><?php echo getNombreCapitulo($dat); ?></td>
+                  <td><?php echo $estado; ?></td>
+                  <td><?php echo getNombreUsuario($ses["idUsuario"]); ?></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>26/05/2014</td>
-                  <td>Taller 2<br>Taller 3</td>
-                  <td>Capítulo 1: Tiempo<br>Capítulo 2: Longitud</td>
-                  <td>Implementado</td>
-                  <td>Amaya Hidalgo </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>26/05/2014</td>
-                  <td>---</td>
-                  <td>Capítulo 2: Longitud</td>
-                  <td>Omitido</td>
-                  <td>Antonio Cofré</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>21/07/2014</td>
-                  <td>Taller 3</td>
-                  <td>Capítulo 3: Calculo mental</td>
-                  <td>Implementado</td>
-                  <td>Amaya Hidalgo </td>
-                </tr>
+                <?php  
+                  }}
+                ?>
               </tbody>
             </table>
             <div class='block-btn'>

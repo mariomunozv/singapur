@@ -305,6 +305,7 @@ function getNombreUsuario($idUsuario){
 		$res = mysql_query($sql); 
 		$row = mysql_fetch_array($res);
 		if ($row["tipoUsuario"] == "Profesor"){
+			echo "{asd}";
 			$rut = $row["rutProfesor"];
 			$nombre = getNombreProfesorPorRut($rut);
 		}
@@ -314,7 +315,7 @@ function getNombreUsuario($idUsuario){
 		if ($row["tipoUsuario"] == "Alumno"){
 			$rut = $row["rutAlumno"];
 		}
-		if ($row["tipoUsuario"] == "Empleado Klein"){
+		if ($row["tipoUsuario"] == "Empleado Klein" || $row["tipoUsuario"] == "Coordinador General" || $row["tipoUsuario"] == "Relator/Tutor" || $row["tipoUsuario"] == "Asesor"){
 			$rut = $row["rutEmpleadoKlein"];
 			$nombre = getNombreEmpleadoKleinPorRut($rut);
 		}

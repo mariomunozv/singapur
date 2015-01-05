@@ -74,6 +74,22 @@ function getNumerosSesionesCurso($idCurso,$idUsuario){
     }
     return $informes;
 }
+
+function getSesiones($idCurso){
+    $sql = "SELECT *
+            FROM informeSesion inf JOIN detalleUsuarioProyectoPerfil per on inf.idRelator = per.idUsuario
+            WHERE idCursoCapacitacion = $idCurso
+            ORDER BY numeroSesion";
+    $res = mysql_query($sql);
+    $i=0;
+    
+    while($row = mysql_fetch_array($res)){
+        $informes[$i] = $row;
+        $i++;
+    }
+    return $informes;
+}
+
 function getSiguienteSesionesCurso($idCurso){
     $sql = "SELECT numeroSesion
             FROM informeSesion
@@ -86,6 +102,7 @@ function getSiguienteSesionesCurso($idCurso){
     }
     return (count($informes)+1);
 }
+
 
 function getCapitulos($nivel){
     $sql = "SELECT parteLibro 
@@ -104,7 +121,6 @@ function getCapitulos($nivel){
         }    
     }
     return $caps;
-
 }
 
 function getDatosSesion($idCurso, $numSesion){

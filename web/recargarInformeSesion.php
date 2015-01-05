@@ -70,7 +70,8 @@
                             echo "</select>";    
                         }
                     }else{
-                        echo getDatosEmpleadoKlein($datos["idRelator"])["nombreParaMostrar"];
+                        $aux = getDatosEmpleadoKlein($datos["idRelator"]);
+                        echo $aux["nombreParaMostrar"];
                     }
                     ?>
                 </td>
