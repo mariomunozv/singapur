@@ -5,11 +5,17 @@ function getDatosProfesor2($idUsuario){
 		//echo $sql;
 		$res = mysql_query($sql); 
 		$row = mysql_fetch_array($res);
-		if($row["implementaProfesor"] == "NO"){
+		$marca = "";
+		if($row["implementaProfesor"] == 0){
 			$marca = "*";
 			}else{
-			$marca = "";	
-			}
+			$marca = " ";	
+		}
+		
+		if ( $row["imagenUsuario"] == "http://www.grupoklein.cl/singapur/images/men.png" || $row["imagenUsuario"] == "/img/nophoto"){
+				$row["imagenUsuario"] = "nophoto.jpg";
+		}
+		
 		$datosProfesor = array(
 			"rut" => $row["rutProfesor"],
 			"implementaProfesor" => $row["implementaProfesor"],
@@ -17,7 +23,7 @@ function getDatosProfesor2($idUsuario){
 			"nombre" => $row["nombreProfesor"],
 			"apellidoPaterno" => $row["apellidoPaternoProfesor"],
 			"imagenUsuario" => $row["imagenUsuario"],
-			"nombreParaMostrar" => "<div title='".$row["nombreColegio"]."'> ".$marca.$row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]."</div>"
+			"nombreParaMostrar" => "<div title='".$row["nombreColegio"]."'> ".$row["nombreProfesor"]." ".$row["apellidoPaternoProfesor"]."</div>"
 			
 		);
 		return ($datosProfesor);
@@ -155,6 +161,10 @@ function getDatosProfesor($idUsuario){
 		//echo $sql;
 		$res = mysql_query($sql); 
 		$row = mysql_fetch_array($res);
+		
+		if ( $row["imagenUsuario"] == "http://www.grupoklein.cl/singapur/images/men.png" || $row["imagenUsuario"] == "/img/nophoto"){
+				$row["imagenUsuario"] = "nophoto.jpg";
+		}
 		$datosProfesor = array(
 			"rutProfesor" => $row["rutProfesor"],
 			"loginUsuario" => $row["loginUsuario"],
