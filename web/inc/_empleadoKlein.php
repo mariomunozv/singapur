@@ -60,6 +60,10 @@ function getDatosEmpleadoKlein($idUsuario){
 		$res = mysql_query($sql); 
 		$row = mysql_fetch_array($res);
 		
+		if ( $row["imagenUsuario"] == "http://www.grupoklein.cl/singapur/images/men.png" || $row["imagenUsuario"] == "/img/nophoto"){
+				$row["imagenUsuario"] = "nophoto.jpg";
+		}
+		
 		$datosDirectivo = array(
 			"rutEmpleadoKlein" => $row["rutEmpleadoKlein"],
 			"loginUsuario" => $row["loginUsuario"],
