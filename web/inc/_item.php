@@ -43,8 +43,12 @@ function getItemsBusqueda($query){
 
 
 function getItemsLista($idLista){
-		
-	$sql = "SELECT * FROM item it JOIN lista_Item li ON it.idItem = li.idItem WHERE idLista = '$idLista' ORDER BY li.idItem ASC";
+	
+	if ($idLista ==  90){
+		$sql = "SELECT * FROM item it JOIN lista_Item li ON it.idItem = li.idItem WHERE idLista = '$idLista' ORDER BY it.enunciadoItem ASC";	
+	}else{
+		$sql = "SELECT * FROM item it JOIN lista_Item li ON it.idItem = li.idItem WHERE idLista = '$idLista' ORDER BY li.idItem ASC";	
+	}
 	$res = mysql_query($sql);
 	$i =0;
 	while ($row = mysql_fetch_array($res)) {
