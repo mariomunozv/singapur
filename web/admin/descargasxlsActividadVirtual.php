@@ -37,8 +37,7 @@
 			u.rutProfesor != ''
 			and u.estadoUsuario = 1
 			and sbP.idNivelCursoSeccionBitacora = $nivel
-			and u.rutProfesor != 333
-			and pi.fechaRespuestaPautaItem > '2014'
+			and pi.fechaRespuestaPautaItem > '".date("Y")."'
 			order by u.rutProfesor, ri.idPautaItem";
 
 		$res = mysql_query($sql);
