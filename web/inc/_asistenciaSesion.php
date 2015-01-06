@@ -76,9 +76,11 @@ function getNumerosSesionesCurso($idCurso,$idUsuario){
 }
 
 function getSesiones($idCurso){
+    $anoActual = date('Y');
     $sql = "SELECT *
             FROM informeSesion inf JOIN detalleUsuarioProyectoPerfil per on inf.idRelator = per.idUsuario
             WHERE idCursoCapacitacion = $idCurso
+            AND fechaSesion >= '$anoActual-01-01'
             ORDER BY numeroSesion";
     $res = mysql_query($sql);
     $i=0;
@@ -123,10 +125,23 @@ function getCapitulos($nivel){
     return $caps;
 }
 
+function getDatosSesionPorId($idSesion){
+    $sql = "SELECT *
+            FROM informeSesion
+            WHERE idInformeSesion = $idSesion";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res);
+    if($row["fechaSesion"]){
+        $row["fechaSesion"] = substr($row["fechaSesion"],-2,2)."/".substr($row["fechaSesion"],-5,2)."/".substr($row["fechaSesion"],0,4);
+    }
+    return $row;
+}
+
 function getDatosSesion($idCurso, $numSesion){
     $sql = "SELECT *
             FROM informeSesion
-            WHERE idCursoCapacitacion = $idCurso AND numeroSesion = $numSesion ";
+            WHERE idCursoCapacitacion = $idCurso 
+            AND numeroSesion = $numSesion";
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res);
     if($row["fechaSesion"]){

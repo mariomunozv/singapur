@@ -304,8 +304,7 @@ function getNombreUsuario($idUsuario){
 		$nombre="";
 		$res = mysql_query($sql); 
 		$row = mysql_fetch_array($res);
-		if ($row["tipoUsuario"] == "Profesor"){
-			echo "{asd}";
+		if ($row["tipoUsuario"] == "Profesor"||$row["tipoUsuario"]=="UTP"){
 			$rut = $row["rutProfesor"];
 			$nombre = getNombreProfesorPorRut($rut);
 		}

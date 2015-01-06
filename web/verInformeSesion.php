@@ -60,18 +60,18 @@ require "_navegacion.php";
             <tr>
               <td style="width:10%;">Nº Sesión</td>
               <td style="width:5%;">
-                <select id="select-numero-sesion">
-                  <option>---</option>
+                <select onchange="setDescarga()" id="select-numero-sesion">
+                  <option value="">---</option>
                   <?php
                     foreach ($sesiones as $ses) {
-                      echo "<option>".$ses["numeroSesion"]."</option>";
+                      echo "<option value='".$ses["idInformeSesion"]."'>".$ses["numeroSesion"]."</option>";
                     }
                   ?>
                 </select>
               </td>
               <td style="width:30%;">
-                Informe Asistencia <img src="img/excel.png"><span></span><br>
-                Informe de Sesión <img src="img/pdf.gif">
+                <a target="_blank" id="descargaAsis">Informe Asistencia <img src="img/excel.png"></a><br>
+                <a target="_blank" id="descargaInfo">Informe de Sesión <img src="img/pdf.gif"></a>
               </td>
             </tr>
           </table>
@@ -144,7 +144,7 @@ require "_navegacion.php";
               <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('#','_self')" value="Descargar" />
             </div>
           </div>
-          <div id="informe-sesion" style="display:no_ne;">
+          <div id="informe-sesion" style="display:none;">
             <table style="text-align:left" class="tablesorter">
               <tr>
                 <th colspan=3>Curso de capacitación</th>
@@ -236,6 +236,20 @@ $("#llenar-curso").html( $("#cambiaCurso option:selected").html() );
     $("#informe-sesion").show();
     $("#informe-asistencia").hide();
   });
+  $("#descargaAsis").click(function(){
+    if( $("#select-numero-sesion").val()=="" ){
+      event.preventDefault();
+    }
+  });
+  function setDescarga(){
+    if( $("#select-numero-sesion").val()!="" ){
+      $("#descargaAsis").prop("href", "#");
+      $("#descargaInfo").prop("href", "informes/informeSesion.php?s="+$("#select-numero-sesion").val());
+    }else{
+      $("#descargaAsis").removeAttr("href");
+      $("#descargaInfo").removeAttr("href");
+    }
+  }
 </script>
 
 </body>

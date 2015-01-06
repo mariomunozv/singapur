@@ -90,7 +90,7 @@ require("inc/_asistenciaSesion.php");
                     echo '<td colspan="6">No hay participantes en el curso.</td>';
                 }else{
                     $nombreP = getNombrePerfil($prof["idPerfil"]);
-                    if($nombreP != "Administrador Sitio" && $nombreP!="Coordinador general"){
+                    if($nombreP == "UTP" || $nombreP=="Profesor"){
         ?>
         <tr>
             <td><?php $key++;echo $key; ?></td>

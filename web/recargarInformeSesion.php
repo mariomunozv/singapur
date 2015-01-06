@@ -187,7 +187,7 @@
             $strProfesores = "";
             foreach ($profesores as $prof){
                 $nombreP = getNombrePerfil($prof["idPerfil"]);
-                if($nombreP != "Administrador Sitio" && $nombreP!="Coordinador general"){
+                if($nombreP == "UTP" || $nombreP=="Profesor"){
                     $strProfesores.="<option value='".$prof["idUsuario"]."'>".$prof["nombreCompleto"]."</option>";
                 }
             }
@@ -209,7 +209,7 @@
                         echo "</td><td><select style='font-size:14px;' name='destacado-".$cant_destacados."'><option value=''>---</option>";
                         foreach ($profesores as $prof){
                             $nombreP = getNombrePerfil($prof["idPerfil"]);
-                            if($nombreP != "Administrador Sitio" && $nombreP!="Coordinador general"){
+                            if($nombreP == "UTP" || $nombreP=="Profesor"){
                                 if($prof["idUsuario"]==$rut){
                                     echo "<option selected value='".$prof["idUsuario"]."'>".$prof["nombreCompleto"]."</option>";
                                 }else{
@@ -259,7 +259,7 @@
                         echo "</td><td><select style='font-size:14px;' name='debil-".$cant_debiles."'><option value=''>---</option>";
                         foreach ($profesores as $prof){
                             $nombreP = getNombrePerfil($prof["idPerfil"]);
-                            if($nombreP != "Administrador Sitio" && $nombreP!="Coordinador general"){
+                            if($nombreP == "UTP" || $nombreP=="Profesor"){
                                 if($prof["idUsuario"]==$rut){
                                     echo "<option selected value='".$prof["idUsuario"]."'>".$prof["nombreCompleto"]."</option>";
                                 }else{
