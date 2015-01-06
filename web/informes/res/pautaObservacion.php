@@ -177,7 +177,7 @@ td.blank{
     </page_header>
     <br><br><br><br><br><br><br><br>
     <h3 style="text-align:center;">PAUTA DE OBSERVACIÓN GENERAL PARA CLASES DE MATEMÁTICAS</h3>
-    <h3 style="margin-top:-10px;text-align:center;">SINGAPUR 2014</h3>
+    <h3 style="margin-top:-10px;text-align:center;">SINGAPUR <?php date("Y"); ?></h3>
     <br><br>
     <?php
         $id =  params('id');
