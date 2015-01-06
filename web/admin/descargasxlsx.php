@@ -32,7 +32,7 @@ function getRespuestaUsuarioByPauta($idUsuario,$idPauta){
 
 
 function buscaPauta($idUsuario,$idLista){
-	$sql = "SELECT idPautaItem from pautaItem WHERE idUsuario = ".$idUsuario." AND idLista = ".$idLista." AND fechaRespuestaPautaItem > '2014'";
+	$sql = "SELECT idPautaItem from pautaItem WHERE idUsuario = ".$idUsuario." AND idLista = ".$idLista." AND fechaRespuestaPautaItem > '".date("Y")."'";
 	$res = mysql_query($sql);
 	$row = mysql_fetch_array($res);
 	if ($row){
@@ -82,21 +82,9 @@ function getAlumnosCurso($nivel){
                 left join usuario as u on m.rutAlumno = u.rutAlumno 
                 left join pautaItem as pi on pi.idUsuario = u.idUsuario
                 where m.idNivel = '$nivel' 
-				AND pi.fechaRespuestaPautaItem > '2014'
-				AND m.anoCursoColegio = 2014
+				AND pi.fechaRespuestaPautaItem > '".date("Y")."'
+				AND m.anoCursoColegio = ".date("Y")."
                 ORDER BY m.rbdColegio, m.letraCursoColegio ASC";
-
-        /*
-        $sql = "SELECT m.rbdColegio,m.idNivel,m.letraCursoColegio,m.anoCursoColegio,u.loginUsuario,u.rutAlumno,a.nombreAlumno,a.apellidoPaternoAlumno,a.apellidoMaternoAlumno,u.idUsuario,a.estadoAlumno,pi.idLista
-                FROM `matricula` as m
-                left join usuario as u on m.rutAlumno = u.rutAlumno 
-                left join alumno as a on m.rutAlumno = a.rutAlumno
-                left join pautaItem as pi on pi.idUsuario = u.idUsuario
-                where m.idNivel = '$nivel' 
-				AND pi.fechaRespuestaPautaItem > '2014'
-				AND m.anoCursoColegio = 2014
-                ORDER BY m.rbdColegio, a.apellidoPaternoAlumno ASC";
-        */    
         //echo $sql;
 
         $res = mysql_query($sql);
