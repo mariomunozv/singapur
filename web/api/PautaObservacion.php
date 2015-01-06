@@ -14,6 +14,7 @@ require '../models/PautaObservacion/indicadorCondiciones.php';
 require '../models/PautaObservacion/PautaObservacion.php';
 
 require "../inc/incluidos.php";
+require "../inc/_profesor.php";
 
 function nombreProfesor($rutProfesor){
   $sql = "SELECT * FROM v35.profesor where rutProfesor='$rutProfesor'";
@@ -44,7 +45,7 @@ dispatch('/indicadorGestion', 'indicadorGestion');
 dispatch('/indicadorCondiciones', 'indicadorCondiciones');
 dispatch('/establecimientoByUTPUser/:rut', 'establecimientoByUTPUser');
 dispatch_post('/save/*', 'save');
-dispatch('/informe/:rut', 'informe');
+dispatch('/informe/', 'informe');
 dispatch('/inf/:id', 'inf');
 dispatch('/detallePauta/:rut', 'detallePauta');
 dispatch_post('/visibilidad/*', 'updateVisibilidad');
@@ -174,12 +175,14 @@ function inf($id = null){
     }
 
 }
-function informe($rut = null)
+function informe()
 {
   $tabla =<<<HTML
 <table>
+  <th>ID</th>
   <th>RBDEscuela</th>
   <th>Rut Responsable</th>
+  <th>Nombre Responsable</th>
   <th>Rut Observado</th>
   <th>Profesor Observado</th>
   <th>Nivel</th>
@@ -218,7 +221,7 @@ HTML;
 
   $rut =  params('rut');
   $p = new PautaObservacion();
-  $pautas = $p->getInforme($rut, $tipoUsuario);
+  $pautas = $p->getInformesAno();
 
   foreach ($pautas as $pauta) {
 
@@ -235,14 +238,17 @@ HTML;
     $apartado = utf8_decode($pauta->apartado);
     $preguntaGestion = utf8_decode($pauta->preguntaGestion);
     $preguntaCondicion = utf8_decode($pauta->preguntaCondiciones);
+    $nombreResponsable=utf8_encode(getNombreProfesorPorRut($pauta->rutResponsable));
 
     ($pauta->grabaClase == null) ? $grabaClase = "" : $grabaClase = $pauta->grabaClase;
 
 
     $tabla .=<<<HTML
     <tr>
+      <td>$pauta->id</td>
       <td>$pauta->rbdColegio</td>
       <td>$pauta->rutResponsable</td>
+      <td>$nombreResponsable</td>
       <td>$pauta->rutProfesor</td>
       <td>$nombreProfesor</td>
       <td>$nombreNivel</td>
@@ -295,7 +301,7 @@ HTML;
 
 
   header('Content-type: application/vnd.ms-excel');
-  header("Content-Disposition: attachment; filename=".$rut."_".date("d-m-Y").".xls");
+  header("Content-Disposition: attachment; filename=Informe de observación general_".date("d-m-Y").".xls");
   header("Pragma: no-cache");
   header("Expires: 0");
 

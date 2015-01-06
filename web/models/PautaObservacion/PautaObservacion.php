@@ -39,6 +39,7 @@ class PautaObservacion
 
     $st = $db->getPDO()->prepare($query);
 
+    $st->bindParam('id', $this->id);
     $st->bindParam('paginasTexto', $this->paginasTexto);
     $st->bindParam('paginasTextoEjercitacion', $this->paginasTextoEjercitacion);
     $st->bindParam('fecha', $this->fecha);
@@ -112,6 +113,28 @@ class PautaObservacion
 
     //echo $query;
 
+    $sth = $db->getPDO()->prepare($query);
+    $sth->setFetchMode(PDO::FETCH_CLASS, 'PautaObservacion');
+    $sth->execute();
+    return $sth->fetchAll();
+  }
+  public function getInformesAno($rutProfesor = null)
+  {
+    $db = new DB();
+    $anoActual = date("Y");
+    $db->connectDb();
+    $query = "SELECT p.*, n.nombreNivel, col.nombreColegio,
+      (SELECT CONCAT(pr.nombreProfesor,' ', pr.apellidoPaternoProfesor,' ', pr.apellidoMaternoProfesor)) as nombreProfesor, 
+      (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idCapitulo) as capitulo,
+      (SELECT nombreSeccionBitacora FROM seccionBitacora where idSeccionBitacora = p.idApartado) as apartado  
+      FROM pautaObservacion as p
+      JOIN profesor as pr 
+      ON pr.rutProfesor = p.rutProfesor
+      LEFT JOIN nivel as n
+      ON p.idNivel = n.idNivel
+      JOIN colegio as col ON col.rbdColegio = p.rbdColegio
+      WHERE p.estado = 1
+      AND fecha >= '$anoActual-01-01'";
     $sth = $db->getPDO()->prepare($query);
     $sth->setFetchMode(PDO::FETCH_CLASS, 'PautaObservacion');
     $sth->execute();

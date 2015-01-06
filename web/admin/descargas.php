@@ -197,25 +197,6 @@ function getAlumnosCurso(){
 				<form id="form">
 				<center>
 					<h3>Informe de Observación</h3>					
-					<div class="control-group">
-						<label class="control-label" for="inputProfesor">Profesor</label>
-						<div class="controls">
-							<?php
-								$rut = null;
-								if ($tipoUsuario == 'UTP') {
-								  $rut = $_SESSION['sesionRutUsuario'];
-								}
-								echo $rut;
-								$p = new PautaObservacion();
-								$rutProfesores = $p->getProfesores($rut);
-							?>
-							<select class="input-xlarge async" name="profesores" id="profesores" data-placeholder="Seleccione Rut">
-								<?php foreach ($rutProfesores as $key => $data) {?>
-								<option value="<?php echo $data["rutProfesor"]?>" ><?php echo ( $data["nombreProfesor"]) ?></option>
-								<?php }?>
-							</select>
-						</div>
-					</div>
 					<input class="btn btn-large btn-success download" type="button" name="" id="" value="Descargar .XLS" onclick="descargarPautaObs()"/>
 				</center>
 				</form>
@@ -228,7 +209,7 @@ function getAlumnosCurso(){
 	function descargarPautaObs(){
 		var form = $("#form");
 		var profesores = $("#profesores").val();
-		form.attr( "action", "./../api/PautaObservacion.php/informe/"+profesores);	
+		form.attr( "action", "./../api/PautaObservacion.php/informe/");	
 		form.submit();
 	}
 
