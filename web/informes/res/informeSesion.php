@@ -70,11 +70,11 @@ li{
     <h4>Capitulos programados:</h4>
     <div style="overflow:hidd_en;">
     </div>
-        <?php foreach ($capProgramados as $cap) { ?>
+        <?php if($capProgramados[0]!=""){foreach ($capProgramados as $cap) { ?>
         <div style="font-size:14px;">
             <img style='margin-left:20px;margin-right:10px;' src='res/img/off.png'><?php echo utf8_encode(getNombreCapitulo($cap)); ?><br><br>
         </div>
-        <?php } ?>
+        <?php }} ?>
     <br />
     <h4>Trabajo realizado:</h4>
     <table align="center" class="table">
@@ -159,18 +159,22 @@ li{
     <div style="font-size:14px;">
         <?php
             $destacada = split(",",substr($detalle["participacionDestacadaSesion"],1,count($detalle["participacionDestacadaSesion"])-2) );
-            foreach ($destacada as $dest) {
-                echo "<img style='margin-left:20px;margin-right:10px;' src='res/img/off.png'>".utf8_encode(getNombreUsuario($dest))."<br /><br />";
-            } 
+            if($destacada[0]!=""){
+                foreach ($destacada as $dest) {
+                    echo "<img style='margin-left:20px;margin-right:10px;' src='res/img/off.png'>".utf8_encode(getNombreUsuario($dest))."<br /><br />";
+                } 
+            }
         ?>
     </div>
     <h4>Docentes que presentan debilidades:</h4>
     <div style="font-size:14px;">
         <?php
             $debil = split(",",substr($detalle["participacionDebilSesion"],1,count($detalle["participacionDebilSesion"])-2));
-            foreach ($debil as $debi) {
-                echo "<img style='margin-left:20px;margin-right:10px;' src='res/img/off.png'>".utf8_encode(getNombreUsuario($debi))."<br /><br />";
-            } 
+            if($debil[0]!=""){
+                foreach ($debil as $debi) {
+                    echo "<img style='margin-left:20px;margin-right:10px;' src='res/img/off.png'>".utf8_encode(getNombreUsuario($debi))."<br /><br />";
+                } 
+            }
         ?>
     </div>
 </page><!--pagina 2-->
