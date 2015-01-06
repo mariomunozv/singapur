@@ -268,7 +268,7 @@ switch ($modo){
 						if(existeUsuario($rutAlumno)==0)
 						{
 							guardarAlumno($rutAlumno, $tipoAlumno, $nombreAlumno, $apellidoPaternoAlumno, $apellidoMaternoAlumno, $sexoAlumno, $fechaNacimientoAlumno, $estadoAlumno);
-							matriculaAlumno($rutAlumno, $rbdColegio, $idNivel, 2014, $letraCursoColegio);
+							matriculaAlumno($rutAlumno, $rbdColegio, $idNivel, date("Y"), $letraCursoColegio);
 							$rut = explode("-",$rutAlumno); 
 							$loginUsuario = $alumnos[$i+1][1];
 							$passwordUsuario = md5($alumnos[$i+1][1]);
@@ -278,7 +278,7 @@ switch ($modo){
 						else
 						{
 							//promoverAlumno($rutAlumno, $rbdColegio, $idNivel, 2013, $letraCursoColegio);
-							matriculaAlumno($rutAlumno, $rbdColegio, $idNivel, 2014, $letraCursoColegio);
+							matriculaAlumno($rutAlumno, $rbdColegio, $idNivel, date("Y"), $letraCursoColegio);
 						}
 					}
 				}
