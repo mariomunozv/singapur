@@ -140,11 +140,11 @@ td,th{
         <tr><th style="width: 100%">Acuerdos o Compromisos</th></tr>
         <tr><td><?php echo $datos["acuerdosDirectivoVisitaEscuela"] ?></td></tr>
     </table>
-    <br>
+ <!--   <br>
     <table>
         <tr><th style="width: 100%">Comentarios generales de la visita</th></tr>
         <tr><td>¿que atributo es este?</td></tr>
-    </table>
+    </table>-->
     <br><br><br><br><br><br><br><br>
     <table style="border:0px">
         <tr>
