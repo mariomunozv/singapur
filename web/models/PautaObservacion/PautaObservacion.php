@@ -35,11 +35,14 @@ class PautaObservacion
 
     $db->connectDb();
 
-    $query = "INSERT INTO pautaObservacion (paginasTexto, paginasTextoEjercitacion, fecha, idCongregacion, rbdColegio, rutProfesor, rutResponsable, idLibro, idCapitulo, idApartado, horaInicio, horaTermino, preguntaGestion, preguntaCondiciones, idNivel, anoCurso, letraCurso, indicadoresGestion, indicadoresCondiciones, visibilidadUTP,grabaClase) VALUES(:paginasTexto, :paginasTextoEjercitacion, :fecha, :idCongregacion, :rbdColegio, :rutProfesor, :rutResponsable, :idLibro, :idCapitulo, :idApartado, :horaInicio, :horaTermino, :preguntaGestion, :preguntaCondiciones, :idNivel, :anoCurso, :letraCurso, :indicadoresGestion, :indicadoresCondiciones, :visibilidadUTP,:grabaClase)";
+    $query = "INSERT INTO pautaObservacion (paginasTexto, paginasTextoEjercitacion, fecha, idCongregacion, rbdColegio, rutProfesor, rutResponsable, idLibro, idCapitulo, 
+      idApartado, horaInicio, horaTermino, preguntaGestion, preguntaCondiciones, idNivel, anoCurso, letraCurso, indicadoresGestion, indicadoresCondiciones, visibilidadUTP,grabaClase) 
+      VALUES(:paginasTexto, :paginasTextoEjercitacion, :fecha, :idCongregacion, :rbdColegio, :rutProfesor, :rutResponsable, :idLibro, :idCapitulo, 
+        :idApartado, :horaInicio, :horaTermino, :preguntaGestion, :preguntaCondiciones, :idNivel, :anoCurso, :letraCurso, :indicadoresGestion, :indicadoresCondiciones, :visibilidadUTP,:grabaClase)";
 
     $st = $db->getPDO()->prepare($query);
 
-    $st->bindParam('id', $this->id);
+    //$st->bindParam('id', $this->id); //                  07/11/2015, habia que comentar esta linea para que calcen el numero de parametros que se esperan
     $st->bindParam('paginasTexto', $this->paginasTexto);
     $st->bindParam('paginasTextoEjercitacion', $this->paginasTextoEjercitacion);
     $st->bindParam('fecha', $this->fecha);
