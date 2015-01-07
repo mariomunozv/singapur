@@ -51,20 +51,22 @@ $idPerfil = getIdPerfilUsuario($idUsuario);
 	if (mysql_num_rows($res) > 0 ){
 		while($row = mysql_fetch_array($res)){
 				
+			$datosDeUsuario = array();
+			$texto_de = "";
+				
 				//echo "de".$row["deMensaje"];
 			switch(getTipoUsuario($row["deMensaje"])){
 				
 				case "Empleado Klein":
-				$datosDeUsuario = getNombreFotoUsuarioEmpleadoKlein($row["deMensaje"]);
-				$texto_de = $datosDeUsuario["nombre"]." ".$datosDeUsuario["apellidoPaterno"];
-				break;
-				
+				case "Relator/Tutor":
 				case "Coordinador General":
 				$datosDeUsuario = getNombreFotoUsuarioEmpleadoKlein($row["deMensaje"]);
 				$texto_de = $datosDeUsuario["nombre"]." ".$datosDeUsuario["apellidoPaterno"];
 				break;
+								
 				case "Profesor":
-				$datosDeUsuario = getNombreFotoUsuarioProfesor($row["deMensaje"]);
+				case "UTP":
+				//$datosDeUsuario = getNombreFotoUsuarioProfesor($row["deMensaje"]);
 				$datosDeUsuario = getDatosProfesor2($row["deMensaje"]);
 				$texto_de = $datosDeUsuario["nombreParaMostrar"];
 				break;
@@ -105,7 +107,7 @@ $idPerfil = getIdPerfilUsuario($idUsuario);
 	
 	?>
 	<tr <?php echo $estilo;?>>
-		<td align="center">
+		<td align="center">      
 			<img src="<?php echo "subir/fotos_perfil/th_".$datosDeUsuario["imagenUsuario"];?>" />
 		</td>
 		<td>

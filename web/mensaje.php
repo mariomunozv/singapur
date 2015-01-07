@@ -29,7 +29,7 @@ if (isset($_REQUEST["idNotificacion"])){
 	registraAcceso($idUsuario, 4, 'NULL');
 	
 	$datosDeUsuario = getNombreFotoUsuarioProfesor($datosMensaje["deMensaje"]);
-$datosU = getDatosGenerico($datosMensaje["deMensaje"]);
+	$datosU = getDatosGenerico($datosMensaje["deMensaje"]);
 ?>
 
 <body>
@@ -89,7 +89,18 @@ $datosU = getDatosGenerico($datosMensaje["deMensaje"]);
             <tr>
                 <td colspan="3">
                 <br />
-				<?php echo $datosMensaje["contenidoMensaje"]; ?>
+				<?php 
+				
+					if(preg_match("/[áéíóú]+/",$datosMensaje["contenidoMensaje"])){
+						//echo 'Caracteres válidos<br>';
+						//echo $datosMensaje["contenidoMensaje"];
+						echo utf8_decode($datosMensaje["contenidoMensaje"]);
+					}else{
+						//echo 'Hay caracteres no validos<br>';
+						echo $datosMensaje["contenidoMensaje"];
+					}
+								
+				  ?>
                 </td>
 			</tr>
             

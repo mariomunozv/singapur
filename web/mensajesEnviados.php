@@ -37,18 +37,22 @@ $idPerfil = getIdPerfilUsuario($idUsuario);
 		while($row = mysql_fetch_array($res)){
 			switch(getTipoUsuario($row["deMensaje"])){
 				case "Empleado Klein":
+				case "Relator/Tutor":
 				$datosDeUsuario = getNombreFotoUsuarioEmpleadoKlein($row["deMensaje"]);
 				break;
 				case "Profesor":
+				case "UTP":
 				$datosDeUsuario = getNombreFotoUsuarioProfesor($row["deMensaje"]);
 				break;
 				
 				}
 			switch(getTipoUsuario($row["paraMensaje"])){
 				case "Empleado Klein":
+				case "Relator/Tutor":
 				$datosParaUsuario = getNombreFotoUsuarioEmpleadoKlein($row["deMensaje"]);
 				break;
 				case "Profesor":
+				case "UTP":
 				$datosParaUsuario = getNombreFotoUsuarioProfesor($row["paraMensaje"]);
 				break;
 				

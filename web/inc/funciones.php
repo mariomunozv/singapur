@@ -454,7 +454,7 @@ function Cambiar_caracteres_especiales($s) {
 	$s = preg_replace("/Ó|Ò|Ô|Õ/","&Oacute;",$s);
 	$s = preg_replace("/ú|ù|û/","&uacute;",$s);
 	$s = preg_replace("/Ú|Ù|Û/","&Uacute;",$s);
-	//$s = str_replace(" ","_",$s);
+	$s = str_replace("ª|º","&deg;",$s); // 05.01.2015 correccion en la funcion Cambiar_caracteres_especiales (se agrego el reeplazo del simbolo de grados)
 	$s = str_replace("ñ","&ntilde;",$s);
 	$s = str_replace("Ñ","&Ntilde;",$s);
 	//para ampliar los caracteres a reemplazar agregar lineas de este tipo:
