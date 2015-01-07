@@ -6,7 +6,7 @@
     }
 ?>
 <meta charset="iso-8859-1">
-	<form method="POST" action="guardarinformesesion.php">
+	<form method="POST" action="guardarInformeSesion.php">
         <p class="titulo_curso">Ingresar informe de sesi&oacute;n</p>
         <hr />
         <br />
