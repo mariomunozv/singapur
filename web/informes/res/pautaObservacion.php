@@ -183,7 +183,11 @@ td.blank{
         $id =  params('id');
 
         $p = new PautaObservacion();
-        $pauta = $p->getInforme2($id)[0];
+        
+        //$pauta = $p->getInforme2($id)[0];
+        $arr_pauta = $p->getInforme2($id);
+        $pauta = $arr_pauta[0];
+        //var_dump($pauta);
 
         $indCondicion = json_decode1($pauta->indicadoresCondiciones);
         $objectIndGestion = json_decode1($pauta->indicadoresGestion);
@@ -192,8 +196,16 @@ td.blank{
         //     echo $pauta->rbdColegio."\n";
         // }
         //$datos = getPautas($rut);
+
+        
+
     ?>
-        <?php $establecimiento = new Establecimiento(); ?>
+        <?php $establecimiento = new Establecimiento(); 
+        
+
+        
+
+        ?>
         <table cellspacing="0" style="width:100%;" id="datos-generales" class="table">
             <tr>
                 <td class="name">Establecimiento:</td>
@@ -204,13 +216,15 @@ td.blank{
         <table>
             <tr>
                 <td class="name">Institución:</td>
-                <td class="cont"><?php echo $establecimiento->getByRbdColegio($pauta->rbdColegio)[0]["nombreColegio"]; ?></td>
+                <td class="cont"><?php 
+                $arr_establecimiento = $establecimiento->getByRbdColegio($pauta->rbdColegio);
+                echo $arr_establecimiento[0]["nombreColegio"]; ?></td>
             </tr>
         </table><br><br>
         <table>
             <tr>
                 <td class="name">Profesor:</td>
-                <td class="cont"><?php echo utf8_decode($pauta->nombreProfesor); ?></td>
+                <td class="cont"><?php echo ($pauta->nombreProfesor); ?></td>
             </tr>
         </table><br><br>
         <table>
@@ -228,13 +242,13 @@ td.blank{
         <table>
             <tr>
                 <td class="name">Capítulo:</td>
-                <td class="cont"><?php echo utf8_decode($pauta->idCapitulo); ?></td>
+                <td class="cont"><?php echo ($pauta->capitulo); ?></td>
             </tr>
         </table><br><br>
         <table>
             <tr>
                 <td class="name">Apartado:</td>
-                <td class="cont"><?php echo utf8_decode($pauta->idApartado); ?></td>
+                <td class="cont"><?php echo ($pauta->apartado); ?></td>
             </tr>
         </table><br><br>
         <table>
