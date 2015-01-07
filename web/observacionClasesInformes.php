@@ -3,7 +3,6 @@ require("inc/incluidos.php");
 require ("hd.php");
 require_once 'models/PautaObservacion/PautaObservacion.php';
 ?>
-<meta charset="iso-8859-1">
 <link rel="stylesheet" href="./css/select2.css"/>
 <link rel="stylesheet" href="./css/bootstrap.min.css"/>
 <body>
@@ -210,7 +209,7 @@ $(document).ready(function() {
     });
 
     $("#form").submit(function(e) {
-      event.preventDefault();
+      e.preventDefault();
       /*var form = $(this);
 
       form.attr("target", "_blank");
