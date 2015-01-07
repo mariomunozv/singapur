@@ -141,7 +141,7 @@ require "_navegacion.php";
               </tbody>
             </table>
             <div class='block-btn'>
-              <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('#','_self')" value="Descargar" />
+              <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('informes/informeExcelAsistenciaGeneral.php?c=<?php echo $_SESSION["sesionIdCurso"] ?>','_blank')" value="Descargar" />
             </div>
           </div>
           <div id="informe-sesion" style="display:none;">
@@ -197,7 +197,7 @@ require "_navegacion.php";
               </tbody>
             </table>
             <div class='block-btn'>
-              <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('#','_self')" value="Descargar" />
+              <input type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onClick="window.open('informes/informeExcelSesionGeneral.php?c=<?php echo $_SESSION["sesionIdCurso"] ?>','_blank')" value="Descargar" />
             </div>
           </div>
         </div>
@@ -243,7 +243,7 @@ $("#llenar-curso").html( $("#cambiaCurso option:selected").html() );
   });
   function setDescarga(){
     if( $("#select-numero-sesion").val()!="" ){
-      $("#descargaAsis").prop("href", "#");
+      $("#descargaAsis").prop("href", "informes/informeExcelAsistenciaSesion.php?s="+$("#select-numero-sesion").val());
       $("#descargaInfo").prop("href", "informes/informeSesion.php?s="+$("#select-numero-sesion").val());
     }else{
       $("#descargaAsis").removeAttr("href");

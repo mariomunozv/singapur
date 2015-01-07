@@ -13,17 +13,17 @@ function getTiposUsuario(){
 }
 
 function getRutNombre($idUsuario){
-    $sql ="SELECT P.rutProfesor,P.nombreProfesor,P.apellidoPaternoProfesor FROM usuario as U
+    $sql ="SELECT P.rutProfesor,P.nombreProfesor,P.apellidoPaternoProfesor,P.apellidoMaternoProfesor FROM usuario as U
     	   inner join profesor as P on P.rutProfesor = U.rutProfesor
-    	   where idUsuario = ".$idUsuario." ";
-
+    	   where idUsuario = ".$idUsuario."";
     $res = mysql_query($sql);
     $i=0;
     while($row = mysql_fetch_array($res)){
             $profesor[] = array(
             "rutProfesor"=> $row["rutProfesor"],
             "nombreProfesor" => $row["nombreProfesor"],
-            "apellidoPaternoProfesor" => $row["apellidoPaternoProfesor"]);    
+            "apellidoPaternoProfesor" => $row["apellidoPaternoProfesor"],
+            "apellidoMaternoProfesor" => $row["apellidoMaternoProfesor"]);    
     }
     
     return $profesor;
@@ -47,6 +47,17 @@ function getColegiosDeProfesor($idUsuario){
     }
    
     return $colegio;
+
+}
+
+function getNombreColegioProfesor($idUsuario){
+    $sql ="SELECT c.nombreColegio
+	FROM  `usuario` us join `profesor` pr on us.rutProfesor = pr.rutProfesor 
+	JOIN   `colegio` c on pr.rbdColegio= c.rbdColegio
+	WHERE  `idUsuario` = $idUsuario";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res);
+    return $row["nombreColegio"];
 
 }
 

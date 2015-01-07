@@ -1,6 +1,5 @@
 <?php
 
-
 function getRelatoresSesion(){
     $sql = "SELECT DISTINCT us.idUsuario, ek.rutEmpleadoKlein, nombreEmpleadoKlein, apellidoPaternoEmpleadoKlein,apellidoMaternoEmpleadoKlein
             FROM empleadoklein ek JOIN usuario us on us.rutEmpleadoKlein=ek.rutEmpleadoKlein
@@ -55,15 +54,19 @@ function getIdPerfil($idUsuario){
 }
 
 function getNumerosSesionesCurso($idCurso,$idUsuario){
+    $anoActual = date('Y');
     $idPerfil=getIdPerfil($idUsuario);
     if($idPerfil == 5){
         $sql = "SELECT numeroSesion
             FROM informeSesion inf JOIN detalleUsuarioProyectoPerfil per on inf.idRelator = per.idUsuario
-            WHERE idCursoCapacitacion = $idCurso AND inf.idRelator = $idUsuario";
+            WHERE idCursoCapacitacion = $idCurso 
+            AND inf.idRelator = $idUsuario
+            AND fechaSesion >='$anoActual-01-01'";
     }else{
         $sql = "SELECT numeroSesion
             FROM informeSesion inf JOIN detalleUsuarioProyectoPerfil per on inf.idRelator = per.idUsuario
-            WHERE idCursoCapacitacion = $idCurso";
+            WHERE idCursoCapacitacion = $idCurso
+            AND fechaSesion >='01-01-$anoActual'";
     }
     $res = mysql_query($sql);
     $i=0;
@@ -85,6 +88,20 @@ function getSesiones($idCurso){
     $res = mysql_query($sql);
     $i=0;
     
+    while($row = mysql_fetch_array($res)){
+        $informes[$i] = $row;
+        $i++;
+    }
+    return $informes;
+}
+function getSesionesTodas(){
+    $anoActual = date('Y');
+    $sql = "SELECT *
+            FROM informeSesion inf JOIN detalleUsuarioProyectoPerfil per on inf.idRelator = per.idUsuario
+            WHERE fechaSesion >= '$anoActual-01-01'
+            ORDER BY numeroSesion";
+    $res = mysql_query($sql);
+    $i=0;
     while($row = mysql_fetch_array($res)){
         $informes[$i] = $row;
         $i++;
@@ -159,6 +176,17 @@ function getAsistenciaSesion($idCurso, $numSesion){
     }
     return $asistencias;
 }
+function getAsistenciaGeneral(){
+    $anoActual = date('Y');
+    $sql = "SELECT *
+            FROM informeSesion inf join asistenciaSesion asis on inf.idInformeSesion = asis.idInformeSesion
+            WHERE fechaSesion >= '$anoActual-01-01'";
+    $res = mysql_query($sql);
+    while($row = mysql_fetch_array($res)){
+        $asistencias[$row["idUsuario"]] = $row["presenteAsistenciaSesion"];
+    }
+    return $asistencias;
+}
 function getDetalleSesion($idInformeSesion){
     $sql = "SELECT *
             FROM detalleSesion
@@ -198,6 +226,268 @@ function newDetalleSesion($post){
 function updateDetalleSesion($post){
     $sql = "UPDATE `detalleSesion` SET `capitulosProgramadosSesion` = '".$post["programados"]."', `trabajoRealizadoSesion`='".$post["trabajados"]."', `justificacionNoRealizadoSesion`='".$post["justificaNoRealizado"]."', `dificultadesMatDidSesion`=".$post["dificultades"].", `matematicoSesion`='".$post["difMatematicas"]."', `didacticoSesion`='".$post["difDidactico"]."', `participacionDestacadaSesion`='".$post["destacados"]."', `participacionDebilSesion`='".$post["debiles"]."', `situacionPedagogicaSesion`=".$post["situaciones"].", `cualSituacionPedagogicaSesion`='".$post["situacionPedagogica"]."', `situacionInstitucionalSesion`=".$post["institucionales"].", `cualSituacionInstitucionalSesion`='".$post["situacionInstitucional"]."' WHERE `idInformeSesion`=".$post["idInformeSesion"]." ";
     $res = mysql_query($sql);
+}
+
+function getNombreCurso2($idCurso){
+    $sql ="SELECT * FROM cursoCapacitacion WHERE idCursoCapacitacion = ".$idCurso;
+    // echo "<br>".$sql;
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res);
+    return($row["nombreCortoCursoCapacitacion"]);
+}
+function getNombreColegio($rbdColegio){
+    $sql = "SELECT nombreColegio 
+            FROM colegio 
+            WHERE rbdColegio = $rbdColegio";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res); 
+    return $row["nombreColegio"] ;
+}
+
+function informeExcelAsistenciaGeneral($idCurso){
+    $curso = utf8_encode(getNombreCurso2($idCurso));
+    $titulos =<<<HTML
+    <table>
+    <tr>
+        <th style='background-color:#d9edf7;'>Curso de Capacitaci&oacute;n</th>
+        <th style='background-color:#d9edf7;'>Perfil</th>
+        <th style='background-color:#d9edf7;'>Nombre</th>
+        <th style='background-color:#d9edf7;'>Apellido Paterno</th>
+        <th style='background-color:#d9edf7;'>Apellido Materno</th>
+        <th style='background-color:#d9edf7;'>Establecimiento</th>
+        <th style='background-color:#d9edf7;'>Asistencia general del particpante</th>
+    </tr>
+    <tbody>
+HTML;
+    $profesores = getAlumnosCurso($idCurso);
+    ordenar($profesores,array("idPerfil"=>"ASC","apellidoPaterno"=>"ASC"));
+    $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"]);
+    //$contProf = 0;
+    $listado = [];
+    foreach ($profesores as $i => $prof) {
+      if($profesores[$i]["nombrePerfil"] == "Profesor" || $profesores[$i]["nombrePerfil"]=="UTP"){
+        $datos = getDatosProfesor($prof["idUsuario"]);
+        $aux[0]=utf8_encode(getNombreCurso2($idCurso));
+        $aux[1]=$prof["nombrePerfil"];
+        $aux[2]=utf8_encode($datos["nombreProfesor"]);
+        $aux[3]=utf8_encode($prof["apellidoPaterno"]);
+        $aux[4]=utf8_encode($datos["apellidoMaternoProfesor"]);
+        $aux[5]=utf8_encode(getNombreColegio($prof["rbdColegio"]));
+        $aux[6]=round(asistenciaProfesor($prof["idUsuario"],$_SESSION["sesionIdCurso"],$cantidadSesiones));
+        array_push($listado,$aux);
+      }
+    }
+    foreach ($listado as $val) {       
+        $tabla .=<<<HTML
+            <tr>
+                <td>$val[0]</td>
+                <td>$val[1]</td>
+                <td>$val[2]</td>
+                <td>$val[3]</td>
+                <td>$val[4]</td>
+                <td>$val[5]</td>
+                <td>$val[6]%</td>                
+            </tr>
+HTML;
+    }
+    $tabla.=<<<HTML
+    </tbody>
+    </table>
+HTML;
+
+  header('Content-type: application/vnd.ms-excel');
+  header("Content-Disposition: attachment; filename=Informe general de asistencia - $curso [".date("d-m-Y")."].xls");
+  header("Pragma: no-cache");
+  header("Expires: 0");
+  echo $titulos;
+  echo $tabla;
+}
+
+function informeExcelSesionGeneral($idCurso){
+    $curso = utf8_encode(getNombreCurso2($idCurso));
+    $sesiones = getSesiones($_SESSION["sesionIdCurso"]);
+    $titulos =<<<HTML
+    <table>
+    <tr>
+        <th style="border:0px;text-align:left;">Curso:</th>
+        <th style="border:0px;text-align:left;">$curso</th>
+    </tr>
+    <tr>
+        <th style='background-color:#d9edf7;'>N&#176; Sesi&oacute;n</th>
+        <th style='background-color:#d9edf7;'>Fecha de sesi&oacute;n</th>
+        <th style='background-color:#d9edf7;'>Taller</th>
+        <th style='background-color:#d9edf7;'>Cap&iacute;tulo</th>
+        <th style='background-color:#d9edf7;'>Estado</th>
+        <th style='background-color:#d9edf7;'>Relator</th>
+    </tr>
+    <tbody>
+HTML;
+
+    foreach ($sesiones as $ses) {
+        $fecha = substr($ses["fechaSesion"],8)."/".substr($ses["fechaSesion"],5,2)."/".substr($ses["fechaSesion"],0,4);
+        $detalle = getDetalleSesion($ses["idInformeSesion"]);
+        $capitulos = split(",",substr($detalle["capitulosProgramadosSesion"],1,count($detalle["capitulosProgramadosSesion"])-2));
+        if($capitulos[0]==""){$capitulos=1;}
+        foreach ($capitulos as $dat) {
+            $talleres = split(",",substr($detalle["trabajoRealizadoSesion"],1,count($detalle["trabajoRealizadoSesion"])-2));
+            $strTaller = "";
+            foreach ($talleres as $tall) {
+                if($tall!=""){
+                    $aux = split(":",$tall);
+                    if($aux[1]==$dat){
+                        $strTaller.="Taller ".$aux[0]."<br>";
+                    }
+                }
+            }
+            if (strlen($strTaller)==0){
+                $estado = "Omitido";
+                $strTaller = "-----";
+            }else{
+                $estado = "Implementado";
+            }
+        
+            $numeroSes = $ses["numeroSesion"];
+            $nombreCap = utf8_encode(getNombreCapitulo($dat));
+            $nombreUsu = utf8_encode(getNombreUsuario($ses["idUsuario"]));
+            $tabla .=<<<HTML
+    <tr>
+      <td>$numeroSes</td>
+      <td>$fecha</td>
+      <td>$strTaller</td>
+      <td>$nombreCap</td>
+      <td>$estado</td>
+      <td>$nombreUsu</td>
+    </tr>
+HTML;
+        }}
+        $tabla.=<<<HTML
+    </tbody>
+    </table>
+HTML;
+
+  header('Content-type: application/vnd.ms-excel');
+  header("Content-Disposition: attachment; filename=Informe General de Sesiones - $curso [".date("d-m-Y")."].xls");
+  header("Pragma: no-cache");
+  header("Expires: 0");
+  echo $titulos;
+  echo $tabla;
+}
+
+
+function informeExcelAsistencia($idSesion){
+    $sesion = getDatosSesionPorId($idSesion);
+    $numeroSes = $sesion["numeroSesion"];
+    $rutIngres = getDatosUsuarioPorId($sesion["idRelator"]);
+    $rutIngres = $rutIngres["rut"];
+    $curso = utf8_encode(getNombreCurso2($sesion["idCursoCapacitacion"]));
+    $asistencia = getAsistenciaSesion( $sesion["idCursoCapacitacion"], $sesion["numeroSesion"] );
+    print_r($asistencia[0]);
+    $titulos =<<<HTML
+    <table>
+    <tr>
+        <th style='background-color:#d9edf7;'>N&#176; Sesi&oacute;n</th>
+        <th style='background-color:#d9edf7;'>RUT de qui&eacute;n ingres&oacute;</th>
+        <th style='background-color:#d9edf7;'>Nombre</th>
+        <th style='background-color:#d9edf7;'>Apellido</th>
+        <th style='background-color:#d9edf7;'>Perfil</th>
+        <th style='background-color:#d9edf7;'>Establecimiento</th>
+        <th style='background-color:#d9edf7;'>Asistencia</th>
+    </tr>
+    <tbody>
+HTML;
+    
+    foreach ($asistencia as $i => $val) {
+        $perfil=getTipoUsuario($i);
+        if($perfil == "UTP" || $perfil =="Profesor"){
+            $datProfe = getRutNombre($i);
+            $nombre = utf8_encode($datProfe[0]["nombreProfesor"]);
+            $apellido = utf8_encode($datProfe[0]["apellidoPaternoProfesor"]." ".$datProfe[0]["apellidoMaternoProfesor"]);
+            $establecimiento = utf8_encode(getNombreColegioProfesor($i));
+            $asistencia= $val? "<td style='background-color:#dff0d8;'>Presente</td>":"<td style='background-color:#f2dede;'>Ausente</td>";
+            $tabla .=<<<HTML
+                <tr>
+                    <td>$numeroSes</td>
+                    <td>$rutIngres</td>
+                    <td>$nombre</td>
+                    <td>$apellido</td>
+                    <td>$perfil</td>
+                    <td>$establecimiento</td>
+                    $asistencia
+                </tr>
+HTML;
+        }
+    }
+    $tabla.=<<<HTML
+    </tbody>
+    </table>
+HTML;
+
+  header('Content-type: application/vnd.ms-excel');
+  header("Content-Disposition: attachment; filename=Informe general de asistencia - $curso [".date("d-m-Y")."].xls");
+  header("Pragma: no-cache");
+  header("Expires: 0");
+  echo $titulos;
+  echo $tabla;
+}
+
+function informeExcelVaciadoSesion(){
+    $sesiones = getSesionesTodas();
+    foreach ($sesiones as $sesion) {
+        //$sesion = getDatosSesionPorId(1);
+        $numeroSes = $sesion["numeroSesion"];
+        $rutIngres = getDatosUsuarioPorId($sesion["idRelator"]);
+        $rutIngres = $rutIngres["rut"];
+        $curso = utf8_encode(getNombreCurso2($sesion["idCursoCapacitacion"]));
+        $asistencia = getAsistenciaSesion( $sesion["idCursoCapacitacion"], $sesion["numeroSesion"] );
+        $titulos =<<<HTML
+        <table>
+        <tr>
+            <th style='background-color:#d9edf7;'>Curso</th>
+            <th style='background-color:#d9edf7;'>N&#176; Sesi&oacute;n</th>
+            <th style='background-color:#d9edf7;'>RUT de qui&eacute;n ingres&oacute;</th>
+            <th style='background-color:#d9edf7;'>Nombre</th>
+            <th style='background-color:#d9edf7;'>Apellido</th>
+            <th style='background-color:#d9edf7;'>Perfil</th>
+            <th style='background-color:#d9edf7;'>Establecimiento</th>
+            <th style='background-color:#d9edf7;'>Asistencia</th>
+        </tr>
+        <tbody>
+HTML;
+        
+        foreach ($asistencia as $i => $val) {
+            $perfil=getTipoUsuario($i);
+            if($perfil == "UTP" || $perfil =="Profesor"){
+                $datProfe = getRutNombre($i);
+                $nombre = utf8_encode($datProfe[0]["nombreProfesor"]);
+                $apellido = utf8_encode($datProfe[0]["apellidoPaternoProfesor"]." ".$datProfe[0]["apellidoMaternoProfesor"]);
+                $establecimiento = utf8_encode(getNombreColegioProfesor($i));
+                $asistencia= $val? "<td style='background-color:#dff0d8;'>Presente</td>":"<td style='background-color:#f2dede;'>Ausente</td>";
+                $tabla .=<<<HTML
+                    <tr>
+                        <td>$curso</td>
+                        <td>$numeroSes</td>
+                        <td>$rutIngres</td>
+                        <td>$nombre</td>
+                        <td>$apellido</td>
+                        <td>$perfil</td>
+                        <td>$establecimiento</td>
+                        $asistencia
+                    </tr>
+HTML;
+            }
+        }
+    }
+    $tabla.=<<<HTML
+    </tbody>
+    </table>
+HTML;
+
+  header('Content-type: application/vnd.ms-excel');
+  header("Content-Disposition: attachment; filename=Informe general de asistencia - $curso [".date("d-m-Y")."].xls");
+  header("Pragma: no-cache");
+  header("Expires: 0");
+  echo $titulos;
+  echo $tabla;
 }
 
 
