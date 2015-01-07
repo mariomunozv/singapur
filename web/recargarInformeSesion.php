@@ -178,7 +178,7 @@
         <br>
         <br>
         <h3 style="font-size:14px;">Datos esenciales de la Relator&iacute;a</h3>
-        <p style="font-size:12px; width:60%;float:left;">&iquest;Los docentes presentan dificultades respecto de temas matem&aacute;ticos y/o did&aacute;cticos en estudio?</p>
+        <p style="font-size:12px; width:70%;float:left;margin-right:55px;">&iquest;Los docentes presentan dificultades respecto de temas matem&aacute;ticos y/o did&aacute;cticos en estudio?</p>
         <table>
             <tr>
                 <td>Si <input onChange="difChange()" <?php if($detalle["dificultadesMatDidSesion"]){echo "checked";} ?> name="dificultades" value="1" type="radio"></td>
@@ -247,7 +247,7 @@
                 if($cant_destacados==0){
             ?>
             <tr class="docente-destacado" data-index2="<?php echo $cant_destacados; ?>">
-                <td style="font-size:12px;">Docentes con participaci&oacute;n destacada:</td>
+                <td style="font-size:12px;width:215px;">Docentes con participaci&oacute;n destacada:</td>
                 <td>
                     <select style="font-size:14px;" name="destacado-<?php echo $cant_destacados; ?>">
                         <option value="">---</option>
@@ -296,7 +296,7 @@
                 if($cant_debiles==0){
             ?>
             <tr class="docente-debil" data-index3="<?php echo $cant_debiles; ?>">
-                <td style="font-size:12px;">Docentes que presentan debilidades:</td>
+                <td style="font-size:12px;width:215px">Docentes que presentan debilidades:</td>
                 <td>
                     <select style="font-size:14px;" name="debil-<?php echo $cant_debiles; ?>">
                         <option value="">---</option>
@@ -314,7 +314,7 @@
         <br>
         <h3 style="font-size:14px;">Implementaci&oacute;n del M&eacute;todo</h3>
         <br>
-        <p style="font-size:12px; width:60%;float:left;">&iquest;Los docentes mencionan situaciones o problem&aacute;ticas en relaci&oacute;n a aspectos did&aacute;cticos o pedag&oacute;gicos surgidos durante la implementaci&oacute;n?</p>
+        <p style="font-size:12px; width:80%;float:left;">&iquest;Los docentes mencionan situaciones o problem&aacute;ticas en relaci&oacute;n a aspectos did&aacute;cticos o pedag&oacute;gicos surgidos durante la implementaci&oacute;n?</p>
         <table>
             <tr>
                 <td>Si <input onChange="sitChange()" <?php if($detalle["situacionPedagogicaSesion"]){echo "checked";} ?> name="situaciones" value="1" type="radio"></td>
@@ -329,7 +329,7 @@
         </div>
         <br>
         <br>
-        <p style="font-size:12px; width:60%;float:left;">&iquest;Los docentes mencionan situaciones o problem&aacute;ticas en relaci&oacute;n a aspectos institucionales que afectan la implementaci&oacute;n?</p>
+        <p style="font-size:12px; width:80%;float:left;">&iquest;Los docentes mencionan situaciones o problem&aacute;ticas en relaci&oacute;n a aspectos institucionales que afectan la implementaci&oacute;n?</p>
         <table>
             <tr>
                 <td>Si <input onChange="instChange()" <?php if($detalle["situacionInstitucionalSesion"]){echo "checked";} ?> name="institucionales" value="1" type="radio"></td>

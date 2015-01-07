@@ -109,7 +109,7 @@ require("inc/_asistenciaSesion.php");
                         $datosColegio = getDatosColegio($prof["rbdColegio"]);
                         echo $datosColegio["nombreColegio"]; ?></td>
                     <td><input type="radio" class="radio-asist" value="1" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
-                    <td><input type="radio" class="radio-asist" value="0" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
+                    <td><input type="radio" class="radio-asist" checked value="0" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
                 </tr>
                 <?php }}} ?>
             </tbody>
