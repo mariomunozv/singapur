@@ -105,7 +105,9 @@ require("inc/_asistenciaSesion.php");
                     <td><?php echo $key+1;$key++; ?></td>
                     <td><?php echo $prof["nombreCompleto"]; ?></td>
                     <td><?php echo $nombreP; ?></td>
-                    <td><?php echo getDatosColegio($prof["rbdColegio"])["nombreColegio"]; ?></td>
+                    <td><?php 
+                        $datosColegio = getDatosColegio($prof["rbdColegio"]);
+                        echo $datosColegio["nombreColegio"]; ?></td>
                     <td><input type="radio" class="radio-asist" value="1" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
                     <td><input type="radio" class="radio-asist" value="0" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
                 </tr>
@@ -142,7 +144,7 @@ require("inc/_asistenciaSesion.php");
 
         
         function enviarAsistencia(){
-            var num = <?php echo count($profesores) ?>;
+            var num = <?php echo $key; ?>;
             if( $("#datepicker").val()!="" ){
                 if( $(".radio-asist:checked").length == num ){
                     if(!confirm("Se enviar"+String.fromCharCode(225)+" la asistencia. Desea continuar?")){

@@ -96,7 +96,9 @@ require("inc/_asistenciaSesion.php");
             <td><?php $key++;echo $key; ?></td>
             <td><?php echo $prof["nombreCompleto"]; ?></td>
             <td><?php echo getNombrePerfil($prof["idPerfil"]); ?></td>
-            <td><?php echo ($prof["rbdColegio"]? getDatosColegio($prof["rbdColegio"])["nombreColegio"] :''); ?></td>
+            <td><?php 
+            $datosColegio = getDatosColegio($prof["rbdColegio"]);
+            echo ($prof["rbdColegio"]?  $datosColegio["nombreColegio"] :''); ?></td>
             <td><input <?php echo ($asistencia[$prof["idUsuario"]]? "checked":""); ?> type="radio" class="radio-asist" value="1" name="asistencia-<?php echo $prof["idUsuario"]; ?>"></td>
             <td><input <?php echo (array_key_exists($prof["idUsuario"],$asistencia) && !$asistencia[$prof["idUsuario"]]? "checked":""); ?> type="radio" class="radio-asist" value="0" name="asistencia-<?php echo $prof["idUsuario"] ?>"></td>
         </tr>
