@@ -118,11 +118,27 @@
                         $cant_caps++;
                     }
                 }else{ ?>
-                    <tr class="cap" data-index="0">
-                        <td><h4>Cap&iacute;tulos Programados:</h4></td>
-                        <td>
-                            Cap&iacute;tulo <input onChange='resetTalleres()' style="width:32px;font-size:14px;" name="numeroCapitulo-0" type="number" min=1>
-                        </td>
+                        <?php
+                        echo "<tr class='cap' onchange='resetTalleres()' data-index='$cant_caps'>
+                              <td>
+                              <h4>Cap&iacute;tulos Programados:</h4>
+                              </td>
+                              <td>
+                              Cap&iacute;tulo ";
+                        $cant_caps++;
+                        $capitulos = getCapitulos(1);
+                        echo "<select onChange='resetTalleres()' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
+                        foreach ($capitulos as $cap) {
+                            if($value == $cap["id"]){
+                                echo "<option selected value='".$cap["id"]."'>".$cap["nombre"]."</option>";
+                            }else{
+                                echo "<option value='".$cap["id"]."'>".$cap["nombre"]."</option>";
+                            }
+                        }
+                        echo "</select>";
+                        //echo "<input onChange='resetTalleres()' value='$value' style='width:32px;font-size:14px;' name='numeroCapitulo-$cant_caps' type='number' min=1>";
+                        echo "</td>";
+                        ?>
                         <td>
                             <input type="button" class="mas" style="height:30px;" onClick="masCapitulo()" value="+" />
                         </td>
@@ -350,6 +366,7 @@
         });
 
         function verificaJustificacion(){
+            return false;
 
         }
         function difChange(){
@@ -518,12 +535,15 @@
             AJAXPOST("recargarInformeSesion.php",a ,sel);
         });
 
-        function enviarAsistencia(){
-            var num = <?php echo count($profesores) ?>;
-            if( $(".radio-asist:checked").length == num ){
-                confirm("Se enviará la asistencia. Desea continuar?");
-            }else{
-                alert("Debe completar la asistencia de todos los profesores listados.");
+        function enviarInforme(){
+            
+            if( true ){
+                if(confirm("Se enviará la asistencia. Desea continuar?")){
+                    
+                }else{
+                    event.preventDefault();
+                }
             }
         }
+
     </script>

@@ -134,7 +134,7 @@ require "_navegacion.php";
                       <td><?php $key++;echo $key; ?></td>
                       <td><?php echo $prof["nombreCompleto"]; ?></td>
                       <td><?php echo $nombreP; ?></td>
-                      <td><?php echo ($prof["rbdColegio"]? getDatosColegio($prof["rbdColegio"])["nombreColegio"] :''); ?></td>
+                      <td><?php $datosColegio=getDatosColegio($prof["rbdColegio"]); echo ($prof["rbdColegio"]? $datosColegio["nombreColegio"] :''); ?></td>
                       <td><?php echo round($prof["porcentajeAsistencia"]); ?>%</td>
                   </tr>
                 <?php }}} ?>

@@ -66,7 +66,7 @@ function getNumerosSesionesCurso($idCurso,$idUsuario){
         $sql = "SELECT numeroSesion
             FROM informeSesion inf JOIN detalleUsuarioProyectoPerfil per on inf.idRelator = per.idUsuario
             WHERE idCursoCapacitacion = $idCurso
-            AND fechaSesion >='01-01-$anoActual'";
+            AND fechaSesion >='$anoActual-01-01'";
     }
     $res = mysql_query($sql);
     $i=0;
@@ -489,7 +489,6 @@ HTML;
   echo $titulos;
   echo $tabla;
 }
-
 
 
 ?>

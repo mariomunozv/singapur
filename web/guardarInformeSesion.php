@@ -18,7 +18,6 @@ $debiles ="";
 foreach ($_POST as $key => $val) {
 	if(substr($key, 0,14)=="numeroCapitulo"){
 		$programados.=$val.",";
-		echo "asd-";
 	}
 	if(substr($key, 0,7)=="taller-"){
 		$trabajados.=$_POST["tallerN-".substr($key, 7)].":".$val.",";
@@ -52,10 +51,10 @@ if(!$detalle){
 
 $detalle = getDetalleSesion($_POST["idInformeSesion"]);
 
-//print_r($_POST);
+print_r($_POST);
 
 
-header('Location: ./ingresoInformeSesion.php');
+//header('Location: ./ingresoInformeSesion.php');
 
 ?>
 

@@ -10,6 +10,7 @@ $rbdColegio = getRbdUsuario($idUsuario);
 
 ?>
 <meta charset="iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css" media="all">
   .block-btn {
     text-align: center;
