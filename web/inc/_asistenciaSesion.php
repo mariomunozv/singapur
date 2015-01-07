@@ -2,7 +2,7 @@
 
 function getRelatoresSesion(){
     $sql = "SELECT DISTINCT us.idUsuario, ek.rutEmpleadoKlein, nombreEmpleadoKlein, apellidoPaternoEmpleadoKlein,apellidoMaternoEmpleadoKlein
-            FROM empleadoklein ek JOIN usuario us on us.rutEmpleadoKlein=ek.rutEmpleadoKlein
+            FROM empleadoKlein ek JOIN usuario us on us.rutEmpleadoKlein=ek.rutEmpleadoKlein
             WHERE us.estadoUsuario = 1
             AND (us.tipoUsuario = 'Coordinador General' OR us.tipoUsuario = 'Relator/Tutor' )";
     $res = mysql_query($sql);
@@ -204,7 +204,7 @@ function newInformeSesion($post){
 
 function updateInformeSesion($post){
     $fecha = substr($post["fechaSesion"],-4,4)."-".substr($post["fechaSesion"],-7,2)."-".substr($post["fechaSesion"],0,2);
-    $sql ="UPDATE `informeSesion` SET `fechaSesion` = '$fecha',`idRelator` = '".$post["idRelator"]."', `idCursoCapacitacion` = '".$post["idCurso"]."'  WHERE `informesesion`.`numeroSesion` = ".$post["numeroSesion"]." AND `informesesion`.`idCursoCapacitacion` = ".$post["idCurso"];
+    $sql ="UPDATE `informeSesion` SET `fechaSesion` = '$fecha',`idRelator` = '".$post["idRelator"]."', `idCursoCapacitacion` = '".$post["idCurso"]."'  WHERE `informeSesion`.`numeroSesion` = ".$post["numeroSesion"]." AND `informeSesion`.`idCursoCapacitacion` = ".$post["idCurso"];
     $res = mysql_query($sql);
 }
 function newAsistenciaSesion($idInformeSesion, $usuario, $valor){
@@ -263,7 +263,7 @@ HTML;
     ordenar($profesores,array("idPerfil"=>"ASC","apellidoPaterno"=>"ASC"));
     $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"]);
     //$contProf = 0;
-    $listado = [];
+    $listado = array();
     foreach ($profesores as $i => $prof) {
       if($profesores[$i]["nombrePerfil"] == "Profesor" || $profesores[$i]["nombrePerfil"]=="UTP"){
         $datos = getDatosProfesor($prof["idUsuario"]);
