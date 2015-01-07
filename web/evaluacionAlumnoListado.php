@@ -27,7 +27,7 @@
                 AND pi.asistio = 1
                 AND pi.fechaRespuestaPautaItem > '".$anoCursoColegio."'
                 ORDER BY a.apellidoPaternoAlumno ASC";
-        // echo $sql;
+        //echo $sql;
         $res = mysql_query($sql);
         $i = 0;
         while ($row = mysql_fetch_array($res)){
