@@ -18,7 +18,8 @@ textarea:disabled{
 </style>
 <meta charset="iso-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<form method="POST" action="guardarinformesesion.php">
+
+	<form method="POST" action="guardarInformeSesion.php">
         <p class="titulo_curso">Ingresar informe de sesi&oacute;n</p>
         <hr />
         <br />

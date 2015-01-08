@@ -226,12 +226,12 @@ $("#llenar-curso").html( $("#cambiaCurso option:selected").html() );
     }
   });
   $("#mostrar-asistencia").click(function(){
-    event.preventDefault();
+    //event.preventDefault();
     $("#informe-asistencia").show();
     $("#informe-sesion").hide();
   });
   $("#mostrar-sesion").click(function(){
-    event.preventDefault();
+    //event.preventDefault();
     $("#llenar-curso-capacitacion").html( $("#cambiaCurso option:selected").html() );
     $("#informe-sesion").show();
     $("#informe-asistencia").hide();

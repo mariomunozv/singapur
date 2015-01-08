@@ -327,7 +327,7 @@ HTML;
         $fecha = substr($ses["fechaSesion"],8)."/".substr($ses["fechaSesion"],5,2)."/".substr($ses["fechaSesion"],0,4);
         $detalle = getDetalleSesion($ses["idInformeSesion"]);
         $capitulos = split(",",substr($detalle["capitulosProgramadosSesion"],1,count($detalle["capitulosProgramadosSesion"])-2));
-        if($capitulos[0]==""){$capitulos=1;}
+        if($capitulos[0]==""){$capitulos=array();}
         foreach ($capitulos as $dat) {
             $talleres = split(",",substr($detalle["trabajoRealizadoSesion"],1,count($detalle["trabajoRealizadoSesion"])-2));
             $strTaller = "";
