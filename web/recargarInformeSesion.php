@@ -5,7 +5,19 @@
         require("inc/_asistenciaSesion.php");
     }
 ?>
+<style type="text/css">
+textarea{
+    padding:3px;
+    min-height:50px;
+    resize:none;
+    width: 98%;
+}
+textarea:disabled{
+    background-color: #eee;
+}
+</style>
 <meta charset="iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<form method="POST" action="guardarinformesesion.php">
         <p class="titulo_curso">Ingresar informe de sesi&oacute;n</p>
         <hr />
@@ -125,9 +137,9 @@
                               </td>
                               <td>
                               Cap&iacute;tulo ";
-                        $cant_caps++;
                         $capitulos = getCapitulos(1);
                         echo "<select onChange='resetTalleres()' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
+                        $cant_caps++;
                         foreach ($capitulos as $cap) {
                             if($value == $cap["id"]){
                                 echo "<option selected value='".$cap["id"]."'>".$cap["nombre"]."</option>";
@@ -174,7 +186,7 @@
         <br>
         <br>
         <h3 style="font-size:14px;">Justificaci&oacute;n del trabajo no realizado:</h3>
-        <textarea name="justificaNoRealizado" style="width:100%;height:50px;resize:none;"><?php echo $detalle["justificacionNoRealizadoSesion"]; ?></textarea>
+        <textarea name="justificaNoRealizado"><?php echo $detalle["justificacionNoRealizadoSesion"]; ?></textarea>
         <br>
         <br>
         <h3 style="font-size:14px;">Datos esenciales de la Relator&iacute;a</h3>
@@ -189,9 +201,9 @@
         <br>
         <div id="dificultades-si" <?php if(!$detalle["dificultadesMatDidSesion"]){echo "style='display:none;'";} ?> >
             <h4>Matem&aacute;tico:</h4>
-            <textarea name="difMatematicas" style="width:100%;height:50px;resize:none;"><?php echo $detalle["matematicoSesion"]; ?></textarea>
+            <textarea name="difMatematicas"><?php echo $detalle["matematicoSesion"]; ?></textarea>
             <h4>Did&aacute;ctico:</h4>
-            <textarea name="difDidactico" style="width:100%;height:50px;resize:none;"><?php echo $detalle["didacticoSesion"]; ?></textarea>
+            <textarea name="difDidactico"><?php echo $detalle["didacticoSesion"]; ?></textarea>
         </div>
         <br />
         <br />
@@ -218,7 +230,7 @@
             <?php 
                 if($rutDestacados[0]!=""){
                     foreach ($rutDestacados as $rut){
-                        echo "<tr class='docente-destacado' data-index2='".$cant_destacados."'><td style='font-size:12px;'>";
+                        echo "<tr class='docente-destacado' data-index2='".$cant_destacados."'><td style='font-size:12px;width:215px;'>";
                         if($cant_destacados==0){
                             echo "Docentes con participaci&oacute;n destacada:";
                         }
@@ -241,10 +253,8 @@
                               </td></tr>";
                         $cant_destacados++;
                     }
-                }
-            ?>
-            <?php
-                if($cant_destacados==0){
+                    $cant_destacados--;
+                }else{
             ?>
             <tr class="docente-destacado" data-index2="<?php echo $cant_destacados; ?>">
                 <td style="font-size:12px;width:215px;">Docentes con participaci&oacute;n destacada:</td>
@@ -261,16 +271,16 @@
                     <input type="button" class="menosDestacado" style="height:30px;" onClick="menosDestacado(<?php echo $cant_destacados; ?>)" value="-" />
                 </td>
             </tr>
-            <?php } ?>
+            <?php } $cant_destacados++; ?>
         </table>
         <br />
         <table id="docentesDebiles" style="font-size:14px;">
             <?php 
                 if($rutDebiles[0]!=""){
                     foreach ($rutDebiles as $rut){
-                        echo "<tr class='docente-debil' data-index3='".$cant_debiles."'><td style='font-size:12px;'>";
+                        echo "<tr class='docente-debil' data-index3='".$cant_debiles."'><td style='font-size:12px;width:215px;'>";
                         if($cant_debiles==0){
-                            echo "Docentes con participaci&oacute;n destacada:";
+                            echo "Docentes que presentan debilidades:";
                         }
                         echo "</td><td><select style='font-size:14px;' name='debil-".$cant_debiles."'><option value=''>---</option>";
                         foreach ($profesores as $prof){
@@ -290,10 +300,8 @@
                         echo "<input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil(".$cant_debiles.")' value='-' /></td></tr>";
                         $cant_debiles++;
                     }
-                }
-            ?>
-            <?php
-                if($cant_debiles==0){
+                    $cant_debiles--;
+                }else{
             ?>
             <tr class="docente-debil" data-index3="<?php echo $cant_debiles; ?>">
                 <td style="font-size:12px;width:215px">Docentes que presentan debilidades:</td>
@@ -308,7 +316,7 @@
                     <input type="button" class="menosDebil" style="height:30px;" onClick="menosDebil(<?php echo $cant_debiles; ?>)" value="-" />
                 </td>
             </tr>
-            <?php } ?>
+            <?php } $cant_debiles++; ?>
         </table>
         <br>
         <br>
@@ -325,7 +333,7 @@
         <br>
         <br>
         <div id="situacion-si" <?php if(!$detalle["situacionPedagogicaSesion"]){ echo "style='display:none;'";} ?> >
-            <textarea name="situacionPedagogica" placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"><?php echo $detalle["cualSituacionPedagogicaSesion"]; ?></textarea>
+            <textarea name="situacionPedagogica" placeholder="&iquest;Cu&aacute;les?"><?php echo $detalle["cualSituacionPedagogicaSesion"]; ?></textarea>
         </div>
         <br>
         <br>
@@ -340,7 +348,7 @@
         <br>
         <br>
         <div id="institucionales-si" <?php if(!$detalle["situacionInstitucionalSesion"]){ echo "style='display:none;'";} ?> >
-            <textarea name="situacionInstitucional" placeholder="&iquest;Cu&aacute;les?" style="width:100%;height:50px;resize:none;"><?php echo $detalle["cualSituacionInstitucionalSesion"]; ?></textarea>
+            <textarea name="situacionInstitucional" placeholder="&iquest;Cu&aacute;les?"><?php echo $detalle["cualSituacionInstitucionalSesion"]; ?></textarea>
         </div>
         <br>
         <br>
@@ -358,6 +366,7 @@
         var indiceDestacado = <?php echo $cant_destacados-1; ?>;
         var indiceDebil = <?php echo $cant_debiles-1; ?>;
         var indiceTaller = <?php echo $cant_talleres; ?>;
+        var flagCaps = false;
 
         $( document ).ready(function(){
             $(function() {
@@ -365,10 +374,6 @@
             });
         });
 
-        function verificaJustificacion(){
-            return false;
-
-        }
         function difChange(){
             if( $("input[name=dificultades]:checked").val()=="1" ){
                 $("#dificultades-si").show();
@@ -390,13 +395,33 @@
                 $("#institucionales-si").hide();
             }
         }
+        function validarRealizado(){
+            if(indiceTaller==0){
+                flagCaps=false;
+                $("textarea[name=justificaNoRealizado]").prop("disabled",""); ;
+            }else{
+                $("textarea[name=justificaNoRealizado]").prop("disabled","disabled");
+                flagCaps = true;
+                $(".cap select option:selected").each(function(){
+                    if( $("#espacio-talleres select option:selected[value="+$(this).val()+"]").length ==0 ){
+                        flagCaps=false;
+                        $("textarea[name=justificaNoRealizado]").prop("disabled",""); ;
+                    }
+                });
+            }
+        }
 
         function masTaller(){
             indiceTaller+=1;
             flag = true;
-            strSelect = "<td><select name='taller-"+indiceTaller+"'>";
+            strSelect = "<td><select onchange='validarRealizado()' name='taller-"+indiceTaller+"'>";
             $(".cap").each(function(){
                 num = $(this).find("select").val();
+                if( $("#espacio-talleres input[type=number]").last().val()!=undefined ){
+                    val = parseInt($("#espacio-talleres input[type=number]").last().val())+1;
+                }else{
+                    val = indiceTaller;
+                }
                 if(num!=""){
                     strSelect += "<option value='"+num+"'>"+$("option[value="+num+"]:selected").html()+"</option>";
                 }else{
@@ -405,13 +430,14 @@
             });
             strSelect += "</select></td>";
             if(flag){
-                $("#espacio-talleres").append("<tr><td>Taller <input type='number' name='tallerN-"+indiceTaller+"' min='1' max='12' value='"+indiceTaller+"'></td>"+strSelect+"</tr>");
+                $("#espacio-talleres").append("<tr><td>Taller <input type='number' name='tallerN-"+indiceTaller+"' min='1' max='12' value='"+val+"'></td>"+strSelect+"</tr>");
+                validarRealizado();
             }else{
                 alert("Todos los capítulos agregados deben ser llenados.");
             }
             //verificarJustificacion();
         }
-        function masTaller(taller, cap){
+        function addTaller(taller, cap){
             indiceTaller=taller;
             flag = true;
             strSelect = "<td><select name='taller-"+indiceTaller+"'>";
@@ -440,14 +466,14 @@
                 $strCap2.= "</select>";
             ?>
             indiceCapitulo++;
-            resetTalleres();
             $('.mas').hide();
             $("#capitulos-programados").append("<tr class='cap' onChange='resetTalleres()' data-index='"+indiceCapitulo+"'><td></td><td>Cap&iacute;tulo <?php echo $strCap1 ?>"+indiceCapitulo+"<?php echo $strCap2; ?></td><td><input type='button' class='mas' style='float:right;height:30px;' onClick='masCapitulo()' value='+' /><input type='button' class='menos' style='height:30px;' onClick='menosCapitulo("+indiceCapitulo+")' value='-' /></td></tr>");
+            resetTalleres();
         }
         function masDestacado(){
             indiceDestacado++;
             $('.masDestacado').hide();
-            $("#docentesDestacados").append("<tr class='docente-destacado' data-index2='"+indiceDestacado+"'><td></td><td><select style='font-size:14px;' name='destacado-"+indiceDestacado+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDestacado' style='height:30px;float:right;' onClick='masDestacado()' value='+' /><input type='button' class='menosDestacado' style='height:30px;' onClick='menosDestacado("+indiceDestacado+")' value='-' /></td></tr>");
+            $("#docentesDestacados").append("<tr class='docente-destacado' data-index2='"+indiceDestacado+"'><td style='width:215px;'></td><td><select style='font-size:14px;' name='destacado-"+indiceDestacado+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDestacado' style='height:30px;float:right;' onClick='masDestacado()' value='+' /><input type='button' class='menosDestacado' style='height:30px;' onClick='menosDestacado("+indiceDestacado+")' value='-' /></td></tr>");
         }
         function menosDestacado(num){
             if( $("tr.docente-destacado").length > 1 ){
@@ -482,7 +508,7 @@
                     $("tr[data-index3="+(num-1)+"] input.masDebil").show();
                 }
                 if(num == 0){
-                    $("tr[data-index3=0] td").first().html("<span style='font-size:12px;'>Docentes con participaci&oacute;n destacada:</span>");
+                    $("tr[data-index3=0] td").first().html("<span style='font-size:12px;'>Docentes que presentan debilidades:</span>");
                 }
             }else{
                 $("tr[data-index3=0] option").first().prop("selected","selected");
@@ -491,15 +517,16 @@
         function masDebil(){
             indiceDebil++;
             $('.masDebil').hide();
-            $("#docentesDebiles").append("<tr class='docente-debil' data-index3='"+indiceDebil+"'><td></td><td><select style='font-size:14px;' name='debil-"+indiceDebil+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDebil' style='height:30px;float:right;' onClick='masDebil()' value='+' /><input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil("+indiceDebil+")' value='-' /></td></tr>");
+            $("#docentesDebiles").append("<tr class='docente-debil' data-index3='"+indiceDebil+"'><td style='width:215px;'></td><td><select style='font-size:14px;' name='debil-"+indiceDebil+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDebil' style='height:30px;float:right;' onClick='masDebil()' value='+' /><input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil("+indiceDebil+")' value='-' /></td></tr>");
         }
 
         function resetTalleres(){
             indiceTaller = 0;
+            flagCaps=false;
             $("#espacio-talleres").html("");
+            validarRealizado();
         }
         function menosCapitulo(num){
-            resetTalleres();
             $("tr[data-index="+num+"]").remove();
             for (var i = num+1; i <= indiceCapitulo; i++) {
 
@@ -512,6 +539,7 @@
             if(num == indiceCapitulo+1){
                 $("tr[data-index="+(num-1)+"] input.mas").show();
             }
+            resetTalleres();
         }
     
         $( document ).ready(function(){
@@ -522,7 +550,7 @@
 
              for (var i = 0; i < talleres_previos.length; i++) {
                 if(talleres_previos[i].split(":").length ==2){
-                    masTaller(talleres_previos[i].split(":")[0],talleres_previos[i].split(":")[1]);
+                    addTaller(talleres_previos[i].split(":")[0],talleres_previos[i].split(":")[1]);
                 }
              };
             
@@ -534,16 +562,54 @@
             var a = "numero="+ $(this).val();
             AJAXPOST("recargarInformeSesion.php",a ,sel);
         });
-
         function enviarInforme(){
-            
-            if( true ){
-                if(confirm("Se enviará la asistencia. Desea continuar?")){
-                    
+            if( $("#datepicker").val()!="" ){
+                if( $("select[name=idRelator]").val()!="" ){
+                    if(flagCaps || $("textarea[name=justificaNoRealizado]").val()!=""){
+                        if($("input[name=dificultades]:checked").length==1){
+                            if( $("input[name=dificultades]:checked").val()==1 -($("textarea[name=difMatematicas]").val()=="" && $("textarea[name=difDidactico]").val()=="") ){
+                                if( $("input[name=situaciones]:checked").length==1 ){
+                                    if($("input[name=situaciones]:checked").val()!=1 || $("textarea[name=situacionPedagogica]").val()!=""){
+                                        if( $("input[name=institucionales]:checked").length==1 ){
+                                            if($("input[name=institucionales]:checked").val()!=1 || $("textarea[name=situacionInstitucional]").val()!=""){
+                                                if(confirm("Se enviará la asistencia. Desea continuar?")){return 1;}
+                                            }else{
+                                                $("textarea[name=situacionInstitucional]").focus();
+                                                alert("Especifique situaciones detectadas.");
+                                            }
+                                        }else{
+                                            $("input[name=institucionales]").focus();
+                                            alert("Debe llenar todos los datos.")
+                                        }
+                                    }else{
+                                        $("textarea[name=situacionPedagogica]").focus();
+                                        alert("Especifique situaciones detectadas.");
+                                    }
+                                }else{
+                                    $("input[name=situaciones]").focus();
+                                    alert("Debe llenar todos los datos.")
+                                }
+                            }else{
+                                $("textarea[name=difMatematicas]").focus();
+                                alert("Debe especificar cuales dificultades se detectaron.");
+                            }
+                        }else{
+                            $("input[name=dificultades]").focus();
+                            alert("Debe seleccionar si docentes presentan dificultades.");
+                        }
+                    }else{
+                        $("textarea[name=justificaNoRealizado]").focus();
+                        alert("Debe justificar el trabajo no realizado.")
+                    }
                 }else{
-                    event.preventDefault();
+                    $("select[name=idRelator]").focus();
+                    alert("Debe seleccionar un relator.");
                 }
+            }else{
+                $("#datepicker").focus();
+                alert("Debe ingresar la fecha.");
             }
+            event.preventDefault();
         }
 
     </script>
