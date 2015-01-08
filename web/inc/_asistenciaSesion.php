@@ -365,7 +365,7 @@ HTML;
     </table>
 HTML;
 
-  header('Content-type: application/vnd.ms-excel');
+  header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
   header("Content-Disposition: attachment; filename=Informe General de Sesiones - $curso [".date("d-m-Y")."].xls");
   header("Pragma: no-cache");
   header("Expires: 0");
@@ -422,7 +422,7 @@ HTML;
     </table>
 HTML;
 
-  header('Content-type: application/vnd.ms-excel');
+  header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
   header("Content-Disposition: attachment; filename=Informe general de asistencia - $curso [".date("d-m-Y")."].xls");
   header("Pragma: no-cache");
   header("Expires: 0");
@@ -481,11 +481,11 @@ HTML;
     </tbody>
     </table>
 HTML;
-
-  header('Content-type: application/vnd.ms-excel');
+  header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
   header("Content-Disposition: attachment; filename=Informe general de asistencia - $curso [".date("d-m-Y")."].xls");
   header("Pragma: no-cache");
   header("Expires: 0");
+  echo "\xEF\xBB\xBF";
   echo $titulos;
   echo $tabla;
 }
