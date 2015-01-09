@@ -293,7 +293,7 @@ function crearObservacionDocente($post, $idVisita){
                     $accion8 = $post["doc8-".$i]=="on" ? 1 : 0;
                     $sql_docente = "INSERT INTO `observacionDocentesVisitaEscuela` (`idObservacionDocenteVisitaEscuela`, `idVisitaEscuela`, `nombreDocenteObservacion`, `cursoDocenteObservacion`, `opcion1Observacion`, `opcion2Observacion`, `opcion3Observacion`, `opcion4Observacion`, `opcion5Observacion`, `opcion6Observacion`, `opcion7Observacion`, `opcion8Observacion`, `detalleOpcion8Observacion`,`observacionTrabajoConDocentes`) 
                                     VALUES (NULL, '$idVisita', '$nombreDocente', '$cursoDocente', '$accion1', '$accion2', '$accion3', '$accion4', '$accion5', '$accion6', '$accion7', '$accion8', '".$post["otroAccionDocente-".$i]."', '".$post["observacionTrabajoDocentes-".$i]."')";
-                    $resp = mysql_query($sql_docente);
+                    $resp = mysql_query(utf8($sql_docente));
                 }
             }
         }
