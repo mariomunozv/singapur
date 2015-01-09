@@ -573,7 +573,7 @@ textarea:disabled{
                                     if($("input[name=situaciones]:checked").val()!=1 || $("textarea[name=situacionPedagogica]").val()!=""){
                                         if( $("input[name=institucionales]:checked").length==1 ){
                                             if($("input[name=institucionales]:checked").val()!=1 || $("textarea[name=situacionInstitucional]").val()!=""){
-                                                if(confirm("Se enviará la asistencia. Desea continuar?")){return 1;}
+                                                if(confirm("Se enviar\u00E1 la asistencia. Desea continuar?")){return 1;}
                                             }else{
                                                 $("textarea[name=situacionInstitucional]").focus();
                                                 alert("Especifique situaciones detectadas.");
@@ -608,9 +608,8 @@ textarea:disabled{
                 }
             }else{
                 $("#datepicker").focus();
-                alert("Debe ingresar la fecha.");
+                alert("Debe ingresar la fecha de la sesi\u00F3ºn.");
             }
             event.preventDefault();
         }
-
     </script>

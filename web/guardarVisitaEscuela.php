@@ -1,7 +1,6 @@
 <?php
 require("inc/incluidos.php");
 require("inc/_visitaEscuela.php");
-
 //validacion de datos
 if( $_POST["idAsesor"]!=""){
 	if($_POST["rbdColegio"]!=""){
@@ -11,9 +10,7 @@ if( $_POST["idAsesor"]!=""){
 				if($_POST["horaLlegada"]!="" && $_POST["horaSalida"]!=""){
 					$fecha = $_POST["fechaVisita"];
 					if( !existePK(substr($fecha, 6),$numeroVisita,$_POST["rbdColegio"]) ){
-						crearVisitaEscuela($_POST);
-						//echo "asd".$_POST["12345"]."asd";
-					
+						crearVisitaEscuela($_POST);					
 					}else{
 						echo 6;
 					}

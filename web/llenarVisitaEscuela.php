@@ -26,6 +26,9 @@ $rbdColegio = getRbdUsuario($idUsuario);
   input[disabled],textarea[disabled] {
     background-color: #eee;
   }
+  textarea{
+    padding: 5px;
+  }
 </style>
 
 <body>
@@ -224,7 +227,7 @@ require "_navegacion.php";
               </tbody>
             </table>
             <h4>Acuerdos o compromisos</h4>
-            <textarea name="acuerdos-docentes-colectivo" style="resize:none; width:100%;height:40px;"></textarea>
+            <textarea name="acuerdos-docentes-colectivo" style="resize:none; width:98%;height:40px;"></textarea>
             <br /><br />
             <div id="cajaCentralDown">
              &nbsp;
@@ -764,6 +767,25 @@ $(function() {
       return str.replace(new RegExp(find, 'g'), replace);
     }
 
+// Kind of encodeURIComponent for ISO-8859
+function escapeComponent(str) { 
+    return escape(str).replace(/\+/g, '%2B');
+}
+ 
+// Kind of $.param for ISO-8859
+$.paramLatin = function( a ) {
+    var s = [];
+     $.each( a, function( i, kv ) {
+        s[ s.length ] = escapeComponent(kv.name) +"="+ escapeComponent(kv.value);
+    });
+     return s.join("&").replace(/%20/g, '+');
+};
+ 
+// Kind of $.fn.serialize for ISO-8859
+$.fn.serializeLatin = function() {
+    return $.paramLatin( this.serializeArray() );
+};
+
     $("#boton-submit").click(function(e){
       e.preventDefault();
       seguir=true;
@@ -813,8 +835,9 @@ $(function() {
       }
       if(seguir){
         $.ajax({
-          data:  $("#form-visita-escuela").serialize(),
+          data:  $("#form-visita-escuela").serializeLatin(),
           url:   'guardarVisitaEscuela.php',
+          encoding:"UTF-8",
           type:  'POST',
           success:  function (resp) {
 			 switch (parseInt(resp)){
@@ -855,9 +878,6 @@ $(function() {
               case 9:
                 alert("Se registro la visita pero ocurrió un error al registrar la observación a docentes.");
                 break;
-              //default:
-               // $("body").append(resp);
-               // break;
             }
           },
           error: function(resp){
