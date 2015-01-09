@@ -94,17 +94,19 @@ require "_navegacion.php";
             $profesores = getAlumnosCurso($_SESSION["sesionIdCurso"]);
             ordenar($profesores,array("idPerfil"=>"ASC","apellidoPaterno"=>"ASC"));
             $key = 0;
-            $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"]);
             $contProf = 0;
+            $cantTotal = 0;
             foreach ($profesores as $i => $prof) {
               if($profesores[$i]["nombrePerfil"] == "Profesor" || $profesores[$i]["nombrePerfil"]=="UTP"){
                 $contProf++;
+                $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"],$prof["idUsuario"]);
+                $cantTotal += $cantidadSesiones;
                 $profesores[$i]["nombrePerfil"] = getNombrePerfil($prof["idPerfil"]);
                 $profesores[$i]["porcentajeAsistencia"]=asistenciaProfesor($prof["idUsuario"],$_SESSION["sesionIdCurso"],$cantidadSesiones);
-                $asistenciaGral += $profesores[$i]["porcentajeAsistencia"];
+                $asistenciaGral += ($profesores[$i]["porcentajeAsistencia"]*$cantidadSesiones);
               }
             }
-            $asistenciaGral /= $contProf;
+            $asistenciaGral /= $cantTotal;
             $asistenciaGral = round($asistenciaGral);
           ?>
           <div id="informe-asistencia" style="display:none;">

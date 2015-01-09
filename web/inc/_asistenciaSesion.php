@@ -16,13 +16,14 @@ function getRelatoresSesion(){
     }
     return($relatores);
 }
-function cantidadSesionesCurso($idCurso){
+function cantidadSesionesCurso($idCurso, $idUsuario){
     $sql = "SELECT idInformeSesion 
             FROM `informeSesion`
             WHERE idCursoCapacitacion = $idCurso 
             AND idInformeSesion in (SELECT DISTINCT asi.idInformeSesion 
                                     FROM `asistenciaSesion` as asi join `informeSesion` as inf on asi.idInformeSesion = inf.idInformeSesion
-                                    AND idCursoCapacitacion=$idCurso)";
+                                    WHERE idCursoCapacitacion=$idCurso
+                                    AND idUsuario = $idUsuario)";
     $res = mysql_query($sql);
     $i=0;
     while($row = mysql_fetch_array($res)){
@@ -261,8 +262,8 @@ function informeExcelAsistenciaGeneral($idCurso){
 HTML;
     $profesores = getAlumnosCurso($idCurso);
     ordenar($profesores,array("idPerfil"=>"ASC","apellidoPaterno"=>"ASC"));
-    $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"]);
     //$contProf = 0;
+    $cantTotal=0;
     $listado = array();
     foreach ($profesores as $i => $prof) {
       if($profesores[$i]["nombrePerfil"] == "Profesor" || $profesores[$i]["nombrePerfil"]=="UTP"){
@@ -273,6 +274,8 @@ HTML;
         $aux[3]=utf8_encode($prof["apellidoPaterno"]);
         $aux[4]=utf8_encode($datos["apellidoMaternoProfesor"]);
         $aux[5]=utf8_encode(getNombreColegio($prof["rbdColegio"]));
+        $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"],$prof["idUsuario"]);
+        $cantTotal+=$cantidadSesiones;
         $aux[6]=round(asistenciaProfesor($prof["idUsuario"],$_SESSION["sesionIdCurso"],$cantidadSesiones));
         array_push($listado,$aux);
       }
