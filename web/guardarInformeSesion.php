@@ -51,10 +51,7 @@ if(!$detalle){
 
 $detalle = getDetalleSesion($_POST["idInformeSesion"]);
 
-print_r($_POST);
-
-
-//header('Location: ./ingresoInformeSesion.php');
+header('Location: ./ingresoInformeSesion.php');
 
 ?>
 

@@ -111,9 +111,12 @@ function getSesionesTodas(){
 }
 
 function getSiguienteSesionesCurso($idCurso){
+    $anoActual = date('Y');
     $sql = "SELECT numeroSesion
             FROM informeSesion
-            WHERE idCursoCapacitacion = $idCurso ";
+            WHERE idCursoCapacitacion = $idCurso
+            AND fechaSesion >= '$anoActual-01-01'
+            ORDER BY numeroSesion";
     $res = mysql_query($sql);
     $i=0;
     while($row = mysql_fetch_array($res)){

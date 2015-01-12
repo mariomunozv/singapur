@@ -85,6 +85,7 @@ textarea:disabled{
                     }else{
                         $aux = getDatosEmpleadoKlein($datos["idRelator"]);
                         echo $aux["nombreParaMostrar"];
+                        echo "<input type='hidden' name='idRelator' value".$datos["idRelator"].">";
                     }
                     ?>
                 </td>

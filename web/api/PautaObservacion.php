@@ -229,16 +229,16 @@ HTML;
     $objectIndGestion = json_decode1($pauta->indicadoresGestion);
     $indGestion = get_object_vars($objectIndGestion);
 
-    $nombreProfesor = utf8_decode($pauta->nombreProfesor);
+    $nombreProfesor = ($pauta->nombreProfesor);
     
     // Si no hay nada en nivel se asigna el caractar vacío para que se pueda imprimir en el excel, si no se asigna el valor que existe (nombre del nivel) 
     // No se estaba llenando el nivel antes, se corrigió el 24/10/2014
-    ($pauta->nombreNivel == null) ? $nombreNivel = "" : $nombreNivel = utf8_decode($pauta->nombreNivel);
-    $capitulo = utf8_decode($pauta->capitulo);
-    $apartado = utf8_decode($pauta->apartado);
-    $preguntaGestion = utf8_decode($pauta->preguntaGestion);
-    $preguntaCondicion = utf8_decode($pauta->preguntaCondiciones);
-    $nombreResponsable=utf8_encode(getNombreProfesorPorRut($pauta->rutResponsable));
+    ($pauta->nombreNivel == null) ? $nombreNivel = "" : $nombreNivel = ($pauta->nombreNivel);
+    $capitulo = ($pauta->capitulo);
+    $apartado = ($pauta->apartado);
+    $preguntaGestion = ($pauta->preguntaGestion);
+    $preguntaCondicion = ($pauta->preguntaCondiciones);
+    $nombreResponsable = (getNombreProfesorPorRut($pauta->rutResponsable));
 
     ($pauta->grabaClase == null) ? $grabaClase = "" : $grabaClase = $pauta->grabaClase;
 
