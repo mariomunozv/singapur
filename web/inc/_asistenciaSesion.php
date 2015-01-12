@@ -488,7 +488,6 @@ HTML;
   header("Content-Disposition: attachment; filename=Informe general de asistencia - $curso [".date("d-m-Y")."].xls");
   header("Pragma: no-cache");
   header("Expires: 0");
-  echo "\xEF\xBB\xBF";
   echo $titulos;
   echo $tabla;
 }
