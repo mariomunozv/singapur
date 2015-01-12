@@ -92,7 +92,6 @@ textarea:disabled{
             </tr>
         </table>
         <br>
-
         <table id="capitulos-programados" style="font-size:14px;">
             <?php
                 $caps = split("[,]",substr($detalle["capitulosProgramadosSesion"],1,strlen($detalle["capitulosProgramadosSesion"])-2));
@@ -107,7 +106,7 @@ textarea:disabled{
                             <td>
                                 Cap&iacute;tulo ";
                         
-                        $capitulos = getCapitulos(1);
+                        $capitulos = getCapitulos(getNivelCurso($_SESSION["sesionIdCurso"]));
                         echo "<select onChange='resetTalleres()' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
                         foreach ($capitulos as $cap) {
                             if($value == $cap["id"]){
@@ -139,7 +138,7 @@ textarea:disabled{
                               </td>
                               <td>
                               Cap&iacute;tulo ";
-                        $capitulos = getCapitulos(1);
+                        $capitulos = getCapitulos(getNivelCurso($_SESSION["sesionIdCurso"]));
                         echo "<select onChange='resetTalleres()' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
                         $cant_caps++;
                         foreach ($capitulos as $cap) {

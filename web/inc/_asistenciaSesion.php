@@ -145,6 +145,14 @@ function getCapitulos($nivel){
     }
     return $caps;
 }
+function getNivelCurso($idCurso){
+    $sql = "SELECT idNivel 
+            FROM `cursoCapacitacion` 
+            WHERE idCursoCapacitacion =".$idCurso;
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res);
+    return($row["idNivel"]);
+}
 
 function getDatosSesionPorId($idSesion){
     $sql = "SELECT *
