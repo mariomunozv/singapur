@@ -6,9 +6,8 @@ $datos = getDatosSesion($_POST["idCurso"], $_POST["numeroSesion"]);
 
 if(!$datos){
 	newInformeSesion($_POST);
-}else{
-	updateInformeSesion($_POST);
 }
+
 $datos = getDatosSesion($_POST["idCurso"], $_POST["numeroSesion"]);
 
 $programados="";
