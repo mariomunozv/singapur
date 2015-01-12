@@ -52,7 +52,7 @@ require "_navegacion.php";
     <p>
       A continuación podrá completar la información relacionada con su visita escuela, se solicita que sea cuidadoso en la información que ingresa ya que el reporte no permite posteriores modificaciones.
     </p>
-      <form id="form-visita-escuela" action="pruebas.php" method="POST">
+      <form id="form-visita-escuela" action="guardarVisitaEscuela.php" method="POST">
         <div>
           <div id="datos-generales" class='cajaCentralFondo'>
             <div id="cajaCentralTop">
@@ -489,8 +489,14 @@ require "_navegacion.php";
 
 </div>
 
-
 <script>
+<?php
+  if ($_GET["er"]){
+    echo "alert('Ocurrió un error inesperado al guardar la visita escuela.');";
+    echo "window.location.assign('llenarVisitaEscuela.php');";
+  }
+
+?>
 $(function() {
     $( "#datepicker" ).datepicker();
 });
@@ -836,7 +842,7 @@ $.fn.serializeLatin = function() {
       if(seguir){
         $.ajax({
           data:  $("#form-visita-escuela").serializeLatin(),
-          url:   'guardarVisitaEscuela.php',
+          url:   'validarVisitaEscuela.php',
           encoding:"UTF-8",
           type:  'POST',
           success:  function (resp) {
@@ -870,10 +876,7 @@ $.fn.serializeLatin = function() {
                 break;
               case 8:
                 alert("Registro de visita a escuela registrado correctamente.");
-                location.reload();
-                $(document).ready(function(){
-                    $(this).scrollTop(0);
-                });
+                $("#form-visita-escuela").submit();
                 break;
               case 9:
                 alert("Se registro la visita pero ocurrió un error al registrar la observación a docentes.");
