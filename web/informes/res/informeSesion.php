@@ -17,13 +17,13 @@ table.table ,.table  th,.table  td {
     border: 1px solid #333;
     border-spacing: 0px;
     border-collapse: collapse;
-    font-size:14px;
+    font-size:13px;
 }
 .table td,.table th{
     padding: 4px;
 }
 li{
-    font-size:14px;
+    font-size:13px;
     padding-left: 5px;
 }
 
@@ -49,29 +49,35 @@ li{
         $datos = getDatosSesionPorId($_GET["s"]);
         $detalle = getDetalleSesion($_GET["s"]);
         $capProgramados = split(",",substr($detalle["capitulosProgramadosSesion"],1,count($detalle["capitulosProgramadosSesion"])-2));
-        //print_r($detalle);
+        $declaradaAsistencia = getDeclaradaAsistencia($_GET["s"]);
     ?>
         
-        <table style="width:100%;margin-left:40px;font-size:14px;" id="datos-generales">
+        <table style="width:100%;margin-left:40px;font-size:13px;" id="datos-generales">
             <tr>
-                <td>Curso: <?php echo utf8_encode(getNombreCortoCurso($datos["idCursoCapacitacion"])); ?></td>
+                <td>Curso:</td><td><?php echo utf8_encode(getNombreCortoCurso($datos["idCursoCapacitacion"])); ?></td>
             </tr><tr><td></td></tr>
             <tr>
-                <td>Sesión: <?php echo $datos["numeroSesion"]; ?></td>
+                <td>Sesión:</td><td><?php echo $datos["numeroSesion"]; ?></td>
             </tr><tr><td></td></tr>
             <tr>
-                <td>Fecha: <?php echo $datos["fechaSesion"]; ?></td>
+                <td>Fecha:</td><td><?php echo $datos["fechaSesion"]; ?></td>
             </tr><tr><td></td></tr>
             <tr>
-                <td>Relator: <?php echo utf8_encode(getNombreUsuario($datos["idRelator"])); ?></td>
+                <td>Relator:</td><td><?php echo utf8_encode(getNombreUsuario($datos["idRelator"])); ?></td>
             </tr><tr><td></td></tr>
+            <tr>
+                <td>Bitácora Taller:</td><td><?php echo count($detalle)>1? "Declarada":"No Declarada"; ?></td>
+            </tr><tr><td></td></tr>
+            <tr>
+                <td>Asistencia:</td><td><?php echo $declaradaAsistencia? "Declarada":"No Declarada"; ?></td>
+            </tr>
         </table>
     <br />
     <h4>Capitulos programados:</h4>
     <div style="overflow:hidd_en;">
     </div>
         <?php if($capProgramados[0]!=""){foreach ($capProgramados as $cap) { ?>
-        <div style="font-size:14px;">
+        <div style="font-size:13px;">
             <img style='margin-left:20px;margin-right:10px;' src='res/img/off.png'><?php echo utf8_encode(getNombreCapitulo($cap)); ?><br><br>
         </div>
         <?php }} ?>
@@ -86,7 +92,6 @@ li{
         </thead>
         <tbody>
             <?php
-
                 $talleres = split(",",substr($detalle["trabajoRealizadoSesion"],1,count($detalle["trabajoRealizadoSesion"])-2));
                 foreach ($capProgramados as $dat) {
                     $strTaller = "";
@@ -112,7 +117,7 @@ li{
             <th style="width:100%;">Justificación del trabajo no realizado:</th>
         </tr>
         <tr>
-            <td style="width:620px;padding:10px;text-align:justify;"><?php echo utf8_encode($detalle["justificacionNoRealizadoSesion"]); ?></td>
+            <td style="width:620px;padding:10px;padding-bottom:1px;text-align:justify;"><?php echo utf8_encode($detalle["justificacionNoRealizadoSesion"]); ?></td>
         </tr>
     </table>
 </page>
@@ -140,7 +145,7 @@ li{
         </tr>
     </table>
     <br><br>
-    <table align="center" style="border: 1px black solid; font-size:14px;padding:5px;">
+    <table align="center" style="border: 1px black solid; font-size:13px;padding:5px;">
         <tr>
             <th style="width:620px;">Matemático</th>
         </tr>
@@ -156,7 +161,7 @@ li{
     </table>
     <br><br>
     <h4>Docentes con participación destacada:</h4>
-    <div style="font-size:14px;">
+    <div style="font-size:13px;">
         <?php
             $destacada = split(",",substr($detalle["participacionDestacadaSesion"],1,count($detalle["participacionDestacadaSesion"])-2) );
             if($destacada[0]!=""){
@@ -167,7 +172,7 @@ li{
         ?>
     </div>
     <h4>Docentes que presentan debilidades:</h4>
-    <div style="font-size:14px;">
+    <div style="font-size:13px;">
         <?php
             $debil = split(",",substr($detalle["participacionDebilSesion"],1,count($detalle["participacionDebilSesion"])-2));
             if($debil[0]!=""){
@@ -206,7 +211,7 @@ li{
         </tr>
     </table>
     <br><br>
-    <table align="center" style="border: 1px black solid; font-size:14px;padding:5px;">
+    <table align="center" style="border: 1px black solid; font-size:13px;padding:5px;">
         <tr>
             <th style="width:620px;">¿Cuáles?</th>
         </tr>
@@ -228,7 +233,7 @@ li{
         </tr>
     </table>
     <br><br>
-    <table align="center" style="border: 1px black solid; font-size:14px;padding:5px;">
+    <table align="center" style="border: 1px black solid; font-size:13px;padding:5px;">
         <tr>
             <th style="width:620px;">¿Cuáles?</th>
         </tr>

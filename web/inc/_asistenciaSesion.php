@@ -122,8 +122,9 @@ function getSiguienteSesionesCurso($idCurso){
     while($row = mysql_fetch_array($res)){
         $informes[$i] = $row;
         $i++;
+        $siguiente= $row["numeroSesion"];
     }
-    return (count($informes)+1);
+    return ($siguiente+1);
 }
 
 
@@ -167,10 +168,12 @@ function getDatosSesionPorId($idSesion){
 }
 
 function getDatosSesion($idCurso, $numSesion){
+    $anoActual = date('Y');
     $sql = "SELECT *
             FROM informeSesion
             WHERE idCursoCapacitacion = $idCurso 
-            AND numeroSesion = $numSesion";
+            AND numeroSesion = $numSesion
+            AND fechaSesion >= '$anoActual-01-01'";
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res);
     if($row["fechaSesion"]){
@@ -207,6 +210,17 @@ function getDetalleSesion($idInformeSesion){
     $row = mysql_fetch_array($res);
     return $row;
 }
+function getDeclaradaAsistencia($idSesion){
+    $sql = "SELECT *
+            FROM asistenciaSesion
+            WHERE idInformeSesion = $idSesion";
+    $res = mysql_query($sql);
+    while($row = mysql_fetch_array($res)){
+        $asistencias[$row["idUsuario"]] = $row["presenteAsistenciaSesion"];
+    }
+    return count($asistencias)>0? 1:0;
+}
+
 function newInformeSesion($post){
     $fecha = substr($post["fechaSesion"],-4,4)."-".substr($post["fechaSesion"],-7,2)."-".substr($post["fechaSesion"],0,2);
     $sql = "INSERT INTO `informeSesion` (`idInformeSesion`, `idRelator`, `idCursoCapacitacion`, `numeroSesion`, `fechaSesion`) 

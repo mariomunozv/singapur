@@ -15,6 +15,16 @@ textarea{
 textarea:disabled{
     background-color: #eee;
 }
+.error{
+    border: 2px solid #d9534f;
+    -webkit-box-shadow: 0px 0px 11px 0px #d9534f;
+    -moz-box-shadow:    0px 0px 11px 0px #d9534f;
+    box-shadow:         0px 0px 11px 0px #d9534f;
+}
+.select-destacados, .select-debiles{
+    width:225px;
+    font-size:14px;
+}
 </style>
 <meta charset="iso-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -107,7 +117,7 @@ textarea:disabled{
                                 Cap&iacute;tulo ";
                         
                         $capitulos = getCapitulos(getNivelCurso($_SESSION["sesionIdCurso"]));
-                        echo "<select onChange='resetTalleres()' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
+                        echo "<select onChange='resetTalleres();validaCapitulos();' class='select-capitulos' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
                         foreach ($capitulos as $cap) {
                             if($value == $cap["id"]){
                                 echo "<option selected value='".$cap["id"]."'>".$cap["nombre"]."</option>";
@@ -139,7 +149,7 @@ textarea:disabled{
                               <td>
                               Cap&iacute;tulo ";
                         $capitulos = getCapitulos(getNivelCurso($_SESSION["sesionIdCurso"]));
-                        echo "<select onChange='resetTalleres()' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
+                        echo "<select class='select-capitulos' onChange='resetTalleres();validaCapitulos();' name='numeroCapitulo-$cant_caps' style='width:200px;'>";
                         $cant_caps++;
                         foreach ($capitulos as $cap) {
                             if($value == $cap["id"]){
@@ -235,7 +245,7 @@ textarea:disabled{
                         if($cant_destacados==0){
                             echo "Docentes con participaci&oacute;n destacada:";
                         }
-                        echo "</td><td><select style='font-size:14px;' name='destacado-".$cant_destacados."'><option value=''>---</option>";
+                        echo "</td><td><select class='select-destacados' onchange='validaDestacados()' style='font-size:14px;' name='destacado-".$cant_destacados."'><option value=''>---</option>";
                         foreach ($profesores as $prof){
                             $nombreP = getNombrePerfil($prof["idPerfil"]);
                             if($nombreP == "UTP" || $nombreP=="Profesor"){
@@ -260,7 +270,7 @@ textarea:disabled{
             <tr class="docente-destacado" data-index2="<?php echo $cant_destacados; ?>">
                 <td style="font-size:12px;width:215px;">Docentes con participaci&oacute;n destacada:</td>
                 <td>
-                    <select style="font-size:14px;" name="destacado-<?php echo $cant_destacados; ?>">
+                    <select class="select-destacados" onchange='validaDestacados()' style="font-size:14px;" name="destacado-<?php echo $cant_destacados; ?>">
                         <option value="">---</option>
                         <?php 
                             echo $strProfesores;
@@ -283,7 +293,7 @@ textarea:disabled{
                         if($cant_debiles==0){
                             echo "Docentes que presentan debilidades:";
                         }
-                        echo "</td><td><select style='font-size:14px;' name='debil-".$cant_debiles."'><option value=''>---</option>";
+                        echo "</td><td><select onchange='validaDebiles()' class='select-debiles' style='font-size:14px;' name='debil-".$cant_debiles."'><option value=''>---</option>";
                         foreach ($profesores as $prof){
                             $nombreP = getNombrePerfil($prof["idPerfil"]);
                             if($nombreP == "UTP" || $nombreP=="Profesor"){
@@ -307,7 +317,7 @@ textarea:disabled{
             <tr class="docente-debil" data-index3="<?php echo $cant_debiles; ?>">
                 <td style="font-size:12px;width:215px">Docentes que presentan debilidades:</td>
                 <td>
-                    <select style="font-size:14px;" name="debil-<?php echo $cant_debiles; ?>">
+                    <select class="select-debiles" onchange="validaDebiles" style="font-size:14px;" name="debil-<?php echo $cant_debiles; ?>">
                         <option value="">---</option>
                         <?php echo $strProfesores; ?>
                     </select>
@@ -374,7 +384,39 @@ textarea:disabled{
                 $( "#datepicker" ).datepicker();
             });
         });
-
+        function validaCapitulos(){
+            var capsTomados = [];
+            $(".select-capitulos").each(function(){
+                if(capsTomados.indexOf( $(this).val() )>=0){
+                    $(this).addClass("error");
+                }else{
+                    capsTomados.push($(this).val());
+                    $(this).removeClass("error");
+                }
+            });
+        }
+        function validaDestacados(){
+            var destacadosTomados = [];
+            $(".select-destacados").each(function(){
+                if(destacadosTomados.indexOf( $(this).val() )>=0){
+                    $(this).addClass("error");
+                }else{
+                    destacadosTomados.push($(this).val());
+                    $(this).removeClass("error");
+                }
+            });
+        }
+        function validaDebiles(){
+            var debilesTomados = [];
+            $(".select-debiles").each(function(){
+                if(debilesTomados.indexOf( $(this).val() )>=0){
+                    $(this).addClass("error");
+                }else{
+                    debilesTomados.push($(this).val());
+                    $(this).removeClass("error");
+                }
+            });
+        }
         function difChange(){
             if( $("input[name=dificultades]:checked").val()=="1" ){
                 $("#dificultades-si").show();
@@ -459,7 +501,7 @@ textarea:disabled{
         }
         function masCapitulo(){
             <?php 
-            $strCap1=  "<select onChange='resetTalleres()' name='numeroCapitulo-";
+            $strCap1=  "<select onChange='resetTalleres()' class='select-capitulos' name='numeroCapitulo-";
             $strCap2= "' style='width:200px;'>";
                 foreach ($capitulos as $cap) {
                     $strCap2.= "<option value='".$cap["id"]."'>".$cap["nombre"]."</option>";
@@ -468,13 +510,15 @@ textarea:disabled{
             ?>
             indiceCapitulo++;
             $('.mas').hide();
-            $("#capitulos-programados").append("<tr class='cap' onChange='resetTalleres()' data-index='"+indiceCapitulo+"'><td></td><td>Cap&iacute;tulo <?php echo $strCap1 ?>"+indiceCapitulo+"<?php echo $strCap2; ?></td><td><input type='button' class='mas' style='float:right;height:30px;' onClick='masCapitulo()' value='+' /><input type='button' class='menos' style='height:30px;' onClick='menosCapitulo("+indiceCapitulo+")' value='-' /></td></tr>");
+            $("#capitulos-programados").append("<tr class='cap' onChange='resetTalleres();validaCapitulos();' data-index='"+indiceCapitulo+"'><td></td><td>Cap&iacute;tulo <?php echo $strCap1 ?>"+indiceCapitulo+"<?php echo $strCap2; ?></td><td><input type='button' class='mas' style='float:right;height:30px;' onClick='masCapitulo()' value='+' /><input type='button' class='menos' style='height:30px;' onClick='menosCapitulo("+indiceCapitulo+")' value='-' /></td></tr>");
             resetTalleres();
+            validaCapitulos();
         }
         function masDestacado(){
             indiceDestacado++;
             $('.masDestacado').hide();
-            $("#docentesDestacados").append("<tr class='docente-destacado' data-index2='"+indiceDestacado+"'><td style='width:215px;'></td><td><select style='font-size:14px;' name='destacado-"+indiceDestacado+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDestacado' style='height:30px;float:right;' onClick='masDestacado()' value='+' /><input type='button' class='menosDestacado' style='height:30px;' onClick='menosDestacado("+indiceDestacado+")' value='-' /></td></tr>");
+            $("#docentesDestacados").append("<tr class='docente-destacado' data-index2='"+indiceDestacado+"'><td style='width:215px;'></td><td><select class='select-destacados' style='font-size:14px;' onChange='validaDestacados()' name='destacado-"+indiceDestacado+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDestacado' style='height:30px;float:right;' onClick='masDestacado()' value='+' /><input type='button' class='menosDestacado' style='height:30px;' onClick='menosDestacado("+indiceDestacado+")' value='-' /></td></tr>");
+            validaDestacados();
         }
         function menosDestacado(num){
             if( $("tr.docente-destacado").length > 1 ){
@@ -494,6 +538,7 @@ textarea:disabled{
             }else{
                 $("tr[data-index2=0] option").first().prop("selected","selected");  
             }
+            validaDestacados();
         }
 
         function menosDebil(num){
@@ -514,11 +559,13 @@ textarea:disabled{
             }else{
                 $("tr[data-index3=0] option").first().prop("selected","selected");
             }
+            validaDebiles();
         }
         function masDebil(){
             indiceDebil++;
             $('.masDebil').hide();
-            $("#docentesDebiles").append("<tr class='docente-debil' data-index3='"+indiceDebil+"'><td style='width:215px;'></td><td><select style='font-size:14px;' name='debil-"+indiceDebil+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDebil' style='height:30px;float:right;' onClick='masDebil()' value='+' /><input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil("+indiceDebil+")' value='-' /></td></tr>");
+            $("#docentesDebiles").append("<tr class='docente-debil' data-index3='"+indiceDebil+"'><td style='width:215px;'></td><td><select class='select-debiles' onChange='validaDebiles()' style='font-size:14px;' name='debil-"+indiceDebil+"'><option value=''>---</option><?php echo $strProfesores; ?></select></td><td><input type='button' class='masDebil' style='height:30px;float:right;' onClick='masDebil()' value='+' /><input type='button' class='menosDebil' style='height:30px;' onClick='menosDebil("+indiceDebil+")' value='-' /></td></tr>");
+            validaDebiles();
         }
 
         function resetTalleres(){
@@ -541,6 +588,7 @@ textarea:disabled{
                 $("tr[data-index="+(num-1)+"] input.mas").show();
             }
             resetTalleres();
+            validaCapitulos();
         }
     
         $( document ).ready(function(){
@@ -573,7 +621,12 @@ textarea:disabled{
                                     if($("input[name=situaciones]:checked").val()!=1 || $("textarea[name=situacionPedagogica]").val()!=""){
                                         if( $("input[name=institucionales]:checked").length==1 ){
                                             if($("input[name=institucionales]:checked").val()!=1 || $("textarea[name=situacionInstitucional]").val()!=""){
-                                                if(confirm("Se enviar\u00E1 la asistencia. Desea continuar?")){return 1;}
+                                                if($(".error").length == 0){
+                                                    if(confirm("Se enviar\u00E1 la asistencia. Desea continuar?")){return 1;}
+                                                }else{
+                                                    $(".error").first().focus();
+                                                    alert("Este campo debe ser \u00FAnico.")
+                                                }
                                             }else{
                                                 $("textarea[name=situacionInstitucional]").focus();
                                                 alert("Especifique situaciones detectadas.");
@@ -608,7 +661,7 @@ textarea:disabled{
                 }
             }else{
                 $("#datepicker").focus();
-                alert("Debe ingresar la fecha de la sesi\u00F3ºn.");
+                alert("Debe ingresar la fecha de la sesi\u00F3n.");
             }
             event.preventDefault();
         }

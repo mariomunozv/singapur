@@ -4,11 +4,12 @@ require("inc/_asistenciaSesion.php");
 $datos = getDatosSesion($_POST["idCurso"], $_POST["numeroSesion"]);
 
 
-if(!$datos){
+if(!$datos["idInformeSesion"]){
 	newInformeSesion($_POST);
+	$datos = getDatosSesion($_POST["idCurso"], $_POST["numeroSesion"]);
+	print_r($datos);
+	echo "no hay";
 }
-
-$datos = getDatosSesion($_POST["idCurso"], $_POST["numeroSesion"]);
 
 $programados="";
 $trabajados ="";
@@ -51,6 +52,5 @@ if(!$detalle){
 $detalle = getDetalleSesion($_POST["idInformeSesion"]);
 
 header('Location: ./ingresoInformeSesion.php');
-
 ?>
 
