@@ -246,7 +246,7 @@ function getNombreColegio($rbdColegio){
 }
 
 function informeExcelAsistenciaGeneral($idCurso){
-    $curso = utf8_encode(getNombreCurso2($idCurso));
+    $curso = (getNombreCurso2($idCurso));
     $titulos =<<<HTML
     <table>
     <tr>
@@ -268,12 +268,12 @@ HTML;
     foreach ($profesores as $i => $prof) {
       if($profesores[$i]["nombrePerfil"] == "Profesor" || $profesores[$i]["nombrePerfil"]=="UTP"){
         $datos = getDatosProfesor($prof["idUsuario"]);
-        $aux[0]=utf8_encode(getNombreCurso2($idCurso));
+        $aux[0]=(getNombreCurso2($idCurso));
         $aux[1]=$prof["nombrePerfil"];
-        $aux[2]=utf8_encode($datos["nombreProfesor"]);
-        $aux[3]=utf8_encode($prof["apellidoPaterno"]);
-        $aux[4]=utf8_encode($datos["apellidoMaternoProfesor"]);
-        $aux[5]=utf8_encode(getNombreColegio($prof["rbdColegio"]));
+        $aux[2]=($datos["nombreProfesor"]);
+        $aux[3]=($prof["apellidoPaterno"]);
+        $aux[4]=($datos["apellidoMaternoProfesor"]);
+        $aux[5]=(getNombreColegio($prof["rbdColegio"]));
         $cantidadSesiones = cantidadSesionesCurso($_SESSION["sesionIdCurso"],$prof["idUsuario"]);
         $cantTotal+=$cantidadSesiones;
         $aux[6]=round(asistenciaProfesor($prof["idUsuario"],$_SESSION["sesionIdCurso"],$cantidadSesiones));
@@ -307,7 +307,7 @@ HTML;
 }
 
 function informeExcelSesionGeneral($idCurso){
-    $curso = utf8_encode(getNombreCurso2($idCurso));
+    $curso = (getNombreCurso2($idCurso));
     $sesiones = getSesiones($_SESSION["sesionIdCurso"]);
     $titulos =<<<HTML
     <table>
@@ -350,8 +350,8 @@ HTML;
             }
         
             $numeroSes = $ses["numeroSesion"];
-            $nombreCap = utf8_encode(getNombreCapitulo($dat));
-            $nombreUsu = utf8_encode(getNombreUsuario($ses["idUsuario"]));
+            $nombreCap = (getNombreCapitulo($dat));
+            $nombreUsu = (getNombreUsuario($ses["idUsuario"]));
             $tabla .=<<<HTML
     <tr>
       <td>$numeroSes</td>
@@ -382,7 +382,7 @@ function informeExcelAsistencia($idSesion){
     $numeroSes = $sesion["numeroSesion"];
     $rutIngres = getDatosUsuarioPorId($sesion["idRelator"]);
     $rutIngres = $rutIngres["rut"];
-    $curso = utf8_encode(getNombreCurso2($sesion["idCursoCapacitacion"]));
+    $curso = (getNombreCurso2($sesion["idCursoCapacitacion"]));
     $asistencia = getAsistenciaSesion( $sesion["idCursoCapacitacion"], $sesion["numeroSesion"] );
     print_r($asistencia[0]);
     $titulos =<<<HTML
@@ -403,9 +403,9 @@ HTML;
         $perfil=getTipoUsuario($i);
         if($perfil == "UTP" || $perfil =="Profesor"){
             $datProfe = getRutNombre($i);
-            $nombre = utf8_encode($datProfe[0]["nombreProfesor"]);
-            $apellido = utf8_encode($datProfe[0]["apellidoPaternoProfesor"]." ".$datProfe[0]["apellidoMaternoProfesor"]);
-            $establecimiento = utf8_encode(getNombreColegioProfesor($i));
+            $nombre = ($datProfe[0]["nombreProfesor"]);
+            $apellido = ($datProfe[0]["apellidoPaternoProfesor"]." ".$datProfe[0]["apellidoMaternoProfesor"]);
+            $establecimiento = (getNombreColegioProfesor($i));
             $asistencia= $val? "<td style='background-color:#dff0d8;'>Presente</td>":"<td style='background-color:#f2dede;'>Ausente</td>";
             $tabla .=<<<HTML
                 <tr>
@@ -440,7 +440,7 @@ function informeExcelVaciadoSesion(){
         $numeroSes = $sesion["numeroSesion"];
         $rutIngres = getDatosUsuarioPorId($sesion["idRelator"]);
         $rutIngres = $rutIngres["rut"];
-        $curso = utf8_encode(getNombreCurso2($sesion["idCursoCapacitacion"]));
+        $curso = (getNombreCurso2($sesion["idCursoCapacitacion"]));
         $asistencia = getAsistenciaSesion( $sesion["idCursoCapacitacion"], $sesion["numeroSesion"] );
         $titulos =<<<HTML
         <table>
@@ -461,9 +461,9 @@ HTML;
             $perfil=getTipoUsuario($i);
             if($perfil == "UTP" || $perfil =="Profesor"){
                 $datProfe = getRutNombre($i);
-                $nombre = utf8_encode($datProfe[0]["nombreProfesor"]);
-                $apellido = utf8_encode($datProfe[0]["apellidoPaternoProfesor"]." ".$datProfe[0]["apellidoMaternoProfesor"]);
-                $establecimiento = utf8_encode(getNombreColegioProfesor($i));
+                $nombre = ($datProfe[0]["nombreProfesor"]);
+                $apellido = ($datProfe[0]["apellidoPaternoProfesor"]." ".$datProfe[0]["apellidoMaternoProfesor"]);
+                $establecimiento = (getNombreColegioProfesor($i));
                 $asistencia= $val? "<td style='background-color:#dff0d8;'>Presente</td>":"<td style='background-color:#f2dede;'>Ausente</td>";
                 $tabla .=<<<HTML
                     <tr>
